@@ -11,68 +11,48 @@
     
     {{-- Phosphor Icons --}}
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
 
     {{-- Tailwind & Vite --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="antialiased text-gray-900 bg-[#f8fafc] font-sans selection:bg-brand-500 selection:text-white flex flex-col min-h-screen">
+<body class="bg-[#fafafa] text-gray-900 antialiased overflow-x-hidden min-h-screen flex flex-col" x-data="{ scrolled: false }" @scroll.window="scrolled = (window.pageYOffset > 30)">
 
     {{-- ═══ NAVBAR (Dari Welcome) ═══ --}}
-    <header class="fixed w-full z-50 top-0 transition-all duration-500 bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-sm shadow-brand-500/5 py-4">
-        <div class="max-w-7xl mx-auto px-5 lg:px-8 flex justify-between items-center">
-            
-            {{-- Logo --}}
-            <a href="/" class="flex items-center gap-3 lg:gap-4 group">
-                <div class="relative w-12 h-12 lg:w-14 lg:h-14 flex items-center justify-center bg-white rounded-2xl shadow-xl shadow-brand-500/10 border border-brand-50 overflow-hidden group-hover:scale-105 transition-transform duration-300">
-                    <img src="{{ asset('assets/img/logo.png') }}" alt="Logo Padang" class="w-8 lg:w-10 h-auto relative z-10">
-                </div>
-                <div class="flex flex-col">
-                    <span class="block text-[10px] lg:text-[11px] font-bold text-gray-500 uppercase tracking-widest mb-0.5">Pemerintah Kota Padang</span>
-                    <span class="block text-sm lg:text-base font-extrabold text-gray-900">BAGIAN ORGANISASI</span>
-                </div>
-            </a>
-
-            {{-- Desktop Menu --}}
-            <nav class="hidden lg:flex items-center justify-center gap-6 xl:gap-8 flex-1 px-4">
-                <a href="/" class="text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Beranda</a>
-                <a href="/profil" class="text-[13px] font-bold text-brand-500 border-b-2 border-brand-500 pb-1 uppercase tracking-wide">Profil</a>
-                <a href="/#layanan" class="text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Layanan</a>
-            </nav>
-
-            {{-- Right CTA --}}
-            <div class="hidden lg:flex items-center gap-4">
-                <a href="/#kontak" class="bg-gray-900 text-white px-6 py-3 rounded-xl font-bold text-[13px] hover:bg-brand-500 transition-colors shadow-lg shadow-gray-900/20 uppercase tracking-wide">
-                    Hubungi Kami
-                </a>
-            </div>
-            
-        </div>
-    </header>
+    @include('components.navbar')
 
     {{-- ═══ GEN-Z BENTO GRID LAYOUT ═══ --}}
-    <main class="flex-1 max-w-[1400px] w-full mx-auto px-5 lg:px-8 pt-32 lg:pt-40 pb-24">
+    <main class="flex-1 relative w-full pt-32 lg:pt-40 pb-24">
         
-        {{-- HERO HEADER --}}
-        <div class="text-center mb-12 lg:mb-20 relative">
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-2xl h-[300px] bg-gradient-to-r from-brand-300 via-purple-300 to-orange-300 blur-[120px] opacity-40 -z-10 rounded-full pointer-events-none"></div>
-            
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-gray-200 shadow-sm text-sm font-bold tracking-tight text-gray-700 mb-6 hover:scale-105 transition-transform cursor-pointer">
-                ✨ Mengenal Lebih Dekat
-            </div>
-            
-            <h1 class="text-5xl lg:text-7xl font-black tracking-tighter text-gray-900 leading-[1.1] mb-6">
-                Pusat Inovasi <br class="hidden lg:block"/>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-orange-500">
-                    Tata Kelola Kota Padang
-                </span>
-            </h1>
-            <p class="text-gray-500 text-lg lg:text-xl font-medium max-w-2xl mx-auto">
-                Kami adalah Bagian Organisasi Setda Kota Padang. Merancang birokrasi yang lincah, modern, dan selalu berpusat pada masyarakat.
-            </p>
-        </div>
+        {{-- Dot Pattern Background --}}
+        <div class="absolute inset-0 z-0 opacity-50 pointer-events-none" style="background-image: radial-gradient(#fcd34d 1.5px, transparent 1.5px); background-size: 36px 36px;"></div>
 
-        {{-- BENTO GRID CONTAINER --}}
-        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-6 auto-rows-[minmax(250px,auto)]">
+        <div class="max-w-[1400px] mx-auto px-5 lg:px-8 relative z-10">
+            {{-- HERO HEADER --}}
+            <div class="text-center mb-12 lg:mb-20 relative">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-2xl h-[300px] bg-gradient-to-r from-brand-300 via-purple-300 to-orange-300 blur-[120px] opacity-20 -z-10 rounded-full pointer-events-none"></div>
+                
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-600 text-xs font-black tracking-widest uppercase mb-6 shadow-sm">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+                    </span>
+                    Mengenal Lebih Dekat
+                </div>
+                
+                <h1 class="text-5xl lg:text-7xl font-black tracking-tighter text-gray-900 leading-[1.1] mb-6">
+                    Pusat Inovasi <br class="hidden lg:block"/>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-orange-500">
+                        Tata Kelola Kota Padang
+                    </span>
+                </h1>
+                <p class="text-gray-500 text-lg lg:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
+                    Kami adalah Bagian Organisasi Setda Kota Padang. Merancang birokrasi yang lincah, modern, dan selalu berpusat pada masyarakat.
+                </p>
+            </div>
+
+            {{-- BENTO GRID CONTAINER --}}
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-6 auto-rows-[minmax(250px,auto)]">
             
             {{-- BENTO 1: VISI (Large Box) --}}
             <div class="md:col-span-2 lg:col-span-2 row-span-2 bg-gray-900 text-white rounded-[2.5rem] lg:rounded-[3rem] p-8 lg:p-12 relative overflow-hidden group hover:scale-[1.01] transition-transform duration-500 shadow-xl shadow-gray-900/10">
@@ -212,43 +192,10 @@
             </div>
 
         </div>
+        </div>
     </main>
 
     {{-- ═══ MEGA FOOTER (Dari Welcome) ═══ --}}
-    <footer class="bg-[#0f172a] text-white pt-20 pb-10 relative overflow-hidden mt-auto">
-        <div class="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-                {{-- Brand Column --}}
-                <div class="lg:col-span-1">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-2 shrink-0">
-                            <img src="{{ asset('assets/img/logo.png') }}" alt="Logo Padang" class="w-full h-auto">
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-bold text-brand-400 tracking-widest uppercase">Pemko Padang</span>
-                            <span class="block text-base font-extrabold text-white leading-tight">BAGIAN ORGANISASI</span>
-                        </div>
-                    </div>
-                    <p class="text-sm text-gray-400 font-medium leading-relaxed mb-6">
-                        Mewujudkan tata kelola organisasi yang efektif, efisien, transparan dan berorientasi pada pelayanan publik.
-                    </p>
-                </div>
-                {{-- Tautan Cepat --}}
-                <div>
-                    <h4 class="text-white font-bold mb-6 flex items-center gap-2"><i class="ph-fill ph-link text-brand-500"></i> Tautan Cepat</h4>
-                    <ul class="space-y-4">
-                        <li><a href="#" class="text-sm text-gray-400 font-medium hover:text-brand-400 transition-colors">Profil Organisasi</a></li>
-                        <li><a href="#" class="text-sm text-gray-400 font-medium hover:text-brand-400 transition-colors">Layanan Publik</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-                <p class="text-xs text-gray-500 font-medium">
-                    &copy; {{ date('Y') }} Bagian Organisasi Setda Kota Padang. All rights reserved.
-                </p>
-            </div>
-        </div>
-    </footer>
+    @include('components.footer')
 </body>
 </html>
