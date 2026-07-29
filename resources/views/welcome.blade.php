@@ -657,67 +657,68 @@
 </section>
 
 {{-- ═══ MAPS & KOTAK SARAN ═══ --}}
-<section class="py-20 bg-white relative overflow-hidden" id="kontak">
-    <div class="max-w-7xl mx-auto px-5 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl lg:text-4xl font-black text-gray-900 mb-4 tracking-tight">Lokasi & <span class="text-brand-500">Kotak Saran</span></h2>
-            <p class="text-gray-500 font-medium max-w-xl mx-auto text-sm lg:text-base">Kunjungi kantor kami atau sampaikan saran dan masukan Anda untuk pelayanan yang lebih baik.</p>
+<section id="kontak" class="relative w-full min-h-[800px] flex items-center bg-gray-900 overflow-hidden">
+    {{-- Smooth Gradient Transition from Agenda Section --}}
+    <div class="absolute top-0 left-0 w-full h-48 bg-gradient-to-b from-[#0a0f1c] to-transparent z-20 pointer-events-none"></div>
+    
+    {{-- Massive Edge-to-Edge Map Background --}}
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2683976643275!2d100.35692807531795!3d-0.9512986353524716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b948c7c72e11%3A0x6771787fa612c99f!2sSekretariat%20Daerah%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1785310213215!5m2!1sid!2sid" class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 mix-blend-luminosity pointer-events-none" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    
+    {{-- Overlay Gradients for Depth --}}
+    <div class="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/80 to-transparent"></div>
+    <div class="absolute inset-0 bg-brand-500/10 mix-blend-color-burn"></div>
+
+    <div class="relative z-10 w-full max-w-7xl mx-auto px-5 lg:px-8 py-20 flex flex-col lg:flex-row items-center justify-between gap-12">
+        
+        {{-- Frontal Left Typography (Gen Z Style) --}}
+        <div class="flex-1 text-center lg:text-left">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-500/20 text-brand-400 border border-brand-500/30 text-xs font-black tracking-widest uppercase mb-8 backdrop-blur-md">
+                <span class="w-2 h-2 rounded-full bg-brand-400 animate-ping"></span> We Are Here
+            </div>
+            <h2 class="text-6xl lg:text-[7rem] font-black text-white leading-[0.9] tracking-tighter mb-6">
+                HIT US!
+            </h2>
+            <p class="text-xl text-gray-400 font-medium max-w-md mx-auto lg:mx-0 leading-relaxed mb-8">
+                Punya ide gila, saran pedas, atau sekedar mau nyapa? Kirim pesan frontal-mu sekarang.
+            </p>
+            
+            {{-- Small Rounded Map Embed --}}
+            <div class="w-full max-w-md mx-auto lg:mx-0 h-[220px] bg-gray-800 rounded-[2rem] overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.4)] border border-white/10 group relative mt-4">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2683976643275!2d100.35692807531795!3d-0.9512986353524716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b948c7c72e11%3A0x6771787fa612c99f!2sSekretariat%20Daerah%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1785310213215!5m2!1sid!2sid" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <div class="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[2rem] pointer-events-none"></div>
+                <a href="https://www.google.com/maps/search/Sekretariat+Daerah+Kota+Padang" target="_blank" class="absolute bottom-4 left-4 right-4 bg-gray-900/90 backdrop-blur-md border border-white/10 text-white px-5 py-3 rounded-xl text-xs font-bold hover:bg-brand-500 transition-colors flex items-center justify-between group/btn">
+                    <span>Lihat di Google Maps</span>
+                    <i class="ph-bold ph-arrow-up-right group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform"></i>
+                </a>
+            </div>
         </div>
 
-        <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-            {{-- Maps --}}
-            <div class="bg-gray-100 rounded-[2.5rem] overflow-hidden border border-gray-200 shadow-inner h-[400px] lg:h-auto relative group">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2683976643275!2d100.35692807531795!3d-0.9512986353524716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b948c7c72e11%3A0x6771787fa612c99f!2sSekretariat%20Daerah%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1785310213215!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="absolute inset-0 w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700"></iframe>
-                <div class="absolute bottom-5 left-5 right-5 bg-white/95 backdrop-blur-md p-5 rounded-3xl shadow-xl border border-white/50 flex items-center justify-between gap-4">
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-brand-50 text-brand-500 rounded-2xl flex items-center justify-center shrink-0">
-                            <i class="ph-fill ph-map-pin text-2xl"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-extrabold text-gray-900 text-sm lg:text-base mb-0.5">Komplek Perkantoran Balaikota</h4>
-                            <p class="text-xs text-gray-500 font-medium">Aie Pacah, Kec. Koto Tangah, Padang</p>
-                        </div>
-                    </div>
-                    <a href="https://www.google.com/maps/search/Sekretariat+Daerah+Kota+Padang" target="_blank" class="shrink-0 w-10 h-10 bg-brand-500 hover:bg-brand-600 text-white rounded-full flex items-center justify-center transition-colors shadow-lg shadow-brand-500/30">
-                        <i class="ph-bold ph-navigation-arrow text-lg"></i>
-                    </a>
-                </div>
-            </div>
-
-            {{-- Kotak Saran --}}
-            <div class="bg-white rounded-[2.5rem] p-8 lg:p-12 border border-gray-100 shadow-[0_0_50px_rgba(0,0,0,0.03)] relative overflow-hidden">
-                <div class="absolute top-0 right-0 p-8 opacity-5 pointer-events-none transform translate-x-1/4 -translate-y-1/4">
-                    <i class="ph-fill ph-envelope-simple text-[12rem]"></i>
-                </div>
+        {{-- Floating Glass Form --}}
+        <div class="w-full lg:w-[500px] shrink-0">
+            <div class="bg-white/10 backdrop-blur-2xl p-8 lg:p-10 rounded-[2.5rem] shadow-2xl border border-white/20 relative overflow-hidden group">
+                <div class="absolute -top-20 -right-20 w-40 h-40 bg-brand-500 rounded-full blur-3xl opacity-50"></div>
                 <div class="relative z-10">
-                    <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-orange-50 text-orange-500 mb-8 border border-orange-100">
-                        <i class="ph-bold ph-chat-teardrop-text text-3xl"></i>
-                    </div>
-                    <h3 class="text-2xl lg:text-3xl font-extrabold text-gray-900 mb-3 tracking-tight">Punya Saran atau Masukan?</h3>
-                    <p class="text-gray-500 text-sm mb-10 font-medium leading-relaxed max-w-sm">Tinggalkan pesan Anda di bawah ini, setiap masukan sangat berarti bagi kami untuk terus berkembang.</p>
+                    <h3 class="text-2xl font-black text-white mb-2 tracking-tight">Kirim Masukan</h3>
+                    <p class="text-gray-300 text-sm mb-8 font-medium">Bantu kami jadi lebih baik dari hari kemarin.</p>
 
-                    <form class="space-y-6">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">Nama Lengkap</label>
-                                <input type="text" class="w-full bg-gray-50/50 border border-gray-200 rounded-2xl px-5 py-3.5 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none transition-all font-medium text-gray-900" placeholder="John Doe">
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">Email / No. HP</label>
-                                <input type="text" class="w-full bg-gray-50/50 border border-gray-200 rounded-2xl px-5 py-3.5 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none transition-all font-medium text-gray-900" placeholder="0812...">
-                            </div>
+                    <form class="space-y-4">
+                        <div>
+                            <input type="text" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-sm focus:bg-white/10 focus:ring-2 focus:ring-brand-400 focus:border-transparent outline-none transition-all font-bold text-white placeholder-gray-400" placeholder="Siapa namamu?">
                         </div>
                         <div>
-                            <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">Pesan & Saran</label>
-                            <textarea rows="4" class="w-full bg-gray-50/50 border border-gray-200 rounded-2xl px-5 py-4 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none transition-all resize-none font-medium text-gray-900" placeholder="Tuliskan saran Anda di sini..."></textarea>
+                            <input type="text" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-sm focus:bg-white/10 focus:ring-2 focus:ring-brand-400 focus:border-transparent outline-none transition-all font-bold text-white placeholder-gray-400" placeholder="Nomor WA / Email">
                         </div>
-                        <button type="button" class="w-full bg-gray-900 hover:bg-brand-500 text-white font-bold py-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 shadow-xl shadow-gray-900/10 hover:shadow-brand-500/30 group">
-                            Kirim Pesan <i class="ph-bold ph-paper-plane-tilt group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                        <div>
+                            <textarea rows="4" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-sm focus:bg-white/10 focus:ring-2 focus:ring-brand-400 focus:border-transparent outline-none transition-all resize-none font-bold text-white placeholder-gray-400" placeholder="Ketik apa aja saran/masukanmu disini..."></textarea>
+                        </div>
+                        <button type="button" class="w-full bg-brand-500 hover:bg-brand-400 text-white font-black py-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 shadow-xl shadow-brand-500/30 hover:scale-[1.02]">
+                            KIRIM SEKARANG <i class="ph-bold ph-paper-plane-tilt"></i>
                         </button>
                     </form>
                 </div>
             </div>
         </div>
+
     </div>
 </section>
 
