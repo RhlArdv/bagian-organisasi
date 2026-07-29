@@ -60,7 +60,7 @@
 <header :class="scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm' : 'bg-transparent'"
         class="fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent"
         :class="scrolled ? 'border-gray-100' : ''">
-    <div class="max-w-7xl mx-auto px-5 lg:px-8 flex items-center justify-between lg:grid lg:grid-cols-3">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 h-20 lg:h-24 flex items-center justify-between">
         
         {{-- Logo Area --}}
         <a href="#" class="flex items-center gap-4 group justify-self-start">
@@ -75,13 +75,13 @@
         </a>
 
         {{-- Desktop Menu --}}
-        <nav class="hidden lg:flex items-center justify-center gap-6 justify-self-center">
-            <a href="#beranda" class="text-xs font-bold text-brand-500 border-b-2 border-brand-500 pb-1 uppercase tracking-wide">Beranda</a>
-            <a href="#profil" class="text-xs font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Profil</a>
+        <nav class="hidden lg:flex items-center justify-center gap-6 xl:gap-8 flex-1 px-4">
+            <a href="#beranda" class="text-[13px] font-bold text-brand-500 border-b-2 border-brand-500 pb-1 uppercase tracking-wide">Beranda</a>
+            <a href="#profil" class="text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Profil</a>
             
             {{-- Dropdown Layanan --}}
             <div class="relative group" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
-                <button class="text-xs font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide flex items-center gap-1">
+                <button class="text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide flex items-center gap-1 whitespace-nowrap">
                     Layanan Utama <i class="ph-bold ph-caret-down text-brand-500 transition-transform duration-300" :class="open ? 'rotate-180' : ''"></i>
                 </button>
                 <div x-show="open" x-transition.opacity.duration.300ms class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-white border border-gray-100 shadow-xl shadow-brand-500/5 rounded-2xl py-3 flex flex-col z-50">
@@ -93,7 +93,7 @@
 
             {{-- Dropdown Publikasi --}}
             <div class="relative group" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
-                <button class="text-xs font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide flex items-center gap-1">
+                <button class="text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide flex items-center gap-1 whitespace-nowrap">
                     Informasi <i class="ph-bold ph-caret-down text-brand-500 transition-transform duration-300" :class="open ? 'rotate-180' : ''"></i>
                 </button>
                 <div x-show="open" x-transition.opacity.duration.300ms class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-white border border-gray-100 shadow-xl shadow-brand-500/5 rounded-2xl py-3 flex flex-col z-50">
@@ -103,15 +103,27 @@
                 </div>
             </div>
 
-            <a href="#kontak" class="text-xs font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Kontak</a>
+            <a href="#kontak" class="text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Kontak</a>
         </nav>
 
-        {{-- Right side (Search & Mobile Toggle) --}}
-        <div class="flex items-center gap-4 justify-self-end">
-            <button class="hidden lg:flex text-gray-400 hover:text-brand-500 transition-colors w-10 h-10 items-center justify-center rounded-full hover:bg-gray-50">
-                <i class="ph-bold ph-magnifying-glass text-xl"></i>
-            </button>
-            
+        {{-- Right side --}}
+        <div class="flex items-center gap-4 justify-self-end shrink-0">
+            {{-- Language Switcher --}}
+            <div class="hidden lg:block relative" x-data="{ langOpen: false }" @mouseenter="langOpen = true" @mouseleave="langOpen = false">
+                <button class="flex items-center gap-1.5 text-gray-500 hover:text-brand-500 transition-colors px-3 py-1.5 rounded-xl hover:bg-gray-50 text-sm font-bold">
+                    <i class="ph-bold ph-globe-hemisphere-west text-xl"></i>
+                    <span>ID</span>
+                    <i class="ph-bold ph-caret-down text-[10px] transition-transform duration-300" :class="langOpen ? 'rotate-180' : ''"></i>
+                </button>
+                <div x-show="langOpen" x-transition.opacity.duration.300ms class="absolute top-full right-0 mt-2 w-36 bg-white border border-gray-100 shadow-xl shadow-gray-900/5 rounded-2xl py-2 flex flex-col z-50">
+                    <a href="#" class="px-4 py-2.5 text-[13px] font-bold text-brand-500 bg-brand-50 flex items-center justify-between">
+                        Indonesia <i class="ph-bold ph-check"></i>
+                    </a>
+                    <a href="#" class="px-4 py-2.5 text-[13px] font-bold text-gray-500 hover:text-brand-500 hover:bg-brand-50 transition-colors">
+                        English
+                    </a>
+                </div>
+            </div>
             {{-- Mobile Toggle --}}
             <button @click="mobileOpen = !mobileOpen" class="lg:hidden text-gray-900 text-2xl w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors">
                 <i class="ph" :class="mobileOpen ? 'ph-x' : 'ph-list'"></i>
@@ -139,18 +151,26 @@
     <div class="flex-1 flex items-center">
         <div class="w-full max-w-[90rem] mx-auto px-5 lg:px-12 relative z-10">
             <div class="w-full lg:w-[55%] relative z-20">
-                <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-[#f5a500] text-white text-[12px] font-bold tracking-wide mb-6">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-600 text-xs font-black tracking-widest uppercase mb-6 shadow-sm">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+                    </span>
                     Selamat Datang di
                 </div>
                 
-                <h1 class="text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-extrabold text-gray-900 leading-[1.1] mb-5 tracking-tight">
-                    Bagian Organisasi <br>
-                    <span class="text-brand-500">Setda Kota Padang</span>
+                <h1 class="text-5xl sm:text-6xl lg:text-[5rem] font-black text-gray-900 leading-[1] mb-4 tracking-tighter">
+                    Bagian Organisasi
                 </h1>
                 
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-medium text-gray-400 tracking-wide mb-8 flex items-center gap-4">
+                    <div class="h-px bg-gray-300 w-10 hidden sm:block"></div>
+                    Setda Kota Padang
+                </h2>
+                
                 {{-- Tagline --}}
-                <p class="text-gray-600 text-base lg:text-xl font-medium leading-relaxed max-w-lg mb-10">
-                    Mewujudkan tata kelola organisasi yang efektif, efisien, transparan, dan berorientasi pada pelayanan publik untuk <strong class="text-gray-900 font-extrabold">Kota Padang yang lebih baik</strong>.
+                <p class="text-gray-500 text-lg lg:text-xl font-medium leading-relaxed max-w-xl mb-10 border-l-4 border-brand-500 pl-6 py-1">
+                    Mewujudkan tata kelola organisasi yang efektif, efisien, transparan, dan berorientasi pada pelayanan publik untuk <strong class="text-gray-900 font-black">Kota Padang yang lebih baik</strong>.
                 </p>
                 
                 <div class="flex flex-wrap gap-4">
@@ -556,7 +576,7 @@
 </section>
 
 {{-- ═══ AGENDA & AKTIVITAS (TIMELINE) ═══ --}}
-<section class="py-32 bg-[#0a0f1c] text-white relative overflow-hidden">
+<section class="py-20 bg-[#0a0f1c] text-white relative overflow-hidden">
     {{-- Glow effects --}}
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-full pointer-events-none">
         <div class="absolute top-20 left-10 w-96 h-96 bg-brand-500/10 rounded-full blur-[100px]"></div>
@@ -564,13 +584,13 @@
     </div>
     
     <div class="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
-        <div class="text-center mb-24">
-            <h2 class="text-4xl lg:text-6xl font-black mb-4 tracking-tight flex items-center justify-center gap-4">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl lg:text-5xl font-black mb-3 tracking-tight flex items-center justify-center gap-3">
                 Agenda 
-                <span class="text-brand-500 font-script font-normal text-6xl lg:text-7xl -mt-4">&</span> 
+                <span class="text-brand-500 font-script font-normal text-5xl lg:text-6xl -mt-2">&</span> 
                 Aktivitas
             </h2>
-            <p class="text-gray-400 font-medium max-w-xl mx-auto text-lg leading-relaxed">Rekam jejak kegiatan dan agenda harian Bagian Organisasi Setda Kota Padang.</p>
+            <p class="text-gray-400 font-medium max-w-xl mx-auto text-sm lg:text-base leading-relaxed">Rekam jejak kegiatan dan agenda harian Bagian Organisasi Setda Kota Padang.</p>
         </div>
 
         <div class="relative max-w-5xl mx-auto">
@@ -585,30 +605,41 @@
                 ];
             @endphp
 
-            <div class="space-y-16 sm:space-y-24">
+            <div class="space-y-10 sm:space-y-12">
                 @foreach($activities as $index => $act)
-                <div class="relative flex flex-col md:flex-row items-center gap-8 group">
-                    {{-- Timeline Dot --}}
-                    <div class="absolute left-6 md:left-1/2 w-5 h-5 bg-[#0a0f1c] border-4 border-brand-500 rounded-full md:-translate-x-1/2 shadow-[0_0_20px_rgba(245,158,11,0.6)] group-hover:scale-150 group-hover:bg-brand-500 transition-all duration-500 hidden sm:block z-20"></div>
+                <div class="relative flex items-center justify-between md:justify-normal w-full group {{ $act['pos'] == 'left' ? 'md:flex-row-reverse' : '' }}">
                     
-                    {{-- Content (Left or Right) --}}
-                    <div class="w-full md:w-1/2 {{ $act['pos'] == 'left' ? 'md:pr-16 md:text-right' : 'md:pl-16 md:order-last' }}">
-                        <div class="bg-white/5 backdrop-blur-xl border border-white/10 p-2 lg:p-3 rounded-[2.5rem] hover:bg-white/10 transition-colors duration-500 hover:shadow-2xl hover:shadow-brand-500/5">
-                            <div class="relative rounded-[2rem] overflow-hidden aspect-[16/10]">
-                                <img src="https://images.unsplash.com/{{ $act['img'] }}?w=800&q=80" alt="Aktivitas" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent pointer-events-none"></div>
-                                
-                                {{-- Date Floating inside image --}}
-                                <div class="absolute bottom-5 {{ $act['pos'] == 'left' ? 'right-5' : 'left-5' }} bg-brand-500 text-white rounded-2xl px-5 py-3 text-center backdrop-blur-md shadow-2xl flex items-center gap-3">
-                                    <span class="text-3xl font-black">{{ $act['d'] }}</span>
-                                    <span class="text-sm font-bold uppercase tracking-widest text-brand-100">{{ $act['m'] }}</span>
-                                </div>
+                    {{-- Timeline Dot --}}
+                    <div class="absolute left-6 md:left-1/2 w-5 h-5 bg-[#0a0f1c] border-[3px] border-brand-500 rounded-full md:-translate-x-1/2 shadow-[0_0_15px_rgba(245,158,11,0.5)] group-hover:scale-125 group-hover:bg-brand-500 transition-all duration-500 z-20 hidden sm:block"></div>
+                
+                    {{-- The Date (Opposite side of the card on Desktop) --}}
+                    <div class="hidden md:block w-5/12 {{ $act['pos'] == 'left' ? 'text-left pl-12' : 'text-right pr-12' }}">
+                        <div class="inline-flex flex-col opacity-60 group-hover:opacity-100 transition-opacity">
+                            <span class="text-4xl font-black text-white leading-none mb-0.5">{{ $act['d'] }}</span>
+                            <span class="text-xs font-bold text-brand-500 uppercase tracking-[0.2em]">{{ $act['m'] }} 2026</span>
+                        </div>
+                    </div>
+                
+                    {{-- The Content Card --}}
+                    <div class="w-full sm:w-[calc(100%-4rem)] sm:ml-16 md:ml-0 md:w-5/12 {{ $act['pos'] == 'left' ? 'md:pr-12' : 'md:pl-12' }}">
+                        <div class="bg-white/5 backdrop-blur-md border border-white/10 p-5 lg:p-6 rounded-[2rem] hover:bg-white/10 transition-all duration-500 hover:shadow-xl hover:shadow-brand-500/10 hover:-translate-y-1 relative group/card">
+                            
+                            {{-- Mobile Date (Hidden on Desktop) --}}
+                            <div class="md:hidden flex items-center gap-2 mb-4">
+                                <span class="text-brand-500 font-bold bg-brand-500/10 px-2.5 py-1 rounded-md text-[11px]">{{ $act['d'] }} {{ $act['m'] }} 2026</span>
                             </div>
-                            <div class="p-6 lg:p-8">
-                                <h3 class="text-2xl font-bold text-white mb-3 leading-snug group-hover:text-brand-400 transition-colors">{{ $act['t'] }}</h3>
-                                <p class="text-sm text-gray-400 font-medium flex items-center gap-2 {{ $act['pos'] == 'left' ? 'md:justify-end' : '' }}">
-                                    <i class="ph-fill ph-map-pin text-brand-500"></i> {{ $act['l'] }}
-                                </p>
+                
+                            <h3 class="text-lg lg:text-xl font-bold text-white mb-2.5 leading-snug group-hover/card:text-brand-400 transition-colors">{{ $act['t'] }}</h3>
+                            
+                            <div class="flex flex-wrap items-center gap-3 text-xs text-gray-400 font-medium mb-4">
+                                <span class="flex items-center gap-1.5"><i class="ph-fill ph-map-pin text-brand-500"></i> {{ $act['l'] }}</span>
+                                <span class="flex items-center gap-1.5"><i class="ph-fill ph-clock text-blue-500"></i> 09:00 WIB</span>
+                            </div>
+                
+                            {{-- Image Thumbnail --}}
+                            <div class="rounded-xl overflow-hidden aspect-[21/9] relative">
+                                <img src="https://images.unsplash.com/{{ $act['img'] }}?w=600&q=80" alt="Aktivitas" class="w-full h-full object-cover opacity-70 group-hover/card:opacity-100 group-hover/card:scale-105 transition-all duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#0a0f1c]/80 to-transparent"></div>
                             </div>
                         </div>
                     </div>
@@ -616,8 +647,8 @@
                 @endforeach
             </div>
 
-            <div class="text-center mt-24 relative z-10">
-                <a href="#" class="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.1)]">
+            <div class="text-center mt-16 relative z-10">
+                <a href="#" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm text-white font-bold transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.1)]">
                     Jelajahi Seluruh Agenda <i class="ph-bold ph-arrow-right"></i>
                 </a>
             </div>
@@ -647,7 +678,7 @@
                             <p class="text-xs text-gray-500 font-medium">Aie Pacah, Kec. Koto Tangah, Padang</p>
                         </div>
                     </div>
-                    <a href="https://maps.app.goo.gl/..." target="_blank" class="shrink-0 w-10 h-10 bg-brand-500 hover:bg-brand-600 text-white rounded-full flex items-center justify-center transition-colors shadow-lg shadow-brand-500/30">
+                    <a href="https://www.google.com/maps/search/Sekretariat+Daerah+Kota+Padang" target="_blank" class="shrink-0 w-10 h-10 bg-brand-500 hover:bg-brand-600 text-white rounded-full flex items-center justify-center transition-colors shadow-lg shadow-brand-500/30">
                         <i class="ph-bold ph-navigation-arrow text-lg"></i>
                     </a>
                 </div>
@@ -691,39 +722,58 @@
 </section>
 
 {{-- ═══ STATISTIK PENGUNJUNG ═══ --}}
-<section class="py-16 bg-gray-50 border-t border-gray-100">
+<section class="py-20 bg-gray-50 border-t border-gray-100">
     <div class="max-w-7xl mx-auto px-5 lg:px-8">
-        <div class="text-center mb-10">
-            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest">Statistik Pengunjung Portal</h3>
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-black text-gray-900 mb-2">Statistik Kunjungan Portal</h2>
+            <p class="text-gray-500 font-medium text-sm lg:text-base">Transparansi data lalu lintas pengunjung website secara real-time.</p>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            <div class="bg-white rounded-3xl p-6 text-center shadow-[0_0_30px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
-                <div class="w-14 h-14 mx-auto bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center mb-5">
-                    <i class="ph-bold ph-users text-2xl"></i>
+        
+        <div class="grid lg:grid-cols-12 gap-8 items-stretch">
+            {{-- Left Side: Stats Cards --}}
+            <div class="lg:col-span-5 grid grid-cols-2 gap-4 sm:gap-6">
+                <div class="bg-white rounded-[2rem] p-6 text-center shadow-[0_0_30px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-12 h-12 mx-auto bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="ph-bold ph-users text-xl"></i>
+                    </div>
+                    <h4 class="text-3xl font-black text-gray-900 mb-1">1,248</h4>
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Hari Ini</p>
                 </div>
-                <h4 class="text-3xl lg:text-4xl font-black text-gray-900 mb-1">1,248</h4>
-                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Hari Ini</p>
+                <div class="bg-white rounded-[2rem] p-6 text-center shadow-[0_0_30px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-12 h-12 mx-auto bg-brand-50 text-brand-500 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="ph-bold ph-calendar text-xl"></i>
+                    </div>
+                    <h4 class="text-3xl font-black text-gray-900 mb-1">34.5K</h4>
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Bulan Ini</p>
+                </div>
+                <div class="bg-white rounded-[2rem] p-6 text-center shadow-[0_0_30px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-12 h-12 mx-auto bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="ph-bold ph-chart-bar text-xl"></i>
+                    </div>
+                    <h4 class="text-3xl font-black text-gray-900 mb-1">450K</h4>
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Tahun Ini</p>
+                </div>
+                <div class="bg-white rounded-[2rem] p-6 text-center shadow-[0_0_30px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-12 h-12 mx-auto bg-purple-50 text-purple-500 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="ph-bold ph-globe text-xl"></i>
+                    </div>
+                    <h4 class="text-3xl font-black text-gray-900 mb-1">523K</h4>
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total Visitor</p>
+                </div>
             </div>
-            <div class="bg-white rounded-3xl p-6 text-center shadow-[0_0_30px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
-                <div class="w-14 h-14 mx-auto bg-brand-50 text-brand-500 rounded-2xl flex items-center justify-center mb-5">
-                    <i class="ph-bold ph-calendar text-2xl"></i>
+
+            {{-- Right Side: Line Chart --}}
+            <div class="lg:col-span-7 bg-white rounded-[2.5rem] p-6 lg:p-8 shadow-[0_0_40px_rgba(0,0,0,0.03)] border border-gray-100 h-full flex flex-col">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h4 class="text-lg lg:text-xl font-bold text-gray-900">Grafik Kunjungan Harian</h4>
+                        <p class="text-sm text-gray-500 font-medium">Tren Kunjungan Bulan Ini (Juli 2026)</p>
+                    </div>
+                    <div class="px-4 py-1.5 bg-brand-50 text-brand-600 rounded-lg text-xs font-bold uppercase tracking-wider hidden sm:block">Bulan Ini</div>
                 </div>
-                <h4 class="text-3xl lg:text-4xl font-black text-gray-900 mb-1">34.5K</h4>
-                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Bulan Ini</p>
-            </div>
-            <div class="bg-white rounded-3xl p-6 text-center shadow-[0_0_30px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
-                <div class="w-14 h-14 mx-auto bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-5">
-                    <i class="ph-bold ph-chart-bar text-2xl"></i>
+                <div class="flex-1 relative min-h-[250px] w-full">
+                    <canvas id="visitorChart"></canvas>
                 </div>
-                <h4 class="text-3xl lg:text-4xl font-black text-gray-900 mb-1">450K</h4>
-                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Tahun Ini</p>
-            </div>
-            <div class="bg-white rounded-3xl p-6 text-center shadow-[0_0_30px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
-                <div class="w-14 h-14 mx-auto bg-purple-50 text-purple-500 rounded-2xl flex items-center justify-center mb-5">
-                    <i class="ph-bold ph-globe text-2xl"></i>
-                </div>
-                <h4 class="text-3xl lg:text-4xl font-black text-gray-900 mb-1">523K</h4>
-                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total Visitor</p>
             </div>
         </div>
     </div>
@@ -733,12 +783,7 @@
 <footer class="bg-[#0f172a] text-white pt-20 pb-10 relative overflow-hidden">
     {{-- Decorative Background --}}
     <div class="absolute top-0 right-0 w-1/2 h-full opacity-5 pointer-events-none z-0">
-        <img src="{{ asset('assets/img/logo.png') }}" class="w-full h-full object-contain object-right-top mix-blend-luminosity" alt="">
-    </div>
-
-    <div class="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
-        
-        {{-- Footer Main Content --}}
+        <img src="{{ asset('assets/img/logo.png') }}" class="w-full h-full object-contain object-right-top mi        {{-- Footer Main Content --}}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             
             {{-- Brand Column --}}
@@ -783,7 +828,7 @@
                                 <i class="ph-fill ph-map-pin text-brand-500 text-xl mt-0.5"></i>
                                 <div>
                                     <p class="text-sm font-bold text-white mb-1.5">Alamat Kantor</p>
-                                    <p class="text-xs text-gray-400 leading-relaxed">Jl. Jenderal Sudirman No. 1, Padang, Sumatera Barat 25129</p>
+                                    <p class="text-xs text-gray-400 leading-relaxed">Balaikota Padang, Jl. Bagindo Aziz Chan No.1, Aie Pacah, Kec. Koto Tangah</p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-4">
@@ -799,7 +844,7 @@
                                 <i class="ph-fill ph-phone text-brand-500 text-xl mt-0.5"></i>
                                 <div>
                                     <p class="text-sm font-bold text-white mb-1.5">Telepon</p>
-                                    <p class="text-xs text-gray-400">(0751) 123456</p>
+                                    <p class="text-xs text-gray-400">(0751) 4640800</p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-4">
@@ -810,6 +855,10 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>                     </div>
                     </div>
                 </div>
             </div>
@@ -829,5 +878,75 @@
     </div>
 </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('visitorChart').getContext('2d');
+            
+            // Create gradient
+            let gradient = ctx.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, 'rgba(245, 158, 11, 0.4)'); // brand-500 with opacity
+            gradient.addColorStop(1, 'rgba(245, 158, 11, 0.0)');
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['1', '3', '6', '9', '12', '15', '18', '21', '24', '27', '30'],
+                    datasets: [{
+                        label: 'Total Visitor',
+                        data: [1200, 1500, 1100, 1800, 1750, 2200, 2100, 2600, 2400, 3100, 3400],
+                        borderColor: '#f59e0b', // brand-500
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#f59e0b',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        fill: true,
+                        tension: 0.4 // smooth curves
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#1f2937',
+                            padding: 12,
+                            titleFont: { size: 13, family: "'Plus Jakarta Sans', sans-serif" },
+                            bodyFont: { size: 14, weight: 'bold', family: "'Plus Jakarta Sans', sans-serif" },
+                            callbacks: {
+                                label: function(context) {
+                                    return context.parsed.y.toLocaleString('id-ID') + ' Visitors';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false, drawBorder: false },
+                            ticks: { font: { family: "'Plus Jakarta Sans', sans-serif", size: 12 }, color: '#9ca3af' }
+                        },
+                        y: {
+                            grid: { borderDash: [4, 4], color: '#f3f4f6', drawBorder: false },
+                            ticks: { 
+                                font: { family: "'Plus Jakarta Sans', sans-serif", size: 12 }, 
+                                color: '#9ca3af',
+                                callback: function(value) { return value / 1000 + 'k'; }
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index',
+                    },
+                }
+            });
+        });
+    </script>
 </body>
 </html>
