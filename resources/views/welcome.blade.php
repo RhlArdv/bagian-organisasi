@@ -60,44 +60,63 @@
 <header :class="scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm' : 'bg-transparent'"
         class="fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent"
         :class="scrolled ? 'border-gray-100' : ''">
-    <div class="max-w-7xl mx-auto px-5 lg:px-8 h-20 flex items-center justify-between">
-
-        {{-- Logo --}}
-        <a href="#" class="flex items-center gap-3 group">
-            <img src="{{ asset('assets/img/logo.png') }}" alt="Logo Padang" class="h-10 w-auto">
-            <div class="leading-tight">
-                <span class="block text-[11px] font-bold text-gray-900 tracking-widest uppercase">Pemerintah Kota Padang</span>
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 flex items-center justify-between lg:grid lg:grid-cols-3">
+        
+        {{-- Logo Area --}}
+        <a href="#" class="flex items-center gap-4 group justify-self-start">
+            <div class="relative w-10 h-12 lg:w-12 lg:h-14 shrink-0 transition-transform duration-500 group-hover:scale-105">
+                <img src="{{ asset('assets/img/logo.png') }}" alt="Logo Padang" class="w-full h-full object-contain relative z-10">
+                <div class="absolute inset-0 bg-brand-500/20 blur-xl rounded-full scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            </div>
+            <div class="flex flex-col">
+                <span class="block text-[10px] lg:text-[11px] font-bold text-gray-500 uppercase tracking-widest mb-0.5">Pemerintah Kota Padang</span>
                 <span class="block text-sm font-extrabold text-gray-900">BAGIAN ORGANISASI</span>
             </div>
         </a>
 
         {{-- Desktop Menu --}}
-        <nav class="hidden xl:flex items-center gap-5">
-            <a href="#beranda" class="text-[13px] font-bold text-brand-500 border-b-2 border-brand-500 pb-1 uppercase tracking-wide">Beranda</a>
-            <a href="#profil" class="text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Profil</a>
-            <a href="#pelayanan" class="text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Pelayanan</a>
-            <a href="#tatalaksana" class="text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Tata Laksana</a>
-            <a href="#kelembagaan" class="text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Kelembagaan</a>
-            <a href="#regulasi" class="text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Regulasi</a>
-            <a href="#berita" class="text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Berita</a>
-            <a href="#download" class="text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Download</a>
-            <a href="#kontak" class="text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Kontak</a>
+        <nav class="hidden lg:flex items-center justify-center gap-6 justify-self-center">
+            <a href="#beranda" class="text-xs font-bold text-brand-500 border-b-2 border-brand-500 pb-1 uppercase tracking-wide">Beranda</a>
+            <a href="#profil" class="text-xs font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Profil</a>
+            
+            {{-- Dropdown Layanan --}}
+            <div class="relative group" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                <button class="text-xs font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide flex items-center gap-1">
+                    Layanan Utama <i class="ph-bold ph-caret-down text-brand-500 transition-transform duration-300" :class="open ? 'rotate-180' : ''"></i>
+                </button>
+                <div x-show="open" x-transition.opacity.duration.300ms class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-white border border-gray-100 shadow-xl shadow-brand-500/5 rounded-2xl py-3 flex flex-col z-50">
+                    <a href="#pelayanan" class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Pelayanan</a>
+                    <a href="#tatalaksana" class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Tata Laksana</a>
+                    <a href="#kelembagaan" class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Kelembagaan</a>
+                </div>
+            </div>
+
+            {{-- Dropdown Publikasi --}}
+            <div class="relative group" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                <button class="text-xs font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide flex items-center gap-1">
+                    Informasi <i class="ph-bold ph-caret-down text-brand-500 transition-transform duration-300" :class="open ? 'rotate-180' : ''"></i>
+                </button>
+                <div x-show="open" x-transition.opacity.duration.300ms class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-white border border-gray-100 shadow-xl shadow-brand-500/5 rounded-2xl py-3 flex flex-col z-50">
+                    <a href="#regulasi" class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Regulasi</a>
+                    <a href="#berita" class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Berita Terkini</a>
+                    <a href="#download" class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Download Area</a>
+                </div>
+            </div>
+
+            <a href="#kontak" class="text-xs font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Kontak</a>
         </nav>
 
-        {{-- Right side (Search & Button) --}}
-        <div class="hidden lg:flex items-center gap-4">
-            <button class="text-gray-400 hover:text-gray-700 transition-colors">
-                <i class="ph ph-magnifying-glass text-xl"></i>
+        {{-- Right side (Search & Mobile Toggle) --}}
+        <div class="flex items-center gap-4 justify-self-end">
+            <button class="hidden lg:flex text-gray-400 hover:text-brand-500 transition-colors w-10 h-10 items-center justify-center rounded-full hover:bg-gray-50">
+                <i class="ph-bold ph-magnifying-glass text-xl"></i>
             </button>
-            <a href="#" class="h-9 px-4 inline-flex items-center gap-2 bg-[#fff8e1] text-[#f5a500] font-bold text-xs uppercase tracking-wide rounded-full hover:bg-yellow-100 transition-colors">
-                Portal Padang <i class="ph ph-arrow-up-right"></i>
-            </a>
+            
+            {{-- Mobile Toggle --}}
+            <button @click="mobileOpen = !mobileOpen" class="lg:hidden text-gray-900 text-2xl w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors">
+                <i class="ph" :class="mobileOpen ? 'ph-x' : 'ph-list'"></i>
+            </button>
         </div>
-
-        {{-- Mobile Toggle --}}
-        <button @click="mobileOpen = !mobileOpen" class="lg:hidden text-gray-700 text-2xl">
-            <i class="ph" :class="mobileOpen ? 'ph-x' : 'ph-list'"></i>
-        </button>
     </div>
 </header>
 
@@ -129,8 +148,9 @@
                     <span class="text-brand-500">Setda Kota Padang</span>
                 </h1>
                 
-                <p class="text-gray-500 text-[15px] lg:text-[17px] mb-10 max-w-[90%] leading-relaxed font-medium">
-                    Mewujudkan tata kelola organisasi yang efektif, efisien, transparan dan berorientasi pada pelayanan publik untuk Kota Padang yang lebih baik.
+                {{-- Tagline --}}
+                <p class="text-gray-600 text-base lg:text-xl font-medium leading-relaxed max-w-lg mb-10">
+                    Mewujudkan tata kelola organisasi yang efektif, efisien, transparan, dan berorientasi pada pelayanan publik untuk <strong class="text-gray-900 font-extrabold">Kota Padang yang lebih baik</strong>.
                 </p>
                 
                 <div class="flex flex-wrap gap-4">
@@ -357,89 +377,178 @@
             </a>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-8">
-            @for($i=1; $i<=3; $i++)
-            <article class="group cursor-pointer flex flex-col h-full">
-                <div class="relative rounded-[2rem] overflow-hidden aspect-[4/3] mb-6 shadow-md border border-gray-100/50">
-                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80" alt="Berita" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    
-                    {{-- Date Badge --}}
-                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-md rounded-2xl p-2 text-center shadow-lg border border-white/50 min-w-[3.5rem]">
-                        <span class="block text-xl font-black text-gray-900 leading-none">26</span>
-                        <span class="block text-[10px] font-bold text-brand-500 mt-1 uppercase tracking-wider">JUN</span>
-                    </div>
-                </div>
+        {{-- Category Filters (Visual only for now) --}}
+        <div class="flex flex-wrap gap-2 mb-10">
+            <button class="px-5 py-2.5 bg-gray-900 text-white text-sm font-bold rounded-full hover:bg-brand-500 hover:text-white transition-colors shadow-md">Semua Berita</button>
+            <button class="px-5 py-2.5 bg-gray-50 text-gray-600 text-sm font-bold rounded-full hover:bg-gray-100 hover:text-gray-900 transition-colors border border-gray-200">Pemerintahan</button>
+            <button class="px-5 py-2.5 bg-gray-50 text-gray-600 text-sm font-bold rounded-full hover:bg-gray-100 hover:text-gray-900 transition-colors border border-gray-200">Inovasi</button>
+            <button class="px-5 py-2.5 bg-gray-50 text-gray-600 text-sm font-bold rounded-full hover:bg-gray-100 hover:text-gray-900 transition-colors border border-gray-200">Regulasi</button>
+        </div>
+
+        <div class="grid lg:grid-cols-12 gap-8 items-stretch">
+            
+            {{-- Featured Post (Left) --}}
+            <article class="lg:col-span-7 group cursor-pointer relative rounded-[2.5rem] overflow-hidden shadow-lg border border-gray-100 flex flex-col h-full min-h-[400px]">
+                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200&q=80" alt="Featured News" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000">
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
-                <div class="px-2 flex flex-col flex-1">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-[11px] font-bold text-brand-500 uppercase tracking-wider bg-brand-50 px-2.5 py-1 rounded-md">Pemerintahan</span>
-                        <span class="text-gray-300">•</span>
-                        <span class="text-xs text-gray-400 font-medium flex items-center gap-1"><i class="ph-fill ph-clock"></i> 3 min read</span>
+                {{-- Date Badge --}}
+                <div class="absolute top-6 left-6 bg-white/95 backdrop-blur-md rounded-2xl p-3 text-center shadow-2xl border border-white/50 min-w-[4rem]">
+                    <span class="block text-2xl font-black text-gray-900 leading-none">26</span>
+                    <span class="block text-xs font-bold text-brand-500 mt-1 uppercase tracking-wider">JUN</span>
+                </div>
+
+                <div class="relative z-10 flex flex-col justify-end h-full p-8 lg:p-10 mt-auto">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-xs font-bold text-brand-600 uppercase tracking-widest bg-brand-50 px-3 py-1.5 rounded-lg shadow-sm">Pemerintahan</span>
+                        <span class="text-gray-400">•</span>
+                        <span class="text-sm text-gray-300 font-medium flex items-center gap-1.5"><i class="ph-bold ph-clock"></i> 5 min read</span>
                     </div>
-                    <h3 class="text-xl font-extrabold text-gray-900 mb-3 leading-snug group-hover:text-brand-500 transition-colors line-clamp-2">
-                        {{ $i == 1 ? 'Rapat Koordinasi Sekretariat Daerah Bahas Penguatan Kinerja' : ($i == 2 ? 'Pemkot Padang Raih Penghargaan SAKIP Predikat A' : 'Inovasi Layanan Publik Berbasis Digital Resmi Diluncurkan') }}
+                    <h3 class="text-3xl lg:text-4xl font-extrabold text-white mb-4 leading-tight group-hover:text-brand-300 transition-colors">
+                        Rapat Koordinasi Sekretariat Daerah Bahas Penguatan Kinerja dan Evaluasi
                     </h3>
-                    <p class="text-gray-500 text-sm font-medium line-clamp-2 leading-relaxed mt-auto">
-                        Pemerintah Kota Padang terus mendorong transformasi pelayanan publik melalui digitalisasi proses bisnis dan penguatan SDM aparatur secara berkesinambungan.
+                    <p class="text-gray-300 text-sm lg:text-base font-medium line-clamp-2 leading-relaxed mb-6 max-w-2xl">
+                        Pemerintah Kota Padang terus mendorong transformasi pelayanan publik melalui digitalisasi proses bisnis dan penguatan SDM aparatur secara berkesinambungan demi mewujudkan kota pintar.
                     </p>
+                    <a href="#" class="inline-flex items-center gap-2 font-bold text-white text-sm hover:text-brand-400 transition-colors w-max group/link">
+                        Baca Selengkapnya <i class="ph-bold ph-arrow-right group-hover/link:translate-x-1 transition-transform"></i>
+                    </a>
                 </div>
             </article>
-            @endfor
+
+            {{-- Side Posts List (Right) --}}
+            <div class="lg:col-span-5 flex flex-col gap-5">
+                
+                {{-- Side Item 1 --}}
+                <article class="group cursor-pointer flex flex-col sm:flex-row gap-5 bg-white p-4 rounded-3xl border border-gray-100 hover:border-brand-200 hover:shadow-xl hover:shadow-brand-500/5 transition-all duration-300">
+                    <div class="w-full sm:w-32 lg:w-36 aspect-[4/3] rounded-2xl overflow-hidden shrink-0 relative">
+                        <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=600&q=80" alt="News" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="flex flex-col flex-1 py-1">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wider bg-blue-50 px-2 py-1 rounded-md">Prestasi</span>
+                            <span class="text-xs text-gray-400 font-medium ml-auto">24 Jun</span>
+                        </div>
+                        <h4 class="text-lg font-extrabold text-gray-900 leading-snug group-hover:text-brand-500 transition-colors line-clamp-2 mb-2">
+                            Pemkot Padang Raih Penghargaan SAKIP Predikat A Tingkat Nasional
+                        </h4>
+                        <a href="#" class="mt-auto text-xs font-bold text-gray-500 group-hover:text-brand-500 inline-flex items-center gap-1 w-max">
+                            Baca <i class="ph-bold ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </article>
+
+                {{-- Side Item 2 --}}
+                <article class="group cursor-pointer flex flex-col sm:flex-row gap-5 bg-white p-4 rounded-3xl border border-gray-100 hover:border-brand-200 hover:shadow-xl hover:shadow-brand-500/5 transition-all duration-300">
+                    <div class="w-full sm:w-32 lg:w-36 aspect-[4/3] rounded-2xl overflow-hidden shrink-0 relative">
+                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&q=80" alt="News" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="flex flex-col flex-1 py-1">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-[10px] font-bold text-purple-600 uppercase tracking-wider bg-purple-50 px-2 py-1 rounded-md">Inovasi</span>
+                            <span class="text-xs text-gray-400 font-medium ml-auto">22 Jun</span>
+                        </div>
+                        <h4 class="text-lg font-extrabold text-gray-900 leading-snug group-hover:text-brand-500 transition-colors line-clamp-2 mb-2">
+                            Inovasi Layanan Publik Berbasis Digital Resmi Diluncurkan
+                        </h4>
+                        <a href="#" class="mt-auto text-xs font-bold text-gray-500 group-hover:text-brand-500 inline-flex items-center gap-1 w-max">
+                            Baca <i class="ph-bold ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </article>
+
+                {{-- Side Item 3 --}}
+                <article class="group cursor-pointer flex flex-col sm:flex-row gap-5 bg-white p-4 rounded-3xl border border-gray-100 hover:border-brand-200 hover:shadow-xl hover:shadow-brand-500/5 transition-all duration-300">
+                    <div class="w-full sm:w-32 lg:w-36 aspect-[4/3] rounded-2xl overflow-hidden shrink-0 relative">
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80" alt="News" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="flex flex-col flex-1 py-1">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2 py-1 rounded-md">Regulasi</span>
+                            <span class="text-xs text-gray-400 font-medium ml-auto">20 Jun</span>
+                        </div>
+                        <h4 class="text-lg font-extrabold text-gray-900 leading-snug group-hover:text-brand-500 transition-colors line-clamp-2 mb-2">
+                            Sosialisasi Pemetaan Nomenklatur Perangkat Daerah 2026
+                        </h4>
+                        <a href="#" class="mt-auto text-xs font-bold text-gray-500 group-hover:text-brand-500 inline-flex items-center gap-1 w-max">
+                            Baca <i class="ph-bold ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </article>
+
+            </div>
         </div>
     </div>
 </section>
 
 {{-- ═══ PENGUMUMAN ═══ --}}
-<section class="py-16 bg-brand-500 relative overflow-hidden">
-    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-    <div class="max-w-7xl mx-auto px-5 lg:px-8 relative z-10 flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
-        <div class="shrink-0 text-center lg:text-left">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/20 backdrop-blur-md mb-4 text-white shadow-inner">
-                <i class="ph-bold ph-megaphone text-3xl"></i>
+<section class="py-20 bg-white relative">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+        <div class="bg-gray-50 rounded-[2.5rem] p-8 lg:p-12 border border-gray-100 flex flex-col lg:flex-row gap-12 items-center">
+            
+            {{-- Left side: Header --}}
+            <div class="shrink-0 lg:w-1/3 text-center lg:text-left">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-brand-50 text-brand-500 mb-6 shadow-sm border border-brand-100">
+                    <i class="ph-fill ph-megaphone text-4xl group-hover:scale-110 transition-transform"></i>
+                </div>
+                <h2 class="text-3xl lg:text-4xl font-black text-gray-900 mb-4 tracking-tight">Papan <br class="hidden lg:block"><span class="text-brand-500">Pengumuman</span></h2>
+                <p class="text-gray-500 font-medium leading-relaxed mb-8 max-w-sm mx-auto lg:mx-0">
+                    Pantau terus informasi terbaru, jadwal kegiatan, dan pengumuman penting lainnya dari Bagian Organisasi.
+                </p>
+                <a href="#" class="inline-flex items-center gap-2 font-bold text-brand-500 hover:text-brand-600 transition-colors bg-white px-7 py-3.5 rounded-full shadow-sm hover:shadow-md border border-gray-200 hover:border-brand-200">
+                    Lihat Semua <i class="ph-bold ph-arrow-right"></i>
+                </a>
             </div>
-            <h2 class="text-3xl font-black text-white mb-1">Pengumuman</h2>
-            <p class="text-brand-100 font-medium text-sm">Informasi Penting & Terbaru</p>
-        </div>
-        
-        <div class="flex-1 w-full bg-white/10 backdrop-blur-xl rounded-[2rem] p-6 border border-white/20 shadow-2xl">
-            <div class="space-y-4">
+
+            {{-- Right side: List --}}
+            <div class="flex-1 w-full flex flex-col gap-4">
                 {{-- Item 1 --}}
-                <a href="#" class="group flex flex-col sm:flex-row sm:items-center gap-4 bg-white/5 hover:bg-white p-4 lg:p-5 rounded-2xl transition-all duration-300 border border-white/10 hover:border-white hover:shadow-xl">
-                    <div class="w-12 h-12 bg-white/10 group-hover:bg-brand-50 rounded-xl flex items-center justify-center shrink-0 transition-colors hidden sm:flex">
-                        <i class="ph-bold ph-push-pin text-white group-hover:text-brand-500 text-xl"></i>
+                <a href="#" class="group bg-white p-5 lg:p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-brand-500/10 hover:border-brand-200 transition-all duration-300 flex items-center gap-4 lg:gap-6">
+                    <div class="w-14 h-14 lg:w-16 lg:h-16 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center shrink-0">
+                        <i class="ph-fill ph-file-pdf text-2xl lg:text-3xl group-hover:scale-110 transition-transform duration-300"></i>
                     </div>
                     <div class="flex-1">
-                        <div class="flex items-center gap-3 mb-2">
-                            <span class="px-2.5 py-1 rounded-md text-[10px] font-bold bg-white/20 group-hover:bg-brand-100 text-white group-hover:text-brand-600 uppercase tracking-wider transition-colors">Terbaru</span>
-                            <span class="text-xs text-brand-100 group-hover:text-gray-400 font-medium transition-colors">28 Juni 2026</span>
+                        <div class="flex items-center gap-3 mb-1.5">
+                            <span class="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-brand-50 text-brand-600 uppercase tracking-wider">Terbaru</span>
+                            <span class="text-[11px] lg:text-xs text-gray-400 font-bold uppercase tracking-wider">28 Jun 2026</span>
                         </div>
-                        <h3 class="text-white group-hover:text-gray-900 font-bold text-sm lg:text-base leading-snug transition-colors line-clamp-2">Hasil Seleksi Administrasi Penerimaan Tenaga Non-ASN Bagian Organisasi Tahun 2026</h3>
+                        <h3 class="text-gray-900 font-extrabold text-sm lg:text-base group-hover:text-brand-500 transition-colors line-clamp-2 leading-snug">Hasil Seleksi Administrasi Penerimaan Tenaga Non-ASN Bagian Organisasi Tahun 2026</h3>
                     </div>
-                    <div class="shrink-0 hidden sm:flex w-10 h-10 rounded-full bg-white/10 group-hover:bg-brand-500 items-center justify-center transition-colors">
-                        <i class="ph-bold ph-arrow-right text-white text-sm"></i>
+                    <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-gray-50 text-gray-400 group-hover:bg-brand-500 group-hover:text-white flex items-center justify-center transition-colors shrink-0">
+                        <i class="ph-bold ph-download-simple text-sm lg:text-base"></i>
                     </div>
                 </a>
 
                 {{-- Item 2 --}}
-                <a href="#" class="group flex flex-col sm:flex-row sm:items-center gap-4 bg-white/5 hover:bg-white p-4 lg:p-5 rounded-2xl transition-all duration-300 border border-white/10 hover:border-white hover:shadow-xl">
-                    <div class="w-12 h-12 bg-white/10 group-hover:bg-brand-50 rounded-xl flex items-center justify-center shrink-0 transition-colors hidden sm:flex">
-                        <i class="ph-bold ph-file-pdf text-white group-hover:text-brand-500 text-xl"></i>
+                <a href="#" class="group bg-white p-5 lg:p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-brand-500/10 hover:border-brand-200 transition-all duration-300 flex items-center gap-4 lg:gap-6">
+                    <div class="w-14 h-14 lg:w-16 lg:h-16 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center shrink-0">
+                        <i class="ph-fill ph-info text-2xl lg:text-3xl group-hover:scale-110 transition-transform duration-300"></i>
                     </div>
                     <div class="flex-1">
-                        <div class="flex items-center gap-3 mb-2">
-                            <span class="text-xs text-brand-100 group-hover:text-gray-400 font-medium transition-colors">15 Juni 2026</span>
+                        <div class="flex items-center gap-3 mb-1.5">
+                            <span class="text-[11px] lg:text-xs text-gray-400 font-bold uppercase tracking-wider">15 Jun 2026</span>
                         </div>
-                        <h3 class="text-white group-hover:text-gray-900 font-bold text-sm lg:text-base leading-snug transition-colors line-clamp-2">Jadwal Pelaksanaan Survei Kepuasan Masyarakat (SKM) Periode Semester I Tahun 2026</h3>
+                        <h3 class="text-gray-900 font-extrabold text-sm lg:text-base group-hover:text-brand-500 transition-colors line-clamp-2 leading-snug">Jadwal Pelaksanaan Survei Kepuasan Masyarakat (SKM) Periode Semester I Tahun 2026</h3>
                     </div>
-                    <div class="shrink-0 hidden sm:flex w-10 h-10 rounded-full bg-white/10 group-hover:bg-brand-500 items-center justify-center transition-colors">
-                        <i class="ph-bold ph-arrow-right text-white text-sm"></i>
+                    <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-gray-50 text-gray-400 group-hover:bg-brand-500 group-hover:text-white flex items-center justify-center transition-colors shrink-0">
+                        <i class="ph-bold ph-arrow-right text-sm lg:text-base"></i>
                     </div>
                 </a>
-            </div>
-            <div class="mt-6 text-center sm:text-right">
-                <a href="#" class="inline-flex items-center gap-2 text-sm font-bold text-white hover:text-brand-100 transition-colors py-2 px-4 rounded-full bg-white/5 hover:bg-white/10 border border-white/10">
-                    Lihat Semua Pengumuman <i class="ph-bold ph-arrow-right"></i>
+                
+                {{-- Item 3 --}}
+                <a href="#" class="group bg-white p-5 lg:p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-brand-500/10 hover:border-brand-200 transition-all duration-300 flex items-center gap-4 lg:gap-6">
+                    <div class="w-14 h-14 lg:w-16 lg:h-16 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center shrink-0">
+                        <i class="ph-fill ph-calendar-check text-2xl lg:text-3xl group-hover:scale-110 transition-transform duration-300"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3 mb-1.5">
+                            <span class="text-[11px] lg:text-xs text-gray-400 font-bold uppercase tracking-wider">10 Jun 2026</span>
+                        </div>
+                        <h3 class="text-gray-900 font-extrabold text-sm lg:text-base group-hover:text-brand-500 transition-colors line-clamp-2 leading-snug">Pemberitahuan Penyesuaian Jam Layanan Publik Selama Bulan Suci Ramadhan</h3>
+                    </div>
+                    <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-gray-50 text-gray-400 group-hover:bg-brand-500 group-hover:text-white flex items-center justify-center transition-colors shrink-0">
+                        <i class="ph-bold ph-arrow-right text-sm lg:text-base"></i>
+                    </div>
                 </a>
             </div>
         </div>
