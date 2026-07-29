@@ -77,7 +77,7 @@
         {{-- Desktop Menu --}}
         <nav class="hidden lg:flex items-center justify-center gap-6 xl:gap-8 flex-1 px-4">
             <a href="#beranda" class="text-[13px] font-bold text-brand-500 border-b-2 border-brand-500 pb-1 uppercase tracking-wide">Beranda</a>
-            <a href="#profil" class="text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Profil</a>
+            <a href="/profil" class="text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide">Profil</a>
             
             {{-- Dropdown Layanan --}}
             <div class="relative group" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
@@ -783,7 +783,12 @@
 <footer class="bg-[#0f172a] text-white pt-20 pb-10 relative overflow-hidden">
     {{-- Decorative Background --}}
     <div class="absolute top-0 right-0 w-1/2 h-full opacity-5 pointer-events-none z-0">
-        <img src="{{ asset('assets/img/logo.png') }}" class="w-full h-full object-contain object-right-top mi        {{-- Footer Main Content --}}
+        <img src="{{ asset('assets/img/logo.png') }}" class="w-full h-full object-contain object-right-top mix-blend-luminosity" alt="">
+    </div>
+
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
+        
+        {{-- Footer Main Content --}}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             
             {{-- Brand Column --}}
