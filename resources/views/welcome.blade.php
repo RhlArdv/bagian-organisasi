@@ -228,98 +228,115 @@
             <a href="#" class="hidden sm:inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-900 font-bold text-sm rounded-xl hover:bg-gray-50 hover:shadow-md transition-all border border-gray-100 group">
                 Jelajahi Semua <i class="ph-bold ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
             </a>
-        </div>
-
-        {{-- Bento Grid Layout --}}
+        </div>        {{-- Bento Grid Layout --}}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
             {{-- 1. Reformasi Birokrasi (Large Card) --}}
-            <div class="group md:col-span-2 lg:col-span-2 md:row-span-2 bg-gradient-to-br from-brand-500 to-brand-600 rounded-[2rem] p-8 text-white relative overflow-hidden shadow-xl shadow-brand-500/20 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
-                <div class="absolute right-0 bottom-0 opacity-20 transform translate-x-1/4 translate-y-1/4 group-hover:scale-110 transition-transform duration-700 pointer-events-none">
-                    <i class="ph-duotone ph-chart-line-up text-[12rem]"></i>
+            <div class="group md:col-span-2 lg:col-span-2 md:row-span-2 bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-slate-800 rounded-[2.5rem] p-8 lg:p-10 text-white relative overflow-hidden shadow-xl shadow-slate-900/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                <div class="absolute right-0 bottom-0 opacity-10 transform translate-x-1/4 translate-y-1/4 group-hover:scale-125 group-hover:-translate-y-4 group-hover:-rotate-12 transition-all duration-700 pointer-events-none">
+                    <i class="ph-duotone ph-chart-line-up text-[16rem]"></i>
                 </div>
                 <div class="relative z-10 flex flex-col h-full">
-                    <div class="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-auto border border-white/30">
-                        <i class="ph-bold ph-trend-up text-2xl text-white"></i>
+                    <div class="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-auto border border-white/10 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500 shadow-xl">
+                        <i class="ph-bold ph-trend-up text-3xl text-white"></i>
                     </div>
-                    <div class="mt-20">
-                        <h3 class="text-3xl font-black mb-3">Reformasi Birokrasi</h3>
-                        <p class="text-brand-100 font-medium leading-relaxed max-w-md mb-8">Mewujudkan pemerintahan yang bersih, akuntabel, dan kapabel melalui pengawasan tata kelola yang efektif dan efisien.</p>
-                        <a href="#" class="inline-flex items-center gap-2 font-bold text-sm bg-white text-brand-600 px-6 py-3 rounded-xl hover:bg-brand-50 hover:shadow-lg transition-all">
-                            Lihat Indeks RB <i class="ph-bold ph-arrow-right"></i>
+                    <div class="mt-24">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-xs font-bold uppercase tracking-widest mb-4 border border-white/10">
+                            <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span> Fokus Utama
+                        </div>
+                        <h3 class="text-3xl lg:text-4xl font-black mb-4 leading-tight">Reformasi Birokrasi</h3>
+                        <p class="text-gray-300 font-medium leading-relaxed max-w-md mb-8 text-sm lg:text-base opacity-90 group-hover:opacity-100 transition-opacity">Mewujudkan pemerintahan yang bersih, akuntabel, dan kapabel melalui pengawasan tata kelola yang efektif dan efisien.</p>
+                        <a href="#" class="inline-flex items-center gap-3 font-bold text-sm bg-brand-500 text-white px-8 py-4 rounded-2xl hover:bg-brand-600 hover:shadow-xl hover:scale-105 transition-all group/btn w-max shadow-brand-500/30">
+                            Lihat Indeks RB <i class="ph-bold ph-arrow-right group-hover/btn:translate-x-1 transition-transform"></i>
                         </a>
                     </div>
                 </div>
             </div>
 
             {{-- 2. SOP (Medium Card) --}}
-            <div class="group bg-white rounded-[2rem] p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden flex flex-col">
-                <div class="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all pointer-events-none">
-                    <i class="ph-fill ph-file-text text-7xl"></i>
+            <div class="group bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 relative overflow-hidden flex flex-col">
+                <div class="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-5 group-hover:scale-125 group-hover:-rotate-12 transition-all duration-500 pointer-events-none transform translate-x-4 -translate-y-4">
+                    <i class="ph-fill ph-file-text text-8xl text-blue-500"></i>
                 </div>
-                <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center mb-5 relative z-10">
-                    <i class="ph-bold ph-files text-xl"></i>
+                <div class="w-14 h-14 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center mb-6 relative z-10 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500">
+                    <i class="ph-bold ph-files text-2xl"></i>
                 </div>
-                <h3 class="text-lg font-extrabold text-gray-900 mb-2 relative z-10">Standar Operasional Prosedur</h3>
-                <p class="text-sm text-gray-500 font-medium mb-4 flex-1 relative z-10">Pedoman baku pelaksanaan tugas dan fungsi aparatur.</p>
-                <a href="#" class="inline-flex items-center text-sm font-bold text-blue-500 group-hover:text-blue-600 w-max mt-auto relative z-10">Selengkapnya <i class="ph-bold ph-caret-right ml-1 group-hover:translate-x-1 transition-transform"></i></a>
+                <h3 class="text-xl font-extrabold text-gray-900 mb-3 relative z-10 group-hover:text-blue-600 transition-colors">Standar Operasional Prosedur</h3>
+                <p class="text-sm text-gray-500 font-medium mb-6 flex-1 relative z-10 leading-relaxed">Pedoman baku pelaksanaan tugas dan fungsi aparatur secara sistematis.</p>
+                <a href="#" class="inline-flex items-center text-sm font-bold text-blue-500 group-hover:text-blue-600 w-max mt-auto relative z-10">Selengkapnya <i class="ph-bold ph-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i></a>
             </div>
 
             {{-- 3. Anjab & ABK (Medium Card) --}}
-            <div class="group bg-white rounded-[2rem] p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden flex flex-col">
-                <div class="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all pointer-events-none">
-                    <i class="ph-fill ph-users-three text-7xl"></i>
+            <div class="group bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 relative overflow-hidden flex flex-col">
+                <div class="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-5 group-hover:scale-125 group-hover:-rotate-12 transition-all duration-500 pointer-events-none transform translate-x-4 -translate-y-4">
+                    <i class="ph-fill ph-users-three text-8xl text-purple-500"></i>
                 </div>
-                <div class="w-12 h-12 bg-purple-50 text-purple-500 rounded-2xl flex items-center justify-center mb-5 relative z-10">
-                    <i class="ph-bold ph-users text-xl"></i>
+                <div class="w-14 h-14 bg-purple-50 text-purple-500 rounded-2xl flex items-center justify-center mb-6 relative z-10 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500">
+                    <i class="ph-bold ph-users text-2xl"></i>
                 </div>
-                <h3 class="text-lg font-extrabold text-gray-900 mb-2 relative z-10">Anjab & ABK</h3>
-                <p class="text-sm text-gray-500 font-medium mb-4 flex-1 relative z-10">Analisis Jabatan dan Beban Kerja pemetaan pegawai.</p>
-                <a href="#" class="inline-flex items-center text-sm font-bold text-purple-500 group-hover:text-purple-600 w-max mt-auto relative z-10">Selengkapnya <i class="ph-bold ph-caret-right ml-1 group-hover:translate-x-1 transition-transform"></i></a>
+                <h3 class="text-xl font-extrabold text-gray-900 mb-3 relative z-10 group-hover:text-purple-600 transition-colors">Anjab & ABK</h3>
+                <p class="text-sm text-gray-500 font-medium mb-6 flex-1 relative z-10 leading-relaxed">Analisis Jabatan dan Beban Kerja untuk pemetaan formasi pegawai.</p>
+                <a href="#" class="inline-flex items-center text-sm font-bold text-purple-500 group-hover:text-purple-600 w-max mt-auto relative z-10">Selengkapnya <i class="ph-bold ph-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i></a>
             </div>
 
             {{-- 4. Pengaduan (Wide Card) --}}
-            <div class="group md:col-span-2 lg:col-span-2 bg-[#1e293b] rounded-[2rem] p-6 sm:p-8 text-white border border-gray-800 shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-between overflow-hidden relative">
-                <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-white/5 to-transparent pointer-events-none"></div>
-                <div class="relative z-10 max-w-[80%]">
-                    <div class="flex items-center gap-4 mb-3">
-                        <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center backdrop-blur-md shrink-0">
-                            <i class="ph-bold ph-megaphone text-white text-lg"></i>
-                        </div>
-                        <h3 class="text-xl font-extrabold">Layanan Pengaduan</h3>
-                    </div>
-                    <p class="text-gray-400 text-sm font-medium">Sampaikan aspirasi dan laporan Anda untuk perbaikan layanan publik secara responsif.</p>
+            <div class="group md:col-span-2 lg:col-span-2 bg-[#1e293b] rounded-[2.5rem] p-8 lg:p-10 text-white border border-gray-800 shadow-xl hover:-translate-y-2 transition-all duration-500 flex flex-col sm:flex-row sm:items-center justify-between gap-6 overflow-hidden relative">
+                <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-white/5 to-transparent pointer-events-none group-hover:w-1/2 transition-all duration-700"></div>
+                
+                {{-- Decorative background icon --}}
+                <div class="absolute -right-8 -bottom-8 opacity-10 group-hover:opacity-20 group-hover:scale-110 group-hover:-translate-y-4 group-hover:-rotate-12 transition-all duration-700 pointer-events-none">
+                    <i class="ph-fill ph-megaphone text-[12rem] text-white"></i>
                 </div>
-                <a href="#" class="relative z-10 shrink-0 w-12 h-12 bg-white text-gray-900 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-lg ml-4">
-                    <i class="ph-bold ph-arrow-up-right text-lg"></i>
+
+                <div class="relative z-10 flex-1">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-md group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500">
+                            <i class="ph-bold ph-speaker-hifi text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-white">Layanan Pengaduan</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm font-medium leading-relaxed max-w-sm">Sampaikan aspirasi dan laporan Anda untuk perbaikan layanan publik secara cepat dan responsif.</p>
+                </div>
+                <a href="#" class="relative z-10 shrink-0 inline-flex items-center justify-center gap-2 px-6 py-4 bg-white text-gray-900 font-bold rounded-2xl hover:scale-105 hover:bg-gray-100 transition-all shadow-xl group/btn">
+                    Buat Laporan <i class="ph-bold ph-arrow-up-right text-lg group-hover/btn:rotate-45 transition-transform"></i>
                 </a>
             </div>
 
             {{-- 5. Penataan Kelembagaan (Wide Card) --}}
-            <div class="group md:col-span-2 lg:col-span-2 bg-white rounded-[2rem] p-6 sm:p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden flex items-center gap-6">
-                <div class="absolute right-0 top-0 bottom-0 p-6 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all pointer-events-none flex items-center">
-                    <i class="ph-fill ph-tree-structure text-8xl"></i>
+            <div class="group md:col-span-2 lg:col-span-2 bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 relative overflow-hidden flex flex-col sm:flex-row sm:items-center gap-6 lg:gap-8">
+                <div class="absolute right-0 top-0 bottom-0 p-6 opacity-0 group-hover:opacity-5 group-hover:scale-125 transition-all duration-700 pointer-events-none flex items-center transform translate-x-12">
+                    <i class="ph-fill ph-tree-structure text-9xl text-emerald-500"></i>
                 </div>
-                <div class="w-16 h-16 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center shrink-0 relative z-10">
+                <div class="w-16 h-16 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center shrink-0 relative z-10 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500">
                     <i class="ph-bold ph-tree-structure text-3xl"></i>
                 </div>
-                <div class="relative z-10">
-                    <h3 class="text-xl font-extrabold text-gray-900 mb-2">Penataan Kelembagaan</h3>
-                    <p class="text-sm text-gray-500 font-medium">Evaluasi dan penyesuaian nomenklatur Perangkat Daerah sesuai dengan kebutuhan.</p>
+                <div class="relative z-10 flex-1">
+                    <h3 class="text-xl font-extrabold text-gray-900 mb-2 group-hover:text-emerald-600 transition-colors">Penataan Kelembagaan</h3>
+                    <p class="text-sm text-gray-500 font-medium leading-relaxed">Evaluasi dan penyesuaian nomenklatur Perangkat Daerah sesuai dengan kebutuhan dan regulasi.</p>
+                </div>
+                <div class="relative z-10 shrink-0 sm:ml-auto">
+                    <a href="#" class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                        <i class="ph-bold ph-arrow-right"></i>
+                    </a>
                 </div>
             </div>
 
             {{-- 6. Standar Pelayanan (Wide Card) --}}
-            <div class="group md:col-span-2 lg:col-span-2 bg-white rounded-[2rem] p-6 sm:p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden flex items-center gap-6">
-                <div class="absolute right-0 top-0 bottom-0 p-6 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all pointer-events-none flex items-center">
-                    <i class="ph-fill ph-star text-8xl"></i>
+            <div class="group md:col-span-2 lg:col-span-2 bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 relative overflow-hidden flex flex-col sm:flex-row sm:items-center gap-6 lg:gap-8">
+                <div class="absolute right-0 top-0 bottom-0 p-6 opacity-0 group-hover:opacity-5 group-hover:scale-125 group-hover:rotate-12 transition-all duration-700 pointer-events-none flex items-center transform translate-x-12">
+                    <i class="ph-fill ph-star text-9xl text-rose-500"></i>
                 </div>
-                <div class="w-16 h-16 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center shrink-0 relative z-10">
+                <div class="w-16 h-16 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center shrink-0 relative z-10 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500">
                     <i class="ph-bold ph-star text-3xl"></i>
                 </div>
-                <div class="relative z-10">
-                    <h3 class="text-xl font-extrabold text-gray-900 mb-2">Standar Pelayanan</h3>
-                    <p class="text-sm text-gray-500 font-medium">Tolak ukur kualitas pelayanan publik sebagai jaminan kepastian layanan.</p>
+                <div class="relative z-10 flex-1">
+                    <h3 class="text-xl font-extrabold text-gray-900 mb-2 group-hover:text-rose-600 transition-colors">Standar Pelayanan</h3>
+                    <p class="text-sm text-gray-500 font-medium leading-relaxed">Tolak ukur kualitas pelayanan publik sebagai jaminan kepastian layanan prima kepada masyarakat.</p>
+                </div>
+                <div class="relative z-10 shrink-0 sm:ml-auto">
+                    <a href="#" class="w-12 h-12 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center group-hover:bg-rose-500 group-hover:text-white transition-colors">
+                        <i class="ph-bold ph-arrow-right"></i>
+                    </a>
                 </div>
             </div>
 
@@ -510,7 +527,7 @@
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
             {{-- Maps --}}
             <div class="bg-gray-100 rounded-[2.5rem] overflow-hidden border border-gray-200 shadow-inner h-[400px] lg:h-auto relative group">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2785461937517!2d100.36017041475359!3d-0.9472355993081077!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b93f140a3eb1%3A0xc6dfbb239633e085!2sKantor%20Wali%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1684307431110!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="absolute inset-0 w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2683976643275!2d100.35692807531795!3d-0.9512986353524716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b948c7c72e11%3A0x6771787fa612c99f!2sSekretariat%20Daerah%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1785310213215!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="absolute inset-0 w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700"></iframe>
                 <div class="absolute bottom-5 left-5 right-5 bg-white/95 backdrop-blur-md p-5 rounded-3xl shadow-xl border border-white/50 flex items-center justify-between gap-4">
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 bg-brand-50 text-brand-500 rounded-2xl flex items-center justify-center shrink-0">
