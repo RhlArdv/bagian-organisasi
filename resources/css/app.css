@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html { scroll-behavior: smooth; }
+    body {
+        @apply bg-surface-50 text-gray-900 font-sans antialiased text-sm overflow-x-hidden;
+    }
+    ::selection { @apply bg-brand-500 text-white; }
+
+    p, li, span, a, label, input, textarea, select, button {
+        font-size: 0.875rem; /* 14px */
+    }
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.125rem; }
+}
+
+@layer components {
+    .section-pad { @apply py-20 lg:py-28 px-5 lg:px-10; }
+}
+
+@layer utilities {
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+    .text-balance { text-wrap: balance; }
+}
