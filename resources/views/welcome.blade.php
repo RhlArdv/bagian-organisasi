@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Portal resmi Bagian Organisasi Sekretariat Daerah Kota Padang.">
-    <title>Bagian Organisasi — Setda Kota Padang</title>
+    <meta name="description" content="Portal resmi Bagian Organisasi Sekretariat Daerah Kota Padang. Informasi kelembagaan, pelayanan publik, tata laksana, dan reformasi birokrasi.">
+    <title>Bagian Organisasi — Sekretariat Daerah Kota Padang</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,6 +44,11 @@
         /* Floating animations */
         @keyframes float-slow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
         .animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
+        
+        /* Stats bar responsive */
+        @media (min-width: 1024px) {
+            .stats-bar > div { flex: 1 1 0 !important; }
+        }
     </style>
 </head>
 
@@ -58,10 +64,10 @@
 
         {{-- Logo --}}
         <a href="#" class="flex items-center gap-3 group">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Lambang_Kota_Padang.png/432px-Lambang_Kota_Padang.png" alt="Logo Padang" class="h-10 w-auto">
+            <img src="{{ asset('assets/img/logo.png') }}" alt="Logo Padang" class="h-10 w-auto">
             <div class="leading-tight">
-                <span class="block text-[11px] font-bold text-gray-900 tracking-widest uppercase">Sekretariat Daerah</span>
-                <span class="block text-sm font-extrabold text-gray-900">Kota Padang</span>
+                <span class="block text-[11px] font-bold text-gray-900 tracking-widest uppercase">Pemerintah Kota Padang</span>
+                <span class="block text-sm font-extrabold text-gray-900">BAGIAN ORGANISASI</span>
             </div>
         </a>
 
@@ -95,7 +101,7 @@
 </header>
 
 {{-- ═══ HERO ═══ --}}
-<section id="beranda" class="relative overflow-hidden bg-white pt-32 lg:pt-[12rem] pb-16 lg:pb-24">
+<section id="beranda" class="relative overflow-hidden bg-white min-h-screen flex flex-col justify-center pt-24 lg:pt-20">
     
     {{-- Dot Pattern Background --}}
     <div class="absolute inset-0 z-0 opacity-50" style="background-image: radial-gradient(#fcd34d 1.5px, transparent 1.5px); background-size: 36px 36px;"></div>
@@ -103,33 +109,100 @@
     {{-- Absolute Huge Image (Anchored to the absolute right of the screen) --}}
     <div class="hidden lg:block absolute top-1/2 -translate-y-[45%] right-0 w-[1100px] xl:w-[1300px] pointer-events-none z-0">
         <img src="{{ asset('assets/img/hero.png') }}" 
-             alt="Sekretariat Daerah Kota Padang" 
+             alt="Bagian Organisasi Sekretariat Daerah Kota Padang" 
              class="w-full h-auto object-contain object-right mix-blend-multiply" 
              style="-webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%); mask-image: linear-gradient(to right, transparent 0%, black 15%);"
              onerror="this.src='https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=900&q=80'">
     </div>
 
-    <div class="w-full max-w-[90rem] mx-auto px-5 lg:px-12 relative z-10">
-        <div class="w-full lg:w-[55%] relative z-20">
-            <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-[#f5a500] text-white text-[12px] font-bold tracking-wide mb-6">
-                Selamat Datang di
+    {{-- Main Hero Content --}}
+    <div class="flex-1 flex items-center">
+        <div class="w-full max-w-[90rem] mx-auto px-5 lg:px-12 relative z-10">
+            <div class="w-full lg:w-[55%] relative z-20">
+                <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-[#f5a500] text-white text-[12px] font-bold tracking-wide mb-6">
+                    Selamat Datang di
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-extrabold text-gray-900 leading-[1.1] mb-5 tracking-tight">
+                    Bagian Organisasi <br>
+                    <span class="text-brand-500">Setda Kota Padang</span>
+                </h1>
+                
+                <p class="text-gray-500 text-[15px] lg:text-[17px] mb-10 max-w-[90%] leading-relaxed font-medium">
+                    Mewujudkan tata kelola organisasi yang efektif, efisien, transparan dan berorientasi pada pelayanan publik untuk Kota Padang yang lebih baik.
+                </p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <a href="#profil" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-[#f5a500] text-white font-bold text-[15px] rounded-xl hover:bg-yellow-600 transition-colors shadow-lg shadow-yellow-500/25">
+                        Profil Organisasi <i class="ph ph-arrow-right"></i>
+                    </a>
+                    <a href="#pelayanan" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-white text-gray-800 font-bold text-[15px] rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                        Lihat Layanan <i class="ph ph-arrow-right text-gray-400"></i>
+                    </a>
+                </div>
             </div>
-            
-            <h1 class="text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-extrabold text-[#111827] leading-[1.1] mb-5 tracking-tight">
-                Sekretariat Daerah <br> Kota Padang
-            </h1>
-            
-            <p class="text-gray-500 text-[15px] lg:text-[16px] mb-8 max-w-[85%] leading-relaxed font-medium">
-                Mendukung terwujudnya tata kelola pemerintahan yang profesional, transparan dan berorientasi pada pelayanan publik yang prima.
-            </p>
-            
-            <div class="flex flex-wrap gap-4">
-                <a href="#" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-[#f5a500] text-white font-bold text-[15px] rounded-xl hover:bg-yellow-600 transition-colors">
-                    Profil Sekda <i class="ph ph-arrow-right"></i>
-                </a>
-                <a href="#pelayanan" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-white text-gray-800 font-bold text-[15px] rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                    Lihat Layanan <i class="ph ph-arrow-right text-gray-400"></i>
-                </a>
+        </div>
+    </div>
+
+    {{-- Statistics Bar (pinned to bottom of hero) --}}
+    <div class="relative z-20 w-full mt-auto">
+        <div class="max-w-7xl mx-auto px-5 lg:px-8 pb-8">
+            <div class="flex flex-wrap lg:flex-nowrap gap-4">
+                <div class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center">
+                            <i class="ph-duotone ph-buildings text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-black text-gray-900 leading-none">47</p>
+                            <p class="text-[11px] text-gray-500 font-semibold mt-1">Perangkat Daerah</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center">
+                            <i class="ph-duotone ph-users text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-black text-gray-900 leading-none">1.482</p>
+                            <p class="text-[11px] text-gray-500 font-semibold mt-1">ASN</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-green-50 text-green-500 flex items-center justify-center">
+                            <i class="ph-duotone ph-clipboard-text text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-black text-gray-900 leading-none">228</p>
+                            <p class="text-[11px] text-gray-500 font-semibold mt-1">SOP</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center">
+                            <i class="ph-duotone ph-check-circle text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-black text-gray-900 leading-none">86</p>
+                            <p class="text-[11px] text-gray-500 font-semibold mt-1">Standar Pelayanan</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full sm:w-full lg:flex-1 rounded-2xl p-5 shadow-lg bg-brand-500">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-white bg-opacity-20 text-white flex items-center justify-center">
+                            <i class="ph-duotone ph-chart-line-up text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-black text-white leading-none">81,25</p>
+                            <p class="text-[11px] text-brand-100 font-semibold mt-1">Indeks RB 2023</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -173,7 +246,7 @@
 <section class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-5 lg:px-8">
         <div class="flex items-end justify-between mb-10">
-            <h2 class="text-3xl font-extrabold text-gray-900">Aktivitas Sekda</h2>
+            <h2 class="text-3xl font-extrabold text-gray-900">Aktivitas Organisasi</h2>
             <a href="#" class="hidden sm:flex items-center gap-2 text-brand-500 font-bold hover:text-brand-600 transition-colors">
                 Lihat Semua Aktivitas <i class="ph-bold ph-arrow-right"></i>
             </a>
@@ -185,7 +258,7 @@
                     ['d'=>'01', 'm'=>'JUL', 't'=>'Kunjungan Kerja ke Kecamatan Bungus Teluk Kabung', 'l'=>'Kecamatan Bungus'],
                     ['d'=>'30', 'm'=>'JUN', 't'=>'Rapat Koordinasi Program Prioritas Daerah', 'l'=>'Ruang Rapat Sekda'],
                     ['d'=>'29', 'm'=>'JUN', 't'=>'Penandatanganan Komitmen Kinerja Perangkat Daerah', 'l'=>'Aula Kantor Wali Kota'],
-                    ['d'=>'28', 'm'=>'JUN', 't'=>'Gotong Royong ASN Sekretariat Daerah', 'l'=>'Pantai Padang'],
+                    ['d'=>'28', 'm'=>'JUN', 't'=>'Sosialisasi Reformasi Birokrasi dan Zona Integritas', 'l'=>'Aula Bagian Organisasi'],
                 ];
             @endphp
             @foreach($activities as $act)
@@ -255,7 +328,7 @@
             
             {{-- Sekda Dalam Angka --}}
             <div>
-                <h3 class="text-xl font-extrabold text-gray-900 mb-8">Sekda dalam Angka</h3>
+                <h3 class="text-xl font-extrabold text-gray-900 mb-8">Organisasi dalam Angka</h3>
                 <div class="space-y-6">
                     <div class="flex items-center gap-5">
                         <div class="w-14 h-14 rounded-2xl bg-brand-50 text-brand-500 flex items-center justify-center text-2xl">
@@ -332,7 +405,7 @@
                             <i class="ph-fill ph-envelope-simple text-lg"></i>
                         </div>
                         <div class="pt-2">
-                            <p class="text-sm font-bold text-gray-900">sekda@padang.go.id</p>
+                            <p class="text-sm font-bold text-gray-900">bag.organisasi@padang.go.id</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-4">
@@ -340,7 +413,7 @@
                             <i class="ph-fill ph-globe text-lg"></i>
                         </div>
                         <div class="pt-2">
-                            <p class="text-sm font-bold text-gray-900">www.padang.go.id/sekda</p>
+                            <p class="text-sm font-bold text-gray-900">organisasi.padang.go.id</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-4">
@@ -416,15 +489,15 @@
         {{-- Bottom Footer --}}
         <div class="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-gray-100">
             <div class="flex items-center gap-3">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Lambang_Kota_Padang.png/432px-Lambang_Kota_Padang.png" alt="Logo Padang" class="h-10 w-auto grayscale opacity-80">
+                <img src="{{ asset('assets/img/logo.png') }}" alt="Logo Padang" class="h-10 w-auto grayscale opacity-80">
                 <div class="leading-tight">
-                    <span class="block text-[10px] font-bold text-gray-500 tracking-widest uppercase">Sekretariat Daerah</span>
-                    <span class="block text-sm font-extrabold text-gray-700">Kota Padang</span>
+                    <span class="block text-[10px] font-bold text-gray-500 tracking-widest uppercase">Pemerintah Kota Padang</span>
+                    <span class="block text-sm font-extrabold text-gray-700">Bagian Organisasi</span>
                 </div>
             </div>
             
             <p class="text-xs text-gray-500 max-w-md text-center md:text-left">
-                Sekretariat Daerah Kota Padang berkomitmen untuk mendukung tata kelola pemerintahan yang baik demi terwujudnya Padang sebagai kota pintar dan kota sehat.
+                Bagian Organisasi Sekretariat Daerah Kota Padang berkomitmen mewujudkan tata kelola organisasi yang efektif dan berorientasi pada pelayanan publik.
             </p>
 
             <div class="flex gap-6">
@@ -437,7 +510,7 @@
         
         <div class="text-center mt-12">
             <p class="text-[11px] font-medium text-gray-400">
-                &copy; {{ date('Y') }} Sekretariat Daerah Kota Padang. All rights reserved.
+                &copy; {{ date('Y') }} Bagian Organisasi Sekretariat Daerah Kota Padang. All rights reserved.
             </p>
         </div>
 

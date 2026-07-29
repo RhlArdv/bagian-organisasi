@@ -15,11 +15,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
+        // Buat user admin default
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Administrator',
+            'email' => 'admin@organisasi.padang.go.id',
+            'role' => 'admin',
+        ]);
+
+        // Jalankan semua seeder
+        $this->call([
+            SiteSettingsSeeder::class,
+            BannersSeeder::class,
+            PerformanceMetricsSeeder::class,
+            PostCategoriesSeeder::class,
+            DocumentCategoriesSeeder::class,
+            FaqsSeeder::class,
         ]);
     }
 }
