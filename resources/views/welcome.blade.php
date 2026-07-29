@@ -858,11 +858,6 @@
                     </div>
                 </div>
             </div>
-        </div>                     </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
         {{-- Bottom Bar --}}
