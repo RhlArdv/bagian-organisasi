@@ -1,36 +1,146 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Bagian Organisasi') }} - Dashboard</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    {{-- Fonts --}}
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800,900" rel="stylesheet" />
+    
+    {{-- Phosphor Icons --}}
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    {{-- Tailwind & Vite --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="bg-[#f4f7f6] text-gray-900 antialiased overflow-x-hidden">
+    <div class="min-h-screen flex" x-data="{ sidebarOpen: false }">
+        
+        {{-- MOBILE OVERLAY --}}
+        <div x-show="sidebarOpen" x-transition.opacity class="fixed inset-0 bg-gray-900/50 z-40 lg:hidden" @click="sidebarOpen = false"></div>
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        {{-- SIDEBAR --}}
+        <aside class="fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-gray-100 flex flex-col transition-transform duration-300 lg:translate-x-0"
+               :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
+            
+            {{-- Sidebar Header (Logo) --}}
+            <div class="h-24 flex items-center gap-3 px-8 border-b border-gray-50">
+                <img src="{{ asset('assets/img/logo.png') }}" alt="Logo Padang" class="w-10 h-12 object-contain">
+                <div>
+                    <span class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest">Dashboard</span>
+                    <span class="block text-sm font-extrabold text-gray-900">BAGIAN ORGANISASI</span>
+                </div>
+            </div>
+
+            {{-- Sidebar Menu --}}
+            <div class="flex-1 overflow-y-auto py-6 px-4 space-y-1">
+                <p class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 mt-4">Menu Utama</p>
+                
+                <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('dashboard') ? 'bg-brand-50 text-brand-500 font-bold' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
+                    <i class="ph-bold ph-squares-four text-xl"></i>
+                    <span class="text-sm">Dashboard Overview</span>
+                </a>
+                
+                <a href="{{ route('pegawai.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('pegawai.*') ? 'bg-brand-50 text-brand-500 font-bold' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
+                    <i class="ph-bold ph-users text-xl"></i>
+                    <span class="text-sm">Profil Pegawai</span>
+                </a>
+
+                <a href="{{ route('pages.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('pages.*') ? 'bg-brand-50 text-brand-500 font-bold' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
+                    <i class="ph-bold ph-file-text text-xl"></i>
+                    <span class="text-sm">Halaman Profil (Visi, dkk)</span>
+                </a>
+
+                <p class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 mt-8">Pengaturan Beranda</p>
+
+                <a href="{{ route('banners.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('banners.*') ? 'bg-brand-50 text-brand-500 font-bold' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
+                    <i class="ph-bold ph-image text-xl"></i>
+                    <span class="text-sm">Banner / Slider Utama</span>
+                </a>
+
+                <a href="{{ route('metrics.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('metrics.*') ? 'bg-brand-50 text-brand-500 font-bold' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
+                    <i class="ph-bold ph-chart-bar text-xl"></i>
+                    <span class="text-sm">Indikator Kinerja (RB, dkk)</span>
+                </a>
+
+                <p class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 mt-8">Pengaturan Akun</p>
+
+                <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('profile.edit') ? 'bg-brand-50 text-brand-500 font-bold' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
+                    <i class="ph-bold ph-user-circle text-xl"></i>
+                    <span class="text-sm">Profil Akun</span>
+                </a>
+            </div>
+
+            {{-- Sidebar Footer (Logout) --}}
+            <div class="p-4 border-t border-gray-50">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 font-bold hover:bg-red-50 transition-all">
+                        <i class="ph-bold ph-sign-out text-xl"></i>
+                        <span class="text-sm">Keluar (Logout)</span>
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        {{-- MAIN CONTENT AREA --}}
+        <div class="flex-1 lg:ml-72 flex flex-col min-h-screen">
+            
+            {{-- TOPBAR --}}
+            <header class="h-24 bg-white border-b border-gray-100 flex items-center justify-between px-6 lg:px-10 sticky top-0 z-30">
+                
+                {{-- Left side Topbar --}}
+                <div class="flex items-center gap-4">
+                    <button @click="sidebarOpen = true" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 text-gray-600 hover:bg-brand-50 hover:text-brand-500 transition-colors">
+                        <i class="ph-bold ph-list text-xl"></i>
+                    </button>
+                    @isset($header)
                         {{ $header }}
-                    </div>
-                </header>
-            @endisset
+                    @endisset
+                </div>
 
-            <!-- Page Content -->
-            <main>
+                {{-- Right side Topbar (Profile Dropdown) --}}
+                <div class="relative" x-data="{ open: false }">
+                    <button @click="open = !open" @click.outside="open = false" class="flex items-center gap-3 p-2 pr-4 rounded-full border border-gray-100 hover:border-brand-200 hover:bg-brand-50 transition-all group">
+                        <div class="w-10 h-10 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-sm">
+                            {{ substr(Auth::user()->name, 0, 1) }}
+                        </div>
+                        <div class="text-left hidden sm:block">
+                            <span class="block text-sm font-bold text-gray-900 group-hover:text-brand-600">{{ Auth::user()->name }}</span>
+                            <span class="block text-[10px] font-bold text-gray-400 uppercase">Administrator</span>
+                        </div>
+                        <i class="ph-bold ph-caret-down text-gray-400 text-xs transition-transform duration-300 ml-2" :class="open ? 'rotate-180' : ''"></i>
+                    </button>
+
+                    <div x-show="open" x-transition.opacity.duration.200ms class="absolute right-0 mt-3 w-56 bg-white border border-gray-100 shadow-xl shadow-brand-500/5 rounded-2xl py-3 z-50">
+                        <div class="px-5 py-2 mb-2 border-b border-gray-50 sm:hidden">
+                            <span class="block text-sm font-bold text-gray-900">{{ Auth::user()->name }}</span>
+                            <span class="block text-[10px] font-bold text-gray-400">{{ Auth::user()->email }}</span>
+                        </div>
+                        <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 transition-colors">
+                            <i class="ph-bold ph-user"></i> Profil Akun
+                        </a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="w-full flex items-center gap-3 px-5 py-2.5 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors">
+                                <i class="ph-bold ph-sign-out"></i> Keluar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </header>
+
+            {{-- PAGE CONTENT --}}
+            <main class="flex-1 p-6 lg:p-10">
                 {{ $slot }}
             </main>
+            
         </div>
-    </body>
+    </div>
+</body>
 </html>
