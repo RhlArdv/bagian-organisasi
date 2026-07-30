@@ -11,9 +11,9 @@ Route::get('/profil', function () {
     return view('profil');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -45,6 +45,13 @@ Route::middleware('auth')->group(function () {
     // Berita & Pengumuman
     Route::resource('admin/posts', \App\Http\Controllers\Admin\PostController::class);
     Route::resource('admin/announcements', \App\Http\Controllers\Admin\AnnouncementController::class);
+
+    // Pengaturan
+    Route::get('admin/settings/contact', [\App\Http\Controllers\Admin\SettingController::class, 'contact'])->name('settings.contact');
+    Route::put('admin/settings/contact', [\App\Http\Controllers\Admin\SettingController::class, 'updateContact'])->name('settings.contact.update');
+    
+    // FAQ
+    Route::resource('admin/faqs', \App\Http\Controllers\Admin\FaqController::class);
 });
 
 require __DIR__.'/auth.php';
