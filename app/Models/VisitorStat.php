@@ -51,4 +51,47 @@ class VisitorStat extends Model
     {
         return static::where('date', now()->toDateString())->value('unique_visitors') ?? 0;
     }
+
+    /**
+     * Pengunjung bulan ini.
+     */
+    public static function getThisMonthVisitors(): int
+    {
+        return static::whereMonth('date', now()->month)
+            ->whereYear('date', now()->year)
+            ->sum('unique_visitors');
+    }
+
+    /**
+     * Pengunjung tahun ini.
+     */
+    public static function getThisYearVisitors(): int
+    {
+        return static::whereYear('date', now()->year)
+            ->sum('unique_visitors');
+    }
+
+    /**
+     * Data untuk chart kunjungan harian (Bulan Ini)
+     */
+    public static function getChartData(): array
+    {
+        $stats = static::whereMonth('date', now()->month)
+            ->whereYear('date', now()->year)
+            ->orderBy('date')
+            ->get();
+
+        $labels = [];
+        $data = [];
+
+        foreach ($stats as $stat) {
+            $labels[] = \Carbon\Carbon::parse($stat->date)->format('d M');
+            $data[] = $stat->unique_visitors;
+        }
+
+        return [
+            'labels' => $labels,
+            'data' => $data,
+        ];
+    }
 }

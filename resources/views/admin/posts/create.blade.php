@@ -35,6 +35,15 @@
                         <label for="excerpt" class="block text-sm font-bold text-gray-700 mb-2">Ringkasan / Excerpt <span class="text-gray-400 font-normal">(opsional — tampil di halaman list)</span></label>
                         <textarea name="excerpt" id="excerpt" rows="2" placeholder="Tulis ringkasan singkat berita..." class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium">{{ old('excerpt') }}</textarea>
                     </div>
+                    <div>
+                        <label for="category_id" class="block text-sm font-bold text-gray-700 mb-2">Kategori <span class="text-gray-400 font-normal">(opsional)</span></label>
+                        <select name="category_id" id="category_id" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium">
+                            <option value="">— Tanpa Kategori —</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
 

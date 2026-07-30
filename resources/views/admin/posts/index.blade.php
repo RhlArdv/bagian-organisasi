@@ -31,6 +31,7 @@
                         <tr>
                             <th class="text-left px-6 py-4 font-bold text-gray-500 text-xs uppercase tracking-wider">Thumbnail</th>
                             <th class="text-left px-6 py-4 font-bold text-gray-500 text-xs uppercase tracking-wider">Judul</th>
+                            <th class="text-left px-6 py-4 font-bold text-gray-500 text-xs uppercase tracking-wider">Kategori</th>
                             <th class="text-left px-6 py-4 font-bold text-gray-500 text-xs uppercase tracking-wider">Status</th>
                             <th class="text-left px-6 py-4 font-bold text-gray-500 text-xs uppercase tracking-wider">Tanggal</th>
                             <th class="text-right px-6 py-4 font-bold text-gray-500 text-xs uppercase tracking-wider">Aksi</th>
@@ -51,6 +52,13 @@
                             <td class="px-6 py-4">
                                 <p class="font-bold text-gray-900 line-clamp-1">{{ $post->title }}</p>
                                 <p class="text-gray-400 text-xs mt-0.5 line-clamp-1">{{ $post->excerpt }}</p>
+                            </td>
+                            <td class="px-6 py-4">
+                                @if($post->category)
+                                    <span class="inline-flex items-center px-2.5 py-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-full">{{ $post->category->name }}</span>
+                                @else
+                                    <span class="text-xs text-gray-300 font-medium">—</span>
+                                @endif
                             </td>
                             <td class="px-6 py-4">
                                 @if($post->status === 'published')

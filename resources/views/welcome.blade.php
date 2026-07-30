@@ -116,61 +116,35 @@
     <div class="relative z-20 w-full mt-auto">
         <div class="max-w-7xl mx-auto px-5 lg:px-8 pb-8">
             <div class="flex flex-wrap lg:flex-nowrap gap-4">
-                <div class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-500 flex items-center justify-center">
-                            <i class="ph-duotone ph-buildings text-xl"></i>
+                @foreach($statistics as $stat)
+                    @if($loop->last && $loop->count > 1)
+                        {{-- The last statistic is highlighted with solid brand bg --}}
+                        <div class="w-full sm:w-full lg:flex-1 rounded-2xl p-5 shadow-lg bg-brand-500">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-white bg-opacity-20 text-white flex items-center justify-center">
+                                    <i class="ph-duotone {{ $stat->icon }} text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-2xl font-black text-white leading-none">{{ $stat->value }}</p>
+                                    <p class="text-[11px] text-brand-100 font-semibold mt-1">{{ $stat->name }}</p>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <p class="text-2xl font-black text-gray-900 leading-none">47</p>
-                            <p class="text-[11px] text-gray-500 font-semibold mt-1">Perangkat Daerah</p>
+                    @else
+                        {{-- Normal statistic card --}}
+                        <div class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-{{ $stat->color }}-50 text-{{ $stat->color }}-500 flex items-center justify-center">
+                                    <i class="ph-duotone {{ $stat->icon }} text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-2xl font-black text-gray-900 leading-none">{{ $stat->value }}</p>
+                                    <p class="text-[11px] text-gray-500 font-semibold mt-1">{{ $stat->name }}</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center">
-                            <i class="ph-duotone ph-users text-xl"></i>
-                        </div>
-                        <div>
-                            <p class="text-2xl font-black text-gray-900 leading-none">1.482</p>
-                            <p class="text-[11px] text-gray-500 font-semibold mt-1">ASN</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-green-50 text-green-500 flex items-center justify-center">
-                            <i class="ph-duotone ph-clipboard-text text-xl"></i>
-                        </div>
-                        <div>
-                            <p class="text-2xl font-black text-gray-900 leading-none">228</p>
-                            <p class="text-[11px] text-gray-500 font-semibold mt-1">SOP</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center">
-                            <i class="ph-duotone ph-check-circle text-xl"></i>
-                        </div>
-                        <div>
-                            <p class="text-2xl font-black text-gray-900 leading-none">86</p>
-                            <p class="text-[11px] text-gray-500 font-semibold mt-1">Standar Pelayanan</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-full sm:w-full lg:flex-1 rounded-2xl p-5 shadow-lg bg-brand-500">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-white bg-opacity-20 text-white flex items-center justify-center">
-                            <i class="ph-duotone ph-chart-line-up text-xl"></i>
-                        </div>
-                        <div>
-                            <p class="text-2xl font-black text-white leading-none">81,25</p>
-                            <p class="text-[11px] text-brand-100 font-semibold mt-1">Indeks RB 2023</p>
-                        </div>
-                    </div>
-                </div>
+                    @endif
+                @endforeach
             </div>
         </div>
     </div>
@@ -213,7 +187,7 @@
                         </div>
                         <h3 class="text-3xl lg:text-4xl font-black mb-4 leading-tight">Reformasi Birokrasi</h3>
                         <p class="text-gray-300 font-medium leading-relaxed max-w-md mb-8 text-sm lg:text-base opacity-90 group-hover:opacity-100 transition-opacity">Mewujudkan pemerintahan yang bersih, akuntabel, dan kapabel melalui pengawasan tata kelola yang efektif dan efisien.</p>
-                        <a href="#" class="inline-flex items-center gap-3 font-bold text-sm bg-brand-500 text-white px-8 py-4 rounded-2xl hover:bg-brand-600 hover:shadow-xl hover:scale-105 transition-all group/btn w-max shadow-brand-500/30">
+                        <a href="{{ route('public.reformasi-birokrasi') }}" class="inline-flex items-center gap-3 font-bold text-sm bg-brand-500 text-white px-8 py-4 rounded-2xl hover:bg-brand-600 hover:shadow-xl hover:scale-105 transition-all group/btn w-max shadow-brand-500/30">
                             Lihat Indeks RB <i class="ph-bold ph-arrow-right group-hover/btn:translate-x-1 transition-transform"></i>
                         </a>
                     </div>
@@ -230,7 +204,7 @@
                 </div>
                 <h3 class="text-xl font-extrabold text-gray-900 mb-3 relative z-10 group-hover:text-blue-600 transition-colors">Standar Operasional Prosedur</h3>
                 <p class="text-sm text-gray-500 font-medium mb-6 flex-1 relative z-10 leading-relaxed">Pedoman baku pelaksanaan tugas dan fungsi aparatur secara sistematis.</p>
-                <a href="#" class="inline-flex items-center text-sm font-bold text-blue-500 group-hover:text-blue-600 w-max mt-auto relative z-10">Selengkapnya <i class="ph-bold ph-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i></a>
+                <a href="{{ route('public.sop') }}" class="inline-flex items-center text-sm font-bold text-blue-500 group-hover:text-blue-600 w-max mt-auto relative z-10">Selengkapnya <i class="ph-bold ph-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i></a>
             </div>
 
             {{-- 3. Anjab & ABK (Medium Card) --}}
@@ -243,7 +217,7 @@
                 </div>
                 <h3 class="text-xl font-extrabold text-gray-900 mb-3 relative z-10 group-hover:text-purple-600 transition-colors">Anjab & ABK</h3>
                 <p class="text-sm text-gray-500 font-medium mb-6 flex-1 relative z-10 leading-relaxed">Analisis Jabatan dan Beban Kerja untuk pemetaan formasi pegawai.</p>
-                <a href="#" class="inline-flex items-center text-sm font-bold text-purple-500 group-hover:text-purple-600 w-max mt-auto relative z-10">Selengkapnya <i class="ph-bold ph-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i></a>
+                <a href="{{ route('public.anjab-abk') }}" class="inline-flex items-center text-sm font-bold text-purple-500 group-hover:text-purple-600 w-max mt-auto relative z-10">Selengkapnya <i class="ph-bold ph-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i></a>
             </div>
 
             {{-- 4. Pengaduan (Wide Card) --}}
@@ -264,7 +238,7 @@
                     </div>
                     <p class="text-gray-400 text-sm font-medium leading-relaxed max-w-sm">Sampaikan aspirasi dan laporan Anda untuk perbaikan layanan publik secara cepat dan responsif.</p>
                 </div>
-                <a href="#" class="relative z-10 shrink-0 inline-flex items-center justify-center gap-2 px-6 py-4 bg-white text-gray-900 font-bold rounded-2xl hover:scale-105 hover:bg-gray-100 transition-all shadow-xl group/btn">
+                <a href="{{ route('public.pengaduan') }}" class="relative z-10 shrink-0 inline-flex items-center justify-center gap-2 px-6 py-4 bg-white text-gray-900 font-bold rounded-2xl hover:scale-105 hover:bg-gray-100 transition-all shadow-xl group/btn">
                     Buat Laporan <i class="ph-bold ph-arrow-up-right text-lg group-hover/btn:rotate-45 transition-transform"></i>
                 </a>
             </div>
@@ -282,7 +256,7 @@
                     <p class="text-sm text-gray-500 font-medium leading-relaxed">Evaluasi dan penyesuaian nomenklatur Perangkat Daerah sesuai dengan kebutuhan dan regulasi.</p>
                 </div>
                 <div class="relative z-10 shrink-0 sm:ml-auto">
-                    <a href="#" class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                    <a href="{{ route('public.kelembagaan') }}" class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors">
                         <i class="ph-bold ph-arrow-right"></i>
                     </a>
                 </div>
@@ -301,7 +275,7 @@
                     <p class="text-sm text-gray-500 font-medium leading-relaxed">Tolak ukur kualitas pelayanan publik sebagai jaminan kepastian layanan prima kepada masyarakat.</p>
                 </div>
                 <div class="relative z-10 shrink-0 sm:ml-auto">
-                    <a href="#" class="w-12 h-12 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center group-hover:bg-rose-500 group-hover:text-white transition-colors">
+                    <a href="{{ route('public.standar-pelayanan') }}" class="w-12 h-12 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center group-hover:bg-rose-500 group-hover:text-white transition-colors">
                         <i class="ph-bold ph-arrow-right"></i>
                     </a>
                 </div>
@@ -319,111 +293,122 @@
                 <h2 class="text-4xl font-black text-gray-900 mb-4 tracking-tight">Kabar <span class="text-brand-500">Terkini</span></h2>
                 <p class="text-gray-500 font-medium max-w-xl leading-relaxed">Informasi terbaru seputar kegiatan, regulasi, dan capaian Bagian Organisasi Sekretariat Daerah Kota Padang.</p>
             </div>
-            <a href="#" class="hidden sm:inline-flex items-center gap-2 text-gray-900 font-bold hover:text-brand-500 transition-colors group pb-2 border-b-2 border-gray-200 hover:border-brand-500 shrink-0">
+            <a href="{{ route('public.berita.index') }}" class="hidden sm:inline-flex items-center gap-2 text-gray-900 font-bold hover:text-brand-500 transition-colors group pb-2 border-b-2 border-gray-200 hover:border-brand-500 shrink-0">
                 Lihat Semua Berita <i class="ph-bold ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
             </a>
         </div>
 
-        {{-- Category Filters (Visual only for now) --}}
-        <div class="flex flex-wrap gap-2 mb-10">
-            <button class="px-5 py-2.5 bg-gray-900 text-white text-sm font-bold rounded-full hover:bg-brand-500 hover:text-white transition-colors shadow-md">Semua Berita</button>
-            <button class="px-5 py-2.5 bg-gray-50 text-gray-600 text-sm font-bold rounded-full hover:bg-gray-100 hover:text-gray-900 transition-colors border border-gray-200">Pemerintahan</button>
-            <button class="px-5 py-2.5 bg-gray-50 text-gray-600 text-sm font-bold rounded-full hover:bg-gray-100 hover:text-gray-900 transition-colors border border-gray-200">Inovasi</button>
-            <button class="px-5 py-2.5 bg-gray-50 text-gray-600 text-sm font-bold rounded-full hover:bg-gray-100 hover:text-gray-900 transition-colors border border-gray-200">Regulasi</button>
-        </div>
-
-        <div class="grid lg:grid-cols-12 gap-8 items-stretch">
-            
-            {{-- Featured Post (Left) --}}
-            <article class="lg:col-span-7 group cursor-pointer relative rounded-[2.5rem] overflow-hidden shadow-lg border border-gray-100 flex flex-col h-full min-h-[400px]">
-                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200&q=80" alt="Featured News" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000">
-                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
-                {{-- Date Badge --}}
-                <div class="absolute top-6 left-6 bg-white/95 backdrop-blur-md rounded-2xl p-3 text-center shadow-2xl border border-white/50 min-w-[4rem]">
-                    <span class="block text-2xl font-black text-gray-900 leading-none">26</span>
-                    <span class="block text-xs font-bold text-brand-500 mt-1 uppercase tracking-wider">JUN</span>
-                </div>
-
-                <div class="relative z-10 flex flex-col justify-end h-full p-8 lg:p-10 mt-auto">
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="text-xs font-bold text-brand-600 uppercase tracking-widest bg-brand-50 px-3 py-1.5 rounded-lg shadow-sm">Pemerintahan</span>
-                        <span class="text-gray-400">•</span>
-                        <span class="text-sm text-gray-300 font-medium flex items-center gap-1.5"><i class="ph-bold ph-clock"></i> 5 min read</span>
-                    </div>
-                    <h3 class="text-3xl lg:text-4xl font-extrabold text-white mb-4 leading-tight group-hover:text-brand-300 transition-colors">
-                        Rapat Koordinasi Sekretariat Daerah Bahas Penguatan Kinerja dan Evaluasi
-                    </h3>
-                    <p class="text-gray-300 text-sm lg:text-base font-medium line-clamp-2 leading-relaxed mb-6 max-w-2xl">
-                        Pemerintah Kota Padang terus mendorong transformasi pelayanan publik melalui digitalisasi proses bisnis dan penguatan SDM aparatur secara berkesinambungan demi mewujudkan kota pintar.
-                    </p>
-                    <a href="#" class="inline-flex items-center gap-2 font-bold text-white text-sm hover:text-brand-400 transition-colors w-max group/link">
-                        Baca Selengkapnya <i class="ph-bold ph-arrow-right group-hover/link:translate-x-1 transition-transform"></i>
-                    </a>
-                </div>
-            </article>
-
-            {{-- Side Posts List (Right) --}}
-            <div class="lg:col-span-5 flex flex-col gap-5">
-                
-                {{-- Side Item 1 --}}
-                <article class="group cursor-pointer flex flex-col sm:flex-row gap-5 bg-white p-4 rounded-3xl border border-gray-100 hover:border-brand-200 hover:shadow-xl hover:shadow-brand-500/5 transition-all duration-300">
-                    <div class="w-full sm:w-32 lg:w-36 aspect-[4/3] rounded-2xl overflow-hidden shrink-0 relative">
-                        <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=600&q=80" alt="News" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    </div>
-                    <div class="flex flex-col flex-1 py-1">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wider bg-blue-50 px-2 py-1 rounded-md">Prestasi</span>
-                            <span class="text-xs text-gray-400 font-medium ml-auto">24 Jun</span>
-                        </div>
-                        <h4 class="text-lg font-extrabold text-gray-900 leading-snug group-hover:text-brand-500 transition-colors line-clamp-2 mb-2">
-                            Pemkot Padang Raih Penghargaan SAKIP Predikat A Tingkat Nasional
-                        </h4>
-                        <a href="#" class="mt-auto text-xs font-bold text-gray-500 group-hover:text-brand-500 inline-flex items-center gap-1 w-max">
-                            Baca <i class="ph-bold ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                        </a>
-                    </div>
-                </article>
-
-                {{-- Side Item 2 --}}
-                <article class="group cursor-pointer flex flex-col sm:flex-row gap-5 bg-white p-4 rounded-3xl border border-gray-100 hover:border-brand-200 hover:shadow-xl hover:shadow-brand-500/5 transition-all duration-300">
-                    <div class="w-full sm:w-32 lg:w-36 aspect-[4/3] rounded-2xl overflow-hidden shrink-0 relative">
-                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&q=80" alt="News" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    </div>
-                    <div class="flex flex-col flex-1 py-1">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-[10px] font-bold text-purple-600 uppercase tracking-wider bg-purple-50 px-2 py-1 rounded-md">Inovasi</span>
-                            <span class="text-xs text-gray-400 font-medium ml-auto">22 Jun</span>
-                        </div>
-                        <h4 class="text-lg font-extrabold text-gray-900 leading-snug group-hover:text-brand-500 transition-colors line-clamp-2 mb-2">
-                            Inovasi Layanan Publik Berbasis Digital Resmi Diluncurkan
-                        </h4>
-                        <a href="#" class="mt-auto text-xs font-bold text-gray-500 group-hover:text-brand-500 inline-flex items-center gap-1 w-max">
-                            Baca <i class="ph-bold ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                        </a>
-                    </div>
-                </article>
-
-                {{-- Side Item 3 --}}
-                <article class="group cursor-pointer flex flex-col sm:flex-row gap-5 bg-white p-4 rounded-3xl border border-gray-100 hover:border-brand-200 hover:shadow-xl hover:shadow-brand-500/5 transition-all duration-300">
-                    <div class="w-full sm:w-32 lg:w-36 aspect-[4/3] rounded-2xl overflow-hidden shrink-0 relative">
-                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80" alt="News" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    </div>
-                    <div class="flex flex-col flex-1 py-1">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2 py-1 rounded-md">Regulasi</span>
-                            <span class="text-xs text-gray-400 font-medium ml-auto">20 Jun</span>
-                        </div>
-                        <h4 class="text-lg font-extrabold text-gray-900 leading-snug group-hover:text-brand-500 transition-colors line-clamp-2 mb-2">
-                            Sosialisasi Pemetaan Nomenklatur Perangkat Daerah 2026
-                        </h4>
-                        <a href="#" class="mt-auto text-xs font-bold text-gray-500 group-hover:text-brand-500 inline-flex items-center gap-1 w-max">
-                            Baca <i class="ph-bold ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                        </a>
-                    </div>
-                </article>
-
+        {{-- Category Filters --}}
+        @if($postCategories->count() > 0)
+            <div class="flex flex-wrap gap-2 mb-10">
+                <a href="{{ route('public.berita.index') }}" class="px-5 py-2.5 bg-gray-900 text-white text-sm font-bold rounded-full hover:bg-brand-500 transition-colors shadow-md">Semua Berita</a>
+                @foreach($postCategories->take(4) as $cat)
+                    <a href="{{ route('public.berita.index', ['kategori' => $cat->slug]) }}" class="px-5 py-2.5 bg-gray-50 text-gray-600 text-sm font-bold rounded-full hover:bg-gray-100 hover:text-gray-900 transition-colors border border-gray-200">{{ $cat->name }}</a>
+                @endforeach
             </div>
+        @endif
+
+        @if($latestPosts->count() > 0)
+            @php $featured = $latestPosts->first(); $sidePosts = $latestPosts->skip(1); @endphp
+
+            <div class="grid lg:grid-cols-12 gap-8 items-stretch">
+
+                {{-- Featured Post (Left) --}}
+                <a href="{{ route('public.berita.show', $featured->slug) }}" class="lg:col-span-7 group cursor-pointer relative rounded-[2.5rem] overflow-hidden shadow-lg border border-gray-100 flex flex-col h-full min-h-[400px]">
+                    @if($featured->thumbnail)
+                        <img src="{{ asset('storage/' . $featured->thumbnail) }}" alt="{{ $featured->title }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000">
+                    @else
+                        <div class="absolute inset-0 w-full h-full bg-gradient-to-br from-brand-700 to-brand-900"></div>
+                    @endif
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                    {{-- Date Badge --}}
+                    @if($featured->published_at)
+                        <div class="absolute top-6 left-6 bg-white/95 backdrop-blur-md rounded-2xl p-3 text-center shadow-2xl border border-white/50 min-w-[4rem]">
+                            <span class="block text-2xl font-black text-gray-900 leading-none">{{ $featured->published_at->format('d') }}</span>
+                            <span class="block text-xs font-bold text-brand-500 mt-1 uppercase tracking-wider">{{ $featured->published_at->translatedFormat('M') }}</span>
+                        </div>
+                    @endif
+
+                    <div class="relative z-10 flex flex-col justify-end h-full p-8 lg:p-10 mt-auto">
+                        <div class="flex items-center gap-3 mb-4">
+                            @if($featured->category)
+                                <span class="text-xs font-bold text-brand-600 uppercase tracking-widest bg-brand-50 px-3 py-1.5 rounded-lg shadow-sm">{{ $featured->category->name }}</span>
+                                <span class="text-gray-400">•</span>
+                            @endif
+                            <span class="text-sm text-gray-300 font-medium flex items-center gap-1.5"><i class="ph-bold ph-eye"></i> {{ number_format($featured->views) }}x dilihat</span>
+                        </div>
+                        <h3 class="text-3xl lg:text-4xl font-extrabold text-white mb-4 leading-tight group-hover:text-brand-300 transition-colors line-clamp-3">
+                            {{ $featured->title }}
+                        </h3>
+                        @if($featured->excerpt)
+                            <p class="text-gray-300 text-sm lg:text-base font-medium line-clamp-2 leading-relaxed mb-6 max-w-2xl">{{ $featured->excerpt }}</p>
+                        @endif
+                        <span class="inline-flex items-center gap-2 font-bold text-white text-sm hover:text-brand-400 transition-colors w-max group/link">
+                            Baca Selengkapnya <i class="ph-bold ph-arrow-right group-hover/link:translate-x-1 transition-transform"></i>
+                        </span>
+                    </div>
+                </a>
+
+                {{-- Side Posts List (Right) --}}
+                <div class="lg:col-span-5 flex flex-col gap-5">
+                    @foreach($sidePosts as $sidePost)
+                        @php
+                            $catColors = ['pemerintahan' => 'blue', 'kegiatan' => 'amber', 'layanan-publik' => 'emerald', 'kelembagaan' => 'purple', 'reformasi-birokrasi' => 'red', 'pengumuman' => 'rose'];
+                            $color = $catColors[$sidePost->category?->slug ?? ''] ?? 'blue';
+                        @endphp
+                        <a href="{{ route('public.berita.show', $sidePost->slug) }}" class="group cursor-pointer flex flex-col sm:flex-row gap-5 bg-white p-4 rounded-3xl border border-gray-100 hover:border-brand-200 hover:shadow-xl hover:shadow-brand-500/5 transition-all duration-300">
+                            <div class="w-full sm:w-32 lg:w-36 aspect-[4/3] rounded-2xl overflow-hidden shrink-0 relative bg-gray-100">
+                                @if($sidePost->thumbnail)
+                                    <img src="{{ asset('storage/' . $sidePost->thumbnail) }}" alt="{{ $sidePost->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                @else
+                                    <div class="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                                        <i class="ph-duotone ph-newspaper text-4xl text-gray-400"></i>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="flex flex-col flex-1 py-1">
+                                <div class="flex items-center gap-2 mb-2">
+                                    @if($sidePost->category)
+                                        <span class="text-[10px] font-bold text-{{ $color }}-600 uppercase tracking-wider bg-{{ $color }}-50 px-2 py-1 rounded-md">{{ $sidePost->category->name }}</span>
+                                    @endif
+                                    @if($sidePost->published_at)
+                                        <span class="text-xs text-gray-400 font-medium ml-auto">{{ $sidePost->published_at->translatedFormat('d M') }}</span>
+                                    @endif
+                                </div>
+                                <h4 class="text-lg font-extrabold text-gray-900 leading-snug group-hover:text-brand-500 transition-colors line-clamp-2 mb-2">
+                                    {{ $sidePost->title }}
+                                </h4>
+                                <span class="mt-auto text-xs font-bold text-gray-500 group-hover:text-brand-500 inline-flex items-center gap-1 w-max">
+                                    Baca <i class="ph-bold ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                                </span>
+                            </div>
+                        </a>
+                    @endforeach
+
+                    @if($sidePosts->count() === 0)
+                        <div class="flex-1 flex items-center justify-center bg-gray-50 rounded-3xl border border-gray-100 p-10">
+                            <p class="text-sm text-gray-400 font-medium text-center">Berita lainnya akan tampil di sini.</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        @else
+            {{-- Empty State --}}
+            <div class="bg-gray-50 rounded-[2.5rem] p-16 text-center border border-gray-100">
+                <div class="w-24 h-24 mx-auto bg-white rounded-full flex items-center justify-center mb-6 shadow-sm">
+                    <i class="ph-duotone ph-newspaper text-5xl text-gray-300"></i>
+                </div>
+                <h3 class="text-2xl font-black text-gray-300 mb-3">Belum Ada Berita</h3>
+                <p class="text-sm text-gray-400 font-medium max-w-md mx-auto">Berita dan informasi terbaru akan ditampilkan di sini setelah dipublikasikan oleh admin.</p>
+            </div>
+        @endif
+
+        {{-- Mobile "View All" link --}}
+        <div class="mt-10 text-center sm:hidden">
+            <a href="{{ route('public.berita.index') }}" class="inline-flex items-center gap-2 text-gray-900 font-bold hover:text-brand-500 transition-colors pb-2 border-b-2 border-gray-200 hover:border-brand-500">
+                Lihat Semua Berita <i class="ph-bold ph-arrow-right"></i>
+            </a>
         </div>
     </div>
 </section>
@@ -436,67 +421,67 @@
             {{-- Left side: Header --}}
             <div class="shrink-0 lg:w-1/3 text-center lg:text-left">
                 <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-brand-50 text-brand-500 mb-6 shadow-sm border border-brand-100">
-                    <i class="ph-fill ph-megaphone text-4xl group-hover:scale-110 transition-transform"></i>
+                    <i class="ph-fill ph-megaphone text-4xl"></i>
                 </div>
                 <h2 class="text-3xl lg:text-4xl font-black text-gray-900 mb-4 tracking-tight">Papan <br class="hidden lg:block"><span class="text-brand-500">Pengumuman</span></h2>
                 <p class="text-gray-500 font-medium leading-relaxed mb-8 max-w-sm mx-auto lg:mx-0">
                     Pantau terus informasi terbaru, jadwal kegiatan, dan pengumuman penting lainnya dari Bagian Organisasi.
                 </p>
-                <a href="#" class="inline-flex items-center gap-2 font-bold text-brand-500 hover:text-brand-600 transition-colors bg-white px-7 py-3.5 rounded-full shadow-sm hover:shadow-md border border-gray-200 hover:border-brand-200">
-                    Lihat Semua <i class="ph-bold ph-arrow-right"></i>
-                </a>
             </div>
 
             {{-- Right side: List --}}
             <div class="flex-1 w-full flex flex-col gap-4">
-                {{-- Item 1 --}}
-                <a href="#" class="group bg-white p-5 lg:p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-brand-500/10 hover:border-brand-200 transition-all duration-300 flex items-center gap-4 lg:gap-6">
-                    <div class="w-14 h-14 lg:w-16 lg:h-16 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center shrink-0">
-                        <i class="ph-fill ph-file-pdf text-2xl lg:text-3xl group-hover:scale-110 transition-transform duration-300"></i>
-                    </div>
-                    <div class="flex-1">
-                        <div class="flex items-center gap-3 mb-1.5">
-                            <span class="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-brand-50 text-brand-600 uppercase tracking-wider">Terbaru</span>
-                            <span class="text-[11px] lg:text-xs text-gray-400 font-bold uppercase tracking-wider">28 Jun 2026</span>
-                        </div>
-                        <h3 class="text-gray-900 font-extrabold text-sm lg:text-base group-hover:text-brand-500 transition-colors line-clamp-2 leading-snug">Hasil Seleksi Administrasi Penerimaan Tenaga Non-ASN Bagian Organisasi Tahun 2026</h3>
-                    </div>
-                    <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-gray-50 text-gray-400 group-hover:bg-brand-500 group-hover:text-white flex items-center justify-center transition-colors shrink-0">
-                        <i class="ph-bold ph-download-simple text-sm lg:text-base"></i>
-                    </div>
-                </a>
+                @if($announcements->count() > 0)
+                    @foreach($announcements as $index => $announcement)
+                        @php
+                            // Smart icon based on content type
+                            if ($announcement->attachment) {
+                                $iconBg = 'bg-red-50'; $iconColor = 'text-red-500'; $icon = 'ph-fill ph-file-pdf';
+                            } elseif ($announcement->is_pinned) {
+                                $iconBg = 'bg-amber-50'; $iconColor = 'text-amber-500'; $icon = 'ph-fill ph-push-pin';
+                            } elseif ($announcement->expired_at) {
+                                $iconBg = 'bg-emerald-50'; $iconColor = 'text-emerald-500'; $icon = 'ph-fill ph-calendar-check';
+                            } else {
+                                $iconBg = 'bg-blue-50'; $iconColor = 'text-blue-500'; $icon = 'ph-fill ph-info';
+                            }
 
-                {{-- Item 2 --}}
-                <a href="#" class="group bg-white p-5 lg:p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-brand-500/10 hover:border-brand-200 transition-all duration-300 flex items-center gap-4 lg:gap-6">
-                    <div class="w-14 h-14 lg:w-16 lg:h-16 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center shrink-0">
-                        <i class="ph-fill ph-info text-2xl lg:text-3xl group-hover:scale-110 transition-transform duration-300"></i>
-                    </div>
-                    <div class="flex-1">
-                        <div class="flex items-center gap-3 mb-1.5">
-                            <span class="text-[11px] lg:text-xs text-gray-400 font-bold uppercase tracking-wider">15 Jun 2026</span>
+                            // Action: download attachment or just info
+                            $href = $announcement->attachment ? asset('storage/' . $announcement->attachment) : '#';
+                            $target = $announcement->attachment ? '_blank' : '_self';
+                        @endphp
+                        <a href="{{ $href }}" target="{{ $target }}" class="group bg-white p-5 lg:p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-brand-500/10 hover:border-brand-200 transition-all duration-300 flex items-center gap-4 lg:gap-6">
+                            <div class="w-14 h-14 lg:w-16 lg:h-16 {{ $iconBg }} {{ $iconColor }} rounded-2xl flex items-center justify-center shrink-0">
+                                <i class="{{ $icon }} text-2xl lg:text-3xl group-hover:scale-110 transition-transform duration-300"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-1.5 flex-wrap">
+                                    @if($index === 0 && $announcement->is_pinned)
+                                        <span class="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-brand-50 text-brand-600 uppercase tracking-wider">📌 Pinned</span>
+                                    @elseif($index === 0)
+                                        <span class="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-brand-50 text-brand-600 uppercase tracking-wider">Terbaru</span>
+                                    @endif
+                                    <span class="text-[11px] lg:text-xs text-gray-400 font-bold uppercase tracking-wider">{{ $announcement->published_at->translatedFormat('d M Y') }}</span>
+                                </div>
+                                <h3 class="text-gray-900 font-extrabold text-sm lg:text-base group-hover:text-brand-500 transition-colors line-clamp-2 leading-snug">{{ $announcement->title }}</h3>
+                            </div>
+                            <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-gray-50 text-gray-400 group-hover:bg-brand-500 group-hover:text-white flex items-center justify-center transition-colors shrink-0">
+                                @if($announcement->attachment)
+                                    <i class="ph-bold ph-download-simple text-sm lg:text-base"></i>
+                                @else
+                                    <i class="ph-bold ph-arrow-right text-sm lg:text-base"></i>
+                                @endif
+                            </div>
+                        </a>
+                    @endforeach
+                @else
+                    {{-- Empty State --}}
+                    <div class="bg-white rounded-3xl p-12 text-center border border-gray-100">
+                        <div class="w-16 h-16 mx-auto bg-gray-50 rounded-full flex items-center justify-center mb-4">
+                            <i class="ph-duotone ph-megaphone text-3xl text-gray-300"></i>
                         </div>
-                        <h3 class="text-gray-900 font-extrabold text-sm lg:text-base group-hover:text-brand-500 transition-colors line-clamp-2 leading-snug">Jadwal Pelaksanaan Survei Kepuasan Masyarakat (SKM) Periode Semester I Tahun 2026</h3>
+                        <p class="text-sm text-gray-400 font-medium">Belum ada pengumuman aktif saat ini.</p>
                     </div>
-                    <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-gray-50 text-gray-400 group-hover:bg-brand-500 group-hover:text-white flex items-center justify-center transition-colors shrink-0">
-                        <i class="ph-bold ph-arrow-right text-sm lg:text-base"></i>
-                    </div>
-                </a>
-                
-                {{-- Item 3 --}}
-                <a href="#" class="group bg-white p-5 lg:p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-brand-500/10 hover:border-brand-200 transition-all duration-300 flex items-center gap-4 lg:gap-6">
-                    <div class="w-14 h-14 lg:w-16 lg:h-16 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center shrink-0">
-                        <i class="ph-fill ph-calendar-check text-2xl lg:text-3xl group-hover:scale-110 transition-transform duration-300"></i>
-                    </div>
-                    <div class="flex-1">
-                        <div class="flex items-center gap-3 mb-1.5">
-                            <span class="text-[11px] lg:text-xs text-gray-400 font-bold uppercase tracking-wider">10 Jun 2026</span>
-                        </div>
-                        <h3 class="text-gray-900 font-extrabold text-sm lg:text-base group-hover:text-brand-500 transition-colors line-clamp-2 leading-snug">Pemberitahuan Penyesuaian Jam Layanan Publik Selama Bulan Suci Ramadhan</h3>
-                    </div>
-                    <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-gray-50 text-gray-400 group-hover:bg-brand-500 group-hover:text-white flex items-center justify-center transition-colors shrink-0">
-                        <i class="ph-bold ph-arrow-right text-sm lg:text-base"></i>
-                    </div>
-                </a>
+                @endif
             </div>
         </div>
     </div>
@@ -664,28 +649,28 @@
                     <div class="w-12 h-12 mx-auto bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center mb-4">
                         <i class="ph-bold ph-users text-xl"></i>
                     </div>
-                    <h4 class="text-3xl font-black text-gray-900 mb-1">1,248</h4>
+                    <h4 class="text-3xl font-black text-gray-900 mb-1">{{ number_format($visitorToday, 0, ',', '.') }}</h4>
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Hari Ini</p>
                 </div>
                 <div class="bg-white rounded-[2rem] p-6 text-center shadow-[0_0_30px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
                     <div class="w-12 h-12 mx-auto bg-brand-50 text-brand-500 rounded-2xl flex items-center justify-center mb-4">
                         <i class="ph-bold ph-calendar text-xl"></i>
                     </div>
-                    <h4 class="text-3xl font-black text-gray-900 mb-1">34.5K</h4>
+                    <h4 class="text-3xl font-black text-gray-900 mb-1">{{ number_format($visitorMonth, 0, ',', '.') }}</h4>
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Bulan Ini</p>
                 </div>
                 <div class="bg-white rounded-[2rem] p-6 text-center shadow-[0_0_30px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
                     <div class="w-12 h-12 mx-auto bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-4">
                         <i class="ph-bold ph-chart-bar text-xl"></i>
                     </div>
-                    <h4 class="text-3xl font-black text-gray-900 mb-1">450K</h4>
+                    <h4 class="text-3xl font-black text-gray-900 mb-1">{{ number_format($visitorYear, 0, ',', '.') }}</h4>
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Tahun Ini</p>
                 </div>
                 <div class="bg-white rounded-[2rem] p-6 text-center shadow-[0_0_30px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-2 transition-transform duration-300">
                     <div class="w-12 h-12 mx-auto bg-purple-50 text-purple-500 rounded-2xl flex items-center justify-center mb-4">
                         <i class="ph-bold ph-globe text-xl"></i>
                     </div>
-                    <h4 class="text-3xl font-black text-gray-900 mb-1">523K</h4>
+                    <h4 class="text-3xl font-black text-gray-900 mb-1">{{ number_format($visitorTotal, 0, ',', '.') }}</h4>
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total Visitor</p>
                 </div>
             </div>
@@ -723,10 +708,10 @@
             new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['1', '3', '6', '9', '12', '15', '18', '21', '24', '27', '30'],
+                    labels: {!! json_encode($visitorChartData['labels']) !!},
                     datasets: [{
                         label: 'Total Visitor',
-                        data: [1200, 1500, 1100, 1800, 1750, 2200, 2100, 2600, 2400, 3100, 3400],
+                        data: {!! json_encode($visitorChartData['data']) !!},
                         borderColor: '#475569', // brand-500 (Slate)
                         backgroundColor: gradient,
                         borderWidth: 3,
@@ -768,7 +753,9 @@
                             ticks: { 
                                 font: { family: "'Plus Jakarta Sans', sans-serif", size: 12 }, 
                                 color: '#9ca3af',
-                                callback: function(value) { return value / 1000 + 'k'; }
+                                callback: function(value) { 
+                                    return value >= 1000 ? (value / 1000) + 'k' : value; 
+                                }
                             }
                         }
                     },

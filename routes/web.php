@@ -1,15 +1,52 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicBeritaController;
+use App\Http\Controllers\PublicLayananController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    // Increment unique visitor count for the homepage
+    \App\Models\VisitorStat::recordVisit(true);
+
+    $latestPosts = \App\Models\Post::published()
+        ->with(['category', 'author'])
+        ->limit(4)
+        ->get();
+    $postCategories = \App\Models\PostCategory::orderBy('name')->get();
+    $announcements = \App\Models\Announcement::active()->limit(5)->get();
+    $statistics = \App\Models\Statistic::orderBy('order')->get();
+    
+    // Visitor Stats
+    $visitorToday = \App\Models\VisitorStat::getTodayVisitors();
+    $visitorMonth = \App\Models\VisitorStat::getThisMonthVisitors();
+    $visitorYear = \App\Models\VisitorStat::getThisYearVisitors();
+    $visitorTotal = \App\Models\VisitorStat::getTotalVisitors();
+    $visitorChartData = \App\Models\VisitorStat::getChartData();
+
+    return view('welcome', compact(
+        'latestPosts', 'postCategories', 'announcements', 'statistics',
+        'visitorToday', 'visitorMonth', 'visitorYear', 'visitorTotal', 'visitorChartData'
+    ));
 });
 
 Route::get('/profil', function () {
     return view('profil');
 });
+
+// Halaman Publik — Layanan Unggulan (6 cards dari landing page)
+Route::get('/layanan/reformasi-birokrasi', [PublicLayananController::class, 'reformasiBirokrasi'])->name('public.reformasi-birokrasi');
+Route::get('/layanan/sop', [PublicLayananController::class, 'sop'])->name('public.sop');
+Route::get('/layanan/anjab-abk', [PublicLayananController::class, 'anjabAbk'])->name('public.anjab-abk');
+Route::get('/layanan/pengaduan', [PublicLayananController::class, 'pengaduan'])->name('public.pengaduan');
+Route::post('/layanan/pengaduan', [PublicLayananController::class, 'storePengaduan'])->name('public.pengaduan.store');
+Route::get('/layanan/kelembagaan', [PublicLayananController::class, 'kelembagaan'])->name('public.kelembagaan');
+Route::get('/layanan/standar-pelayanan', [PublicLayananController::class, 'standarPelayanan'])->name('public.standar-pelayanan');
+
+// Halaman Publik — Berita
+Route::get('/berita', [PublicBeritaController::class, 'index'])->name('public.berita.index');
+Route::get('/berita/{slug}', [PublicBeritaController::class, 'show'])->name('public.berita.show');
+
 
 Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -25,6 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('admin/pegawai', \App\Http\Controllers\Admin\PegawaiController::class);
     Route::resource('admin/banners', \App\Http\Controllers\Admin\BannerController::class);
     Route::resource('admin/metrics', \App\Http\Controllers\Admin\PerformanceMetricController::class);
+    Route::resource('admin/statistics', \App\Http\Controllers\Admin\StatisticController::class);
     
     // Kelembagaan (Layanan)
     Route::get('admin/layanan/{kategori}', [\App\Http\Controllers\Admin\LayananController::class, 'index'])->name('layanan.index');
