@@ -94,7 +94,7 @@
                 </div>
                 <h1 class="text-4xl font-black text-white mb-4 leading-tight">
                     Sistem Informasi <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-orange-300">Bagian Organisasi</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-300">Bagian Organisasi</span>
                 </h1>
                 <p class="text-gray-400 text-sm font-medium leading-relaxed mb-10 px-8">
                     Portal terpadu untuk mengelola konten website, layanan perizinan, dan informasi tata kelola organisasi secara efisien, transparan, dan terukur.
@@ -107,7 +107,7 @@
                         <div class="w-10 h-10 rounded-full border-2 border-[#0a0f1c] bg-gray-200 flex items-center justify-center overflow-hidden"><img src="{{ asset('assets/img/staff/yeni_martina_1785375402271.png') }}" class="w-full h-full object-cover"></div>
                     </div>
                     <div class="text-left">
-                        <div class="flex items-center gap-1 text-yellow-400">
+                        <div class="flex items-center gap-1 text-brand-400">
                             <i class="ph-fill ph-star text-xs"></i>
                             <i class="ph-fill ph-star text-xs"></i>
                             <i class="ph-fill ph-star text-xs"></i>

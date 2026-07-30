@@ -38,10 +38,10 @@
                     </thead>
                     <tbody class="divide-y divide-gray-50">
                         @foreach($announcements as $announcement)
-                        <tr class="hover:bg-gray-50/50 transition-colors {{ $announcement->is_pinned ? 'bg-yellow-50/30' : '' }}">
+                        <tr class="hover:bg-gray-50/50 transition-colors {{ $announcement->is_pinned ? 'bg-brand-50/30' : '' }}">
                             <td class="px-6 py-4">
                                 @if($announcement->is_pinned)
-                                    <i class="ph-fill ph-push-pin text-yellow-500 text-lg"></i>
+                                    <i class="ph-fill ph-push-pin text-brand-500 text-lg"></i>
                                 @endif
                             </td>
                             <td class="px-6 py-4">

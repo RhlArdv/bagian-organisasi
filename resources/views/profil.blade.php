@@ -30,7 +30,7 @@
         <section class="pb-4 mb-8 border-b border-gray-200/60 max-w-7xl mx-auto px-5 lg:px-8">
             <h1 class="text-[28px] lg:text-3xl font-black text-[#1a202c] tracking-tight mb-2">Profil</h1>
             <nav class="flex items-center gap-2 text-[12px] font-medium text-gray-500">
-                <a href="/" class="hover:text-orange-400 transition-colors text-[#1a202c]">Beranda</a>
+                <a href="/" class="hover:text-brand-400 transition-colors text-[#1a202c]">Beranda</a>
                 <i class="ph-bold ph-caret-right text-[10px] text-gray-400"></i>
                 <span class="text-gray-500">Profil</span>
             </nav>
@@ -44,7 +44,7 @@
                     {{-- Left Text Box --}}
                     <div class="flex-1">
                         <h2 class="text-[22px] lg:text-3xl font-black text-[#1a202c] mb-3">Sambutan Kepala Bagian Organisasi</h2>
-                        <div class="w-16 h-[3px] bg-orange-400 mb-6"></div>
+                        <div class="w-16 h-[3px] bg-brand-400 mb-6"></div>
                         
                         <div class="text-gray-600 font-medium text-[14px] leading-relaxed space-y-4 mb-8">
                             <p class="font-bold text-[#1a202c]">Assalamu'alaikum Wr. Wb.</p>
@@ -55,7 +55,7 @@
 
                         <div>
                             <h3 class="text-[17px] font-black text-[#1a202c]">Ir. Yudi Indra, M.M.</h3>
-                            <p class="text-[13px] font-bold text-orange-400 mt-0.5">Kepala Bagian Organisasi</p>
+                            <p class="text-[13px] font-bold text-brand-400 mt-0.5">Kepala Bagian Organisasi</p>
                         </div>
                     </div>
 
@@ -78,7 +78,7 @@
                     
                     {{-- Visi --}}
                     <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-[0_4px_25px_rgb(0,0,0,0.03)] h-full">
-                        <div class="w-12 h-12 rounded-xl bg-orange-50 text-orange-400 flex items-center justify-center mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-400 flex items-center justify-center mb-6">
                             <i class="ph-bold ph-eye text-[26px]"></i>
                         </div>
                         <h3 class="text-2xl font-black text-[#1a202c] mb-4">Visi</h3>
@@ -89,25 +89,25 @@
 
                     {{-- Misi --}}
                     <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-[0_4px_25px_rgb(0,0,0,0.03)] h-full">
-                        <div class="w-12 h-12 rounded-xl bg-orange-50 text-orange-400 flex items-center justify-center mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-400 flex items-center justify-center mb-6">
                             <i class="ph-bold ph-target text-[26px]"></i>
                         </div>
                         <h3 class="text-2xl font-black text-[#1a202c] mb-4">Misi</h3>
                         <ul class="space-y-3">
                             <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
-                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0"></span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
                                 Meningkatkan kualitas pelayanan umum yang cepat, tepat dan transparan.
                             </li>
                             <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
-                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0"></span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
                                 Mengoptimalkan pengelolaan aset, rumah tangga dan dokumentasi.
                             </li>
                             <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
-                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0"></span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
                                 Mewujudkan tata kelola administrasi yang akuntabel dan inovatif.
                             </li>
                             <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
-                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0"></span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
                                 Mendukung pelaksanaan tugas pemerintahan daerah secara efektif dan efisien.
                             </li>
                         </ul>
@@ -115,25 +115,25 @@
 
                     {{-- Tujuan --}}
                     <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-[0_4px_25px_rgb(0,0,0,0.03)] h-full">
-                        <div class="w-12 h-12 rounded-xl bg-orange-50 text-orange-400 flex items-center justify-center mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-400 flex items-center justify-center mb-6">
                             <i class="ph-bold ph-flag-banner text-[26px]"></i>
                         </div>
                         <h3 class="text-2xl font-black text-[#1a202c] mb-4">Tujuan</h3>
                         <ul class="space-y-3">
                             <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
-                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0"></span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
                                 Memberikan pelayanan umum yang prima bagi seluruh perangkat daerah.
                             </li>
                             <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
-                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0"></span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
                                 Menyediakan sarana dan prasarana kerja yang memadai.
                             </li>
                             <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
-                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0"></span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
                                 Mendukung kelancaran administrasi dan operasional Pemerintah Kota Padang.
                             </li>
                             <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
-                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0"></span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
                                 Mewujudkan lingkungan kerja yang tertib, aman dan nyaman.
                             </li>
                         </ul>
@@ -148,31 +148,31 @@
                 <div class="bg-white rounded-[2rem] p-8 lg:p-12 shadow-[0_4px_25px_rgb(0,0,0,0.03)] flex flex-col lg:flex-row gap-10 lg:gap-16">
                     <div class="w-full lg:w-[40%]">
                         <div class="flex items-center gap-3 mb-4">
-                            <i class="ph-bold ph-briefcase text-orange-400 text-3xl"></i>
+                            <i class="ph-bold ph-briefcase text-brand-400 text-3xl"></i>
                             <h2 class="text-[26px] font-black text-[#1a202c]">Tupoksi</h2>
                         </div>
                         <p class="text-gray-600 font-medium text-[13.5px] leading-relaxed mb-6">
                             Bagian Organisasi Sekretariat Daerah Kota Padang mempunyai tugas melaksanakan penyiapan bahan perumusan kebijakan daerah, pengkoordinasian perumusan kebijakan daerah, pengkoordinasian pelaksanaan tugas perangkat daerah, pemantauan dan evaluasi pelaksanaan kebijakan daerah di bidang organisasi.
                         </p>
-                        <a href="#" class="inline-flex items-center gap-2 px-6 py-2.5 bg-white border border-orange-200 text-orange-400 font-bold rounded-full hover:bg-orange-50 transition-colors text-[13px]">
+                        <a href="#" class="inline-flex items-center gap-2 px-6 py-2.5 bg-white border border-brand-200 text-brand-400 font-bold rounded-full hover:bg-brand-50 transition-colors text-[13px]">
                             Selengkapnya <i class="ph-bold ph-arrow-right"></i>
                         </a>
                     </div>
                     <div class="w-full lg:w-[60%] space-y-3 lg:mt-2">
                         <div class="flex items-center gap-5 bg-[#fffaf3] p-4 lg:p-5 rounded-2xl border border-[#ffe8c7]">
-                            <span class="text-orange-400 font-bold text-[15px] w-8 text-center shrink-0">01</span>
+                            <span class="text-brand-400 font-bold text-[15px] w-8 text-center shrink-0">01</span>
                             <p class="text-[13px] font-bold text-[#1a202c]">Melaksanakan urusan ketatausahaan, kearsipan, dan kerumahtanggaan.</p>
                         </div>
                         <div class="flex items-center gap-5 bg-[#fffaf3] p-4 lg:p-5 rounded-2xl border border-[#ffe8c7]">
-                            <span class="text-orange-400 font-bold text-[15px] w-8 text-center shrink-0">02</span>
+                            <span class="text-brand-400 font-bold text-[15px] w-8 text-center shrink-0">02</span>
                             <p class="text-[13px] font-bold text-[#1a202c]">Mengelola administrasi aset dan perlengkapan daerah.</p>
                         </div>
                         <div class="flex items-center gap-5 bg-[#fffaf3] p-4 lg:p-5 rounded-2xl border border-[#ffe8c7]">
-                            <span class="text-orange-400 font-bold text-[15px] w-8 text-center shrink-0">03</span>
+                            <span class="text-brand-400 font-bold text-[15px] w-8 text-center shrink-0">03</span>
                             <p class="text-[13px] font-bold text-[#1a202c]">Menyelenggarakan dokumentasi dan publikasi kegiatan pimpinan daerah.</p>
                         </div>
                         <div class="flex items-center gap-5 bg-[#fffaf3] p-4 lg:p-5 rounded-2xl border border-[#ffe8c7]">
-                            <span class="text-orange-400 font-bold text-[15px] w-8 text-center shrink-0">04</span>
+                            <span class="text-brand-400 font-bold text-[15px] w-8 text-center shrink-0">04</span>
                             <p class="text-[13px] font-bold text-[#1a202c]">Memberikan pelayanan administratif kepada perangkat daerah dan masyarakat.</p>
                         </div>
                     </div>
@@ -184,11 +184,11 @@
         <section class="mb-12">
             <div class="max-w-7xl mx-auto px-5 lg:px-8">
                 <div class="bg-[#fff9ed] rounded-[2rem] p-8 lg:px-12 flex flex-col md:flex-row items-center md:items-start gap-6 border border-[#ffe5b5] shadow-sm">
-                    <div class="w-[70px] h-[70px] bg-white rounded-2xl flex items-center justify-center shrink-0 shadow-sm text-orange-400">
+                    <div class="w-[70px] h-[70px] bg-white rounded-2xl flex items-center justify-center shrink-0 shadow-sm text-brand-400">
                         <i class="ph-fill ph-shield-check text-[36px]"></i>
                     </div>
                     <div class="pt-1 text-center md:text-left">
-                        <h3 class="text-xl font-black text-orange-500 mb-2">Maklumat Pelayanan</h3>
+                        <h3 class="text-xl font-black text-brand-500 mb-2">Maklumat Pelayanan</h3>
                         <p class="text-[#1a202c] font-medium text-[13.5px] leading-relaxed max-w-4xl opacity-80">
                             Dengan ini kami menyatakan sanggup menyelenggarakan pelayanan sesuai standar pelayanan yang telah ditetapkan, memberikan pelayanan dengan sepenuh hati, transparan, cepat, tepat, dan akuntabel serta bersedia menerima sanksi sesuai peraturan perundang-undangan.
                         </p>
@@ -202,10 +202,10 @@
             <div class="max-w-7xl mx-auto px-5 lg:px-8">
                 <div class="flex items-center justify-between mb-8">
                     <div class="flex items-center gap-3">
-                        <i class="ph-bold ph-users-three text-orange-400 text-3xl"></i>
+                        <i class="ph-bold ph-users-three text-brand-400 text-3xl"></i>
                         <h2 class="text-[26px] font-black text-[#1a202c]">Profil Pegawai</h2>
                     </div>
-                    <a href="#" class="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full border border-orange-200 text-orange-500 font-bold text-[13px] hover:bg-orange-50 transition-colors bg-white">
+                    <a href="#" class="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full border border-brand-200 text-brand-500 font-bold text-[13px] hover:bg-brand-50 transition-colors bg-white">
                         Lihat Semua Pegawai <i class="ph-bold ph-arrow-right"></i>
                     </a>
                 </div>
@@ -235,7 +235,7 @@
                 </div>
 
                 <div class="flex justify-center gap-1.5 mt-8">
-                    <span class="w-6 h-1.5 rounded-full bg-orange-400"></span>
+                    <span class="w-6 h-1.5 rounded-full bg-brand-400"></span>
                     <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
                     <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
                 </div>
@@ -252,25 +252,25 @@
                         <h2 class="text-xl font-black text-[#1a202c] mb-8">Kontak Kami</h2>
                         <div class="space-y-5">
                             <div class="flex items-start gap-4">
-                                <i class="ph-bold ph-phone-call text-orange-400 text-xl mt-0.5"></i>
+                                <i class="ph-bold ph-phone-call text-brand-400 text-xl mt-0.5"></i>
                                 <div>
                                     <p class="text-[13px] text-gray-700 font-medium">(0751) 123456</p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-4">
-                                <i class="ph-bold ph-envelope-simple text-orange-400 text-xl mt-0.5"></i>
+                                <i class="ph-bold ph-envelope-simple text-brand-400 text-xl mt-0.5"></i>
                                 <div>
                                     <p class="text-[13px] text-gray-700 font-medium">bag.organisasi@padang.go.id</p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-4">
-                                <i class="ph-bold ph-map-pin text-orange-400 text-xl mt-0.5"></i>
+                                <i class="ph-bold ph-map-pin text-brand-400 text-xl mt-0.5"></i>
                                 <div>
                                     <p class="text-[13px] text-gray-700 font-medium leading-relaxed">Jl. Jenderal Sudirman No. 1<br>Padang, Sumatera Barat 25129</p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-4">
-                                <i class="ph-bold ph-clock text-orange-400 text-xl mt-0.5"></i>
+                                <i class="ph-bold ph-clock text-brand-400 text-xl mt-0.5"></i>
                                 <div>
                                     <p class="text-[13px] text-[#1a202c] font-bold mb-0.5">Senin - Jumat</p>
                                     <p class="text-[13px] text-gray-500 font-medium">08.00 - 16.00 WIB</p>
@@ -279,10 +279,10 @@
                         </div>
 
                         <div class="flex items-center gap-3 mt-8 pt-6">
-                            <a href="#" class="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-orange-400 hover:text-white hover:border-orange-400 transition-colors shadow-sm"><i class="ph-bold ph-instagram-logo"></i></a>
-                            <a href="#" class="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-orange-400 hover:text-white hover:border-orange-400 transition-colors shadow-sm"><i class="ph-bold ph-facebook-logo"></i></a>
-                            <a href="#" class="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-orange-400 hover:text-white hover:border-orange-400 transition-colors shadow-sm"><i class="ph-bold ph-twitter-logo"></i></a>
-                            <a href="#" class="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-orange-400 hover:text-white hover:border-orange-400 transition-colors shadow-sm"><i class="ph-bold ph-youtube-logo"></i></a>
+                            <a href="#" class="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-brand-400 hover:text-white hover:border-brand-400 transition-colors shadow-sm"><i class="ph-bold ph-instagram-logo"></i></a>
+                            <a href="#" class="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-brand-400 hover:text-white hover:border-brand-400 transition-colors shadow-sm"><i class="ph-bold ph-facebook-logo"></i></a>
+                            <a href="#" class="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-brand-400 hover:text-white hover:border-brand-400 transition-colors shadow-sm"><i class="ph-bold ph-twitter-logo"></i></a>
+                            <a href="#" class="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-brand-400 hover:text-white hover:border-brand-400 transition-colors shadow-sm"><i class="ph-bold ph-youtube-logo"></i></a>
                         </div>
                     </div>
 

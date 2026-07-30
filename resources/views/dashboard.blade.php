@@ -30,7 +30,7 @@
         <h3 class="font-bold text-gray-800 text-lg">Informasi Utama</h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="bg-white rounded-3xl p-6 border border-gray-100 shadow-[0_4px_25px_rgb(0,0,0,0.03)] flex items-center gap-5 hover:-translate-y-1 transition-transform cursor-default">
-                <div class="w-14 h-14 rounded-2xl bg-orange-50 text-orange-500 flex items-center justify-center">
+                <div class="w-14 h-14 rounded-2xl bg-brand-50 text-brand-500 flex items-center justify-center">
                     <i class="ph-bold ph-users text-2xl"></i>
                 </div>
                 <div>
@@ -104,6 +104,12 @@
             </div>
         </div>
 
+        {{-- Statistik Grafik --}}
+        <h3 class="font-bold text-gray-800 text-lg pt-4 border-t border-gray-100">Grafik Aktivitas</h3>
+        <div class="bg-white rounded-3xl p-6 border border-gray-100 shadow-[0_4px_25px_rgb(0,0,0,0.03)]">
+            <div id="activityChart"></div>
+        </div>
+
         {{-- Quick Actions --}}
         <h3 class="font-bold text-gray-800 text-lg pt-4 border-t border-gray-100">Aksi Cepat</h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -139,4 +145,53 @@
         </div>
         
     </div>
+
+    @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var options = {
+                series: [{
+                    name: 'Publikasi Berita',
+                    data: [12, 19, 15, 25, 22, 30]
+                }, {
+                    name: 'Dokumen Regulasi',
+                    data: [7, 11, 8, 15, 13, 22]
+                }],
+                chart: {
+                    type: 'area',
+                    height: 350,
+                    toolbar: { show: false },
+                    fontFamily: 'inherit'
+                },
+                colors: ['#0d9488', '#f5a500'], // Teal and Orange
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.4,
+                        opacityTo: 0.05,
+                        stops: [0, 100]
+                    }
+                },
+                dataLabels: { enabled: false },
+                stroke: { curve: 'smooth', width: 3 },
+                xaxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    axisBorder: { show: false },
+                    axisTicks: { show: false }
+                },
+                yaxis: { show: false },
+                grid: {
+                    borderColor: '#f1f5f9',
+                    strokeDashArray: 4,
+                },
+                theme: { mode: 'light' }
+            };
+
+            var chart = new ApexCharts(document.querySelector("#activityChart"), options);
+            chart.render();
+        });
+    </script>
+    @endpush
 </x-app-layout>

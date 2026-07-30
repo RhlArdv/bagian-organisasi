@@ -101,7 +101,7 @@
                 </p>
                 
                 <div class="flex flex-wrap gap-4">
-                    <a href="#profil" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-[#f5a500] text-white font-bold text-[15px] rounded-xl hover:bg-yellow-600 transition-colors shadow-lg shadow-yellow-500/25">
+                    <a href="#profil" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-brand-500 text-white font-bold text-[15px] rounded-xl hover:bg-brand-600 transition-colors shadow-lg shadow-brand-500/25">
                         Profil Organisasi <i class="ph ph-arrow-right"></i>
                     </a>
                     <a href="#pelayanan" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-white text-gray-800 font-bold text-[15px] rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
@@ -118,7 +118,7 @@
             <div class="flex flex-wrap lg:flex-nowrap gap-4">
                 <div class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center">
+                        <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-500 flex items-center justify-center">
                             <i class="ph-duotone ph-buildings text-xl"></i>
                         </div>
                         <div>
@@ -717,8 +717,8 @@
             
             // Create gradient
             let gradient = ctx.createLinearGradient(0, 0, 0, 300);
-            gradient.addColorStop(0, 'rgba(245, 158, 11, 0.4)'); // brand-500 with opacity
-            gradient.addColorStop(1, 'rgba(245, 158, 11, 0.0)');
+            gradient.addColorStop(0, 'rgba(71, 85, 105, 0.4)'); // brand-500 (Slate) with opacity
+            gradient.addColorStop(1, 'rgba(71, 85, 105, 0.0)');
 
             new Chart(ctx, {
                 type: 'line',
@@ -727,11 +727,11 @@
                     datasets: [{
                         label: 'Total Visitor',
                         data: [1200, 1500, 1100, 1800, 1750, 2200, 2100, 2600, 2400, 3100, 3400],
-                        borderColor: '#f59e0b', // brand-500
+                        borderColor: '#475569', // brand-500 (Slate)
                         backgroundColor: gradient,
                         borderWidth: 3,
                         pointBackgroundColor: '#fff',
-                        pointBorderColor: '#f59e0b',
+                        pointBorderColor: '#475569',
                         pointBorderWidth: 2,
                         pointRadius: 4,
                         pointHoverRadius: 6,
