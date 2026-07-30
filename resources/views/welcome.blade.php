@@ -603,7 +603,7 @@
                 <span class="w-2 h-2 rounded-full bg-brand-400 animate-ping"></span> We Are Here
             </div>
             <h2 class="text-6xl lg:text-[7rem] font-black text-white leading-[0.9] tracking-tighter mb-6">
-                HIT US!
+                HIT&nbsp;&nbsp;US!
             </h2>
             <p class="text-xl text-gray-400 font-medium max-w-md mx-auto lg:mx-0 leading-relaxed mb-8">
                 Punya ide gila, saran pedas, atau sekedar mau nyapa? Kirim pesan frontal-mu sekarang.

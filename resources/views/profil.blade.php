@@ -16,186 +16,298 @@
     {{-- Tailwind & Vite --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-[#fafafa] text-gray-900 antialiased overflow-x-hidden min-h-screen flex flex-col" x-data="{ scrolled: false }" @scroll.window="scrolled = (window.pageYOffset > 30)">
+<body class="bg-[#f4f7f6] text-gray-900 antialiased overflow-x-hidden min-h-screen flex flex-col" x-data="{ scrolled: false }" @scroll.window.passive="scrolled = (window.pageYOffset > 30)">
 
-    {{-- ═══ NAVBAR (Dari Welcome) ═══ --}}
+    {{-- ═══ NAVBAR ═══ --}}
     @include('components.navbar')
 
-    {{-- ═══ GEN-Z BENTO GRID LAYOUT ═══ --}}
-    <main class="flex-1 relative w-full pt-32 lg:pt-40 pb-24">
+    {{-- ═══════════════════════════════════════════════════ --}}
+    {{-- ═══ MAIN CONTENT ═══ --}}
+    {{-- ═══════════════════════════════════════════════════ --}}
+    <main class="flex-1 w-full pt-28 lg:pt-32 pb-20">
         
-        {{-- Dot Pattern Background --}}
-        <div class="absolute inset-0 z-0 opacity-50 pointer-events-none" style="background-image: radial-gradient(#fcd34d 1.5px, transparent 1.5px); background-size: 36px 36px;"></div>
+        {{-- PAGE HEADER --}}
+        <section class="pb-4 mb-8 border-b border-gray-200/60 max-w-7xl mx-auto px-5 lg:px-8">
+            <h1 class="text-[28px] lg:text-3xl font-black text-[#1a202c] tracking-tight mb-2">Profil</h1>
+            <nav class="flex items-center gap-2 text-[12px] font-medium text-gray-500">
+                <a href="/" class="hover:text-orange-400 transition-colors text-[#1a202c]">Beranda</a>
+                <i class="ph-bold ph-caret-right text-[10px] text-gray-400"></i>
+                <span class="text-gray-500">Profil</span>
+            </nav>
+        </section>
 
-        <div class="max-w-[1400px] mx-auto px-5 lg:px-8 relative z-10">
-            {{-- HERO HEADER --}}
-            <div class="text-center mb-12 lg:mb-20 relative">
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-2xl h-[300px] bg-gradient-to-r from-brand-300 via-purple-300 to-orange-300 blur-[120px] opacity-20 -z-10 rounded-full pointer-events-none"></div>
-                
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-600 text-xs font-black tracking-widest uppercase mb-6 shadow-sm">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
-                    </span>
-                    Mengenal Lebih Dekat
-                </div>
-                
-                <h1 class="text-5xl lg:text-7xl font-black tracking-tighter text-gray-900 leading-[1.1] mb-6">
-                    Pusat Inovasi <br class="hidden lg:block"/>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-orange-500">
-                        Tata Kelola Kota Padang
-                    </span>
-                </h1>
-                <p class="text-gray-500 text-lg lg:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
-                    Kami adalah Bagian Organisasi Setda Kota Padang. Merancang birokrasi yang lincah, modern, dan selalu berpusat pada masyarakat.
-                </p>
-            </div>
-
-            {{-- BENTO GRID CONTAINER --}}
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-6 auto-rows-[minmax(250px,auto)]">
-            
-            {{-- BENTO 1: VISI (Large Box) --}}
-            <div class="md:col-span-2 lg:col-span-2 row-span-2 bg-gray-900 text-white rounded-[2.5rem] lg:rounded-[3rem] p-8 lg:p-12 relative overflow-hidden group hover:scale-[1.01] transition-transform duration-500 shadow-xl shadow-gray-900/10">
-                <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-brand-950"></div>
-                <div class="absolute -top-10 -right-10 p-8 opacity-[0.03] group-hover:scale-110 transition-transform duration-700 pointer-events-none">
-                    <i class="ph-fill ph-target text-[20rem]"></i>
-                </div>
-                <div class="relative z-10 h-full flex flex-col justify-between">
-                    <div>
-                        <div class="w-14 h-14 bg-white/10 rounded-[1.2rem] flex items-center justify-center backdrop-blur-md mb-10 border border-white/20 text-brand-400">
-                            <i class="ph-bold ph-eye text-3xl"></i>
+        {{-- KATA SAMBUTAN --}}
+        <section class="mb-10">
+            <div class="max-w-7xl mx-auto px-5 lg:px-8">
+                <div class="bg-white rounded-[2rem] p-8 lg:p-12 shadow-[0_4px_25px_rgb(0,0,0,0.03)] flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+                    
+                    {{-- Left Text Box --}}
+                    <div class="flex-1">
+                        <h2 class="text-[22px] lg:text-3xl font-black text-[#1a202c] mb-3">Sambutan Kepala Bagian Organisasi</h2>
+                        <div class="w-16 h-[3px] bg-orange-400 mb-6"></div>
+                        
+                        <div class="text-gray-600 font-medium text-[14px] leading-relaxed space-y-4 mb-8">
+                            <p class="font-bold text-[#1a202c]">Assalamu'alaikum Wr. Wb.</p>
+                            <p>Selamat datang di website resmi Bagian Organisasi Sekretariat Daerah Kota Padang. Website ini kami hadirkan sebagai wujud komitmen dalam memberikan informasi yang transparan, layanan yang prima, serta kemudahan akses bagi seluruh masyarakat dan perangkat daerah.</p>
+                            <p>Kami berharap website ini dapat menjadi sarana komunikasi yang efektif serta mendukung terwujudnya pelayanan yang profesional, akuntabel, dan terpercaya.</p>
+                            <p>Wassalamu'alaikum Wr. Wb.</p>
                         </div>
-                        <h2 class="text-lg font-bold text-gray-400 mb-4 tracking-widest uppercase">Visi Utama</h2>
-                        <p class="text-3xl lg:text-[2.5rem] font-black leading-tight tracking-tight text-white mb-8">
-                            "Mewujudkan Kota Padang Sebagai Kota Pendidikan, Perdagangan dan Pariwisata yang Sejahtera, Religius dan Berbudaya."
+
+                        <div>
+                            <h3 class="text-[17px] font-black text-[#1a202c]">Ir. Yudi Indra, M.M.</h3>
+                            <p class="text-[13px] font-bold text-orange-400 mt-0.5">Kepala Bagian Organisasi</p>
+                        </div>
+                    </div>
+
+                    {{-- Right Photo --}}
+                    <div class="relative w-full lg:w-[42%] px-2 lg:px-6">
+                        <div class="absolute inset-0 bg-[#fdf2d9] rounded-[2rem] transform translate-x-4 translate-y-4 lg:translate-x-6 lg:translate-y-6 z-0"></div>
+                        <div class="relative z-10 w-full aspect-[4/3] rounded-[2rem] overflow-hidden bg-[#f0f2f5]">
+                            <img src="/assets/img/staff/kepala_pejabat_khaki_1785375439464.png" alt="Kepala Bagian Organisasi" class="w-full h-full object-cover object-top">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        {{-- VISI, MISI, TUJUAN --}}
+        <section class="mb-10">
+            <div class="max-w-7xl mx-auto px-5 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    {{-- Visi --}}
+                    <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-[0_4px_25px_rgb(0,0,0,0.03)] h-full">
+                        <div class="w-12 h-12 rounded-xl bg-orange-50 text-orange-400 flex items-center justify-center mb-6">
+                            <i class="ph-bold ph-eye text-[26px]"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-[#1a202c] mb-4">Visi</h3>
+                        <p class="text-[13.5px] text-gray-600 font-medium leading-relaxed">
+                            Terwujudnya pelayanan umum yang profesional, efektif, efisien dan berkelanjutan dalam mendukung tata kelola pemerintahan yang baik di Kota Padang.
                         </p>
                     </div>
-                    <div class="inline-flex items-center gap-2 text-brand-400 font-bold text-sm tracking-wide group-hover:translate-x-2 transition-transform">
-                        Explore Misi <i class="ph-bold ph-arrow-right"></i>
-                    </div>
-                </div>
-            </div>
 
-            {{-- BENTO 2: MISI COUNTER (Small Box) --}}
-            <div class="bg-brand-500 text-white rounded-[2.5rem] lg:rounded-[3rem] p-8 relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500 flex flex-col justify-center items-center text-center shadow-xl shadow-brand-500/20">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-3xl pointer-events-none"></div>
-                <h3 class="text-7xl font-black mb-2 tracking-tighter">7</h3>
-                <p class="font-bold text-brand-100 uppercase tracking-widest text-sm">Misi Utama</p>
-                <div class="mt-4 px-4 py-1.5 bg-black/10 rounded-full text-[11px] font-bold tracking-widest uppercase backdrop-blur-sm">
-                    Berkelanjutan
-                </div>
-            </div>
+                    {{-- Misi --}}
+                    <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-[0_4px_25px_rgb(0,0,0,0.03)] h-full">
+                        <div class="w-12 h-12 rounded-xl bg-orange-50 text-orange-400 flex items-center justify-center mb-6">
+                            <i class="ph-bold ph-target text-[26px]"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-[#1a202c] mb-4">Misi</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
+                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0"></span>
+                                Meningkatkan kualitas pelayanan umum yang cepat, tepat dan transparan.
+                            </li>
+                            <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
+                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0"></span>
+                                Mengoptimalkan pengelolaan aset, rumah tangga dan dokumentasi.
+                            </li>
+                            <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
+                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0"></span>
+                                Mewujudkan tata kelola administrasi yang akuntabel dan inovatif.
+                            </li>
+                            <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
+                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0"></span>
+                                Mendukung pelaksanaan tugas pemerintahan daerah secara efektif dan efisien.
+                            </li>
+                        </ul>
+                    </div>
 
-            {{-- BENTO 3: TUPOKSI 1 (Kelembagaan) --}}
-            <div class="bg-white border border-gray-100 rounded-[2.5rem] lg:rounded-[3rem] p-8 shadow-[0_4px_40px_rgba(0,0,0,0.03)] hover:shadow-xl hover:scale-[1.02] transition-all duration-500 group flex flex-col justify-between relative overflow-hidden">
-                <div class="absolute right-0 bottom-0 opacity-5 pointer-events-none group-hover:scale-110 transition-transform">
-                    <i class="ph-fill ph-buildings text-9xl transform translate-x-4 translate-y-4"></i>
-                </div>
-                <div class="relative z-10">
-                    <div class="w-14 h-14 bg-brand-50 text-brand-500 rounded-[1.2rem] flex items-center justify-center mb-8 group-hover:rotate-12 transition-transform shadow-inner">
-                        <i class="ph-bold ph-buildings text-3xl"></i>
+                    {{-- Tujuan --}}
+                    <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-[0_4px_25px_rgb(0,0,0,0.03)] h-full">
+                        <div class="w-12 h-12 rounded-xl bg-orange-50 text-orange-400 flex items-center justify-center mb-6">
+                            <i class="ph-bold ph-flag-banner text-[26px]"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-[#1a202c] mb-4">Tujuan</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
+                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0"></span>
+                                Memberikan pelayanan umum yang prima bagi seluruh perangkat daerah.
+                            </li>
+                            <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
+                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0"></span>
+                                Menyediakan sarana dan prasarana kerja yang memadai.
+                            </li>
+                            <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
+                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0"></span>
+                                Mendukung kelancaran administrasi dan operasional Pemerintah Kota Padang.
+                            </li>
+                            <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
+                                <span class="w-1.5 h-1.5 rounded-full bg-orange-400 mt-2 shrink-0"></span>
+                                Mewujudkan lingkungan kerja yang tertib, aman dan nyaman.
+                            </li>
+                        </ul>
                     </div>
-                    <h3 class="font-black text-gray-900 text-xl mb-2 tracking-tight">Kelembagaan</h3>
-                    <p class="text-sm font-medium text-gray-500 leading-relaxed">Penataan SOTK, analisis, dan evaluasi formasi jabatan perangkat daerah.</p>
                 </div>
             </div>
-            
-            {{-- BENTO 4: TUPOKSI 2 (Tata Laksana) --}}
-            <div class="bg-white border border-gray-100 rounded-[2.5rem] lg:rounded-[3rem] p-8 shadow-[0_4px_40px_rgba(0,0,0,0.03)] hover:shadow-xl hover:scale-[1.02] transition-all duration-500 group flex flex-col justify-between relative overflow-hidden">
-                <div class="absolute right-0 bottom-0 opacity-5 pointer-events-none group-hover:scale-110 transition-transform">
-                    <i class="ph-fill ph-files text-9xl transform translate-x-4 translate-y-4"></i>
-                </div>
-                <div class="relative z-10">
-                    <div class="w-14 h-14 bg-blue-50 text-blue-500 rounded-[1.2rem] flex items-center justify-center mb-8 group-hover:-rotate-12 transition-transform shadow-inner">
-                        <i class="ph-bold ph-files text-3xl"></i>
-                    </div>
-                    <h3 class="font-black text-gray-900 text-xl mb-2 tracking-tight">Tata Laksana</h3>
-                    <p class="text-sm font-medium text-gray-500 leading-relaxed">Penyusunan SOP & Peningkatan kualitas Pelayanan Publik.</p>
-                </div>
-            </div>
+        </section>
 
-            {{-- BENTO 5: TUPOKSI 3 (Kinerja RB) --}}
-            <div class="bg-white border border-gray-100 rounded-[2.5rem] lg:rounded-[3rem] p-8 shadow-[0_4px_40px_rgba(0,0,0,0.03)] hover:shadow-xl hover:scale-[1.02] transition-all duration-500 group flex flex-col justify-between relative overflow-hidden">
-                <div class="absolute right-0 bottom-0 opacity-5 pointer-events-none group-hover:scale-110 transition-transform">
-                    <i class="ph-fill ph-chart-line-up text-9xl transform translate-x-4 translate-y-4"></i>
-                </div>
-                <div class="relative z-10">
-                    <div class="w-14 h-14 bg-emerald-50 text-emerald-500 rounded-[1.2rem] flex items-center justify-center mb-8 group-hover:scale-110 transition-transform shadow-inner">
-                        <i class="ph-bold ph-chart-line-up text-3xl"></i>
-                    </div>
-                    <h3 class="font-black text-gray-900 text-xl mb-2 tracking-tight">Kinerja & RB</h3>
-                    <p class="text-sm font-medium text-gray-500 leading-relaxed">Evaluasi SAKIP dan fasilitasi pelaksanaan Reformasi Birokrasi.</p>
-                </div>
-            </div>
-
-            {{-- BENTO 6: STRUKTUR ORGANISASI (Wide Box) --}}
-            <div class="md:col-span-2 lg:col-span-2 bg-gray-100 border border-gray-200 rounded-[2.5rem] lg:rounded-[3rem] p-8 lg:p-12 flex flex-col items-center justify-center text-center group hover:scale-[1.01] transition-transform duration-500 cursor-pointer overflow-hidden relative shadow-inner">
-                <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/60 via-transparent to-transparent opacity-50"></div>
-                <div class="relative z-10">
-                    <div class="w-20 h-20 bg-white shadow-xl shadow-gray-200/50 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:-translate-y-2 transition-transform duration-300">
-                        <i class="ph-bold ph-tree-structure text-4xl text-gray-400 group-hover:text-brand-500 transition-colors"></i>
-                    </div>
-                    <h3 class="font-black text-gray-900 text-3xl tracking-tight mb-2">Struktur Organisasi</h3>
-                    <p class="text-gray-500 font-medium text-sm">Lihat bagan hierarki struktural kami.</p>
-                </div>
-            </div>
-
-            {{-- BENTO 7: PROFIL PEGAWAI --}}
-            <div class="md:col-span-3 lg:col-span-2 bg-white border border-gray-100 shadow-[0_4px_40px_rgba(0,0,0,0.03)] rounded-[2.5rem] lg:rounded-[3rem] p-8 lg:p-10 relative overflow-hidden hover:shadow-xl transition-all duration-500 group flex flex-col justify-between">
-                <div class="flex justify-between items-start mb-8">
-                    <div>
-                        <h3 class="font-black text-gray-900 text-3xl tracking-tight mb-2">Meet The Team 👋</h3>
-                        <p class="text-gray-500 text-sm font-medium">Orang-orang hebat di balik layar.</p>
-                    </div>
-                    <button class="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center text-gray-600 hover:bg-brand-500 hover:text-white transition-colors group-hover:rotate-45 duration-300 shrink-0">
-                        <i class="ph-bold ph-arrow-up-right text-xl"></i>
-                    </button>
-                </div>
-                
-                <div class="flex items-center -space-x-4 ml-2">
-                    <img src="https://ui-avatars.com/api/?name=H+P&background=f59e0b&color=fff" class="w-16 h-16 rounded-full border-4 border-white shadow-md z-40 hover:-translate-y-2 transition-transform cursor-pointer">
-                    <img src="https://ui-avatars.com/api/?name=S+K&background=3b82f6&color=fff" class="w-16 h-16 rounded-full border-4 border-white shadow-md z-30 hover:-translate-y-2 transition-transform cursor-pointer">
-                    <img src="https://ui-avatars.com/api/?name=S+T&background=10b981&color=fff" class="w-16 h-16 rounded-full border-4 border-white shadow-md z-20 hover:-translate-y-2 transition-transform cursor-pointer">
-                    <img src="https://ui-avatars.com/api/?name=S+R&background=8b5cf6&color=fff" class="w-16 h-16 rounded-full border-4 border-white shadow-md z-10 hover:-translate-y-2 transition-transform cursor-pointer">
-                    <div class="w-16 h-16 rounded-full border-4 border-white shadow-md bg-gray-100 flex items-center justify-center text-gray-500 font-bold text-xs z-0">
-                        +15
-                    </div>
-                </div>
-            </div>
-
-            {{-- BENTO 8: MAKLUMAT (Full Width Quote) --}}
-            <div class="md:col-span-3 lg:col-span-4 bg-gradient-to-r from-orange-500 to-brand-500 text-white rounded-[2.5rem] lg:rounded-[3rem] p-10 lg:p-14 mt-2 hover:scale-[1.01] transition-transform duration-500 relative overflow-hidden group shadow-2xl shadow-brand-500/20">
-                <div class="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none"></div>
-                <div class="absolute -right-10 -bottom-20 opacity-10 transform group-hover:rotate-12 transition-transform duration-1000 pointer-events-none">
-                    <i class="ph-fill ph-certificate text-[30rem]"></i>
-                </div>
-                <div class="relative z-10 flex flex-col md:flex-row items-center gap-10 lg:gap-14">
-                    <div class="w-28 h-28 bg-white/20 backdrop-blur-xl rounded-[2rem] flex items-center justify-center shrink-0 border border-white/30 shadow-2xl">
-                        <i class="ph-fill ph-quotes text-6xl"></i>
-                    </div>
-                    <div class="text-center md:text-left">
-                        <h3 class="text-xs font-bold tracking-[0.2em] uppercase text-white/80 mb-4">Maklumat Pelayanan</h3>
-                        <p class="text-2xl lg:text-4xl font-black leading-tight lg:leading-snug mb-8 tracking-tight text-white drop-shadow-sm">
-                            "Kami sanggup menyelenggarakan pelayanan publik sesuai standar. Jika melanggar, kami siap menerima sanksi."
+        {{-- TUPOKSI --}}
+        <section class="mb-10">
+            <div class="max-w-7xl mx-auto px-5 lg:px-8">
+                <div class="bg-white rounded-[2rem] p-8 lg:p-12 shadow-[0_4px_25px_rgb(0,0,0,0.03)] flex flex-col lg:flex-row gap-10 lg:gap-16">
+                    <div class="w-full lg:w-[40%]">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i class="ph-bold ph-briefcase text-orange-400 text-3xl"></i>
+                            <h2 class="text-[26px] font-black text-[#1a202c]">Tupoksi</h2>
+                        </div>
+                        <p class="text-gray-600 font-medium text-[13.5px] leading-relaxed mb-6">
+                            Bagian Organisasi Sekretariat Daerah Kota Padang mempunyai tugas melaksanakan penyiapan bahan perumusan kebijakan daerah, pengkoordinasian perumusan kebijakan daerah, pengkoordinasian pelaksanaan tugas perangkat daerah, pemantauan dan evaluasi pelaksanaan kebijakan daerah di bidang organisasi.
                         </p>
-                        <div class="flex items-center justify-center md:justify-start gap-4">
-                            <div class="w-12 h-12 bg-white rounded-full overflow-hidden shadow-lg">
-                                <img src="https://ui-avatars.com/api/?name=K+B&background=f59e0b&color=fff" class="w-full h-full object-cover">
-                            </div>
-                            <div>
-                                <h4 class="font-black text-sm lg:text-base">H. NAMA PEJABAT, S.STP, M.Si</h4>
-                                <p class="text-xs text-white/80 font-semibold tracking-wider uppercase mt-1">Kepala Bagian Organisasi</p>
-                            </div>
+                        <a href="#" class="inline-flex items-center gap-2 px-6 py-2.5 bg-white border border-orange-200 text-orange-400 font-bold rounded-full hover:bg-orange-50 transition-colors text-[13px]">
+                            Selengkapnya <i class="ph-bold ph-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="w-full lg:w-[60%] space-y-3 lg:mt-2">
+                        <div class="flex items-center gap-5 bg-[#fffaf3] p-4 lg:p-5 rounded-2xl border border-[#ffe8c7]">
+                            <span class="text-orange-400 font-bold text-[15px] w-8 text-center shrink-0">01</span>
+                            <p class="text-[13px] font-bold text-[#1a202c]">Melaksanakan urusan ketatausahaan, kearsipan, dan kerumahtanggaan.</p>
+                        </div>
+                        <div class="flex items-center gap-5 bg-[#fffaf3] p-4 lg:p-5 rounded-2xl border border-[#ffe8c7]">
+                            <span class="text-orange-400 font-bold text-[15px] w-8 text-center shrink-0">02</span>
+                            <p class="text-[13px] font-bold text-[#1a202c]">Mengelola administrasi aset dan perlengkapan daerah.</p>
+                        </div>
+                        <div class="flex items-center gap-5 bg-[#fffaf3] p-4 lg:p-5 rounded-2xl border border-[#ffe8c7]">
+                            <span class="text-orange-400 font-bold text-[15px] w-8 text-center shrink-0">03</span>
+                            <p class="text-[13px] font-bold text-[#1a202c]">Menyelenggarakan dokumentasi dan publikasi kegiatan pimpinan daerah.</p>
+                        </div>
+                        <div class="flex items-center gap-5 bg-[#fffaf3] p-4 lg:p-5 rounded-2xl border border-[#ffe8c7]">
+                            <span class="text-orange-400 font-bold text-[15px] w-8 text-center shrink-0">04</span>
+                            <p class="text-[13px] font-bold text-[#1a202c]">Memberikan pelayanan administratif kepada perangkat daerah dan masyarakat.</p>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
 
-        </div>
-        </div>
+        {{-- MAKLUMAT PELAYANAN --}}
+        <section class="mb-12">
+            <div class="max-w-7xl mx-auto px-5 lg:px-8">
+                <div class="bg-[#fff9ed] rounded-[2rem] p-8 lg:px-12 flex flex-col md:flex-row items-center md:items-start gap-6 border border-[#ffe5b5] shadow-sm">
+                    <div class="w-[70px] h-[70px] bg-white rounded-2xl flex items-center justify-center shrink-0 shadow-sm text-orange-400">
+                        <i class="ph-fill ph-shield-check text-[36px]"></i>
+                    </div>
+                    <div class="pt-1 text-center md:text-left">
+                        <h3 class="text-xl font-black text-orange-500 mb-2">Maklumat Pelayanan</h3>
+                        <p class="text-[#1a202c] font-medium text-[13.5px] leading-relaxed max-w-4xl opacity-80">
+                            Dengan ini kami menyatakan sanggup menyelenggarakan pelayanan sesuai standar pelayanan yang telah ditetapkan, memberikan pelayanan dengan sepenuh hati, transparan, cepat, tepat, dan akuntabel serta bersedia menerima sanksi sesuai peraturan perundang-undangan.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{-- PROFIL PEGAWAI --}}
+        <section class="mb-14">
+            <div class="max-w-7xl mx-auto px-5 lg:px-8">
+                <div class="flex items-center justify-between mb-8">
+                    <div class="flex items-center gap-3">
+                        <i class="ph-bold ph-users-three text-orange-400 text-3xl"></i>
+                        <h2 class="text-[26px] font-black text-[#1a202c]">Profil Pegawai</h2>
+                    </div>
+                    <a href="#" class="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full border border-orange-200 text-orange-500 font-bold text-[13px] hover:bg-orange-50 transition-colors bg-white">
+                        Lihat Semua Pegawai <i class="ph-bold ph-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5">
+                    @php
+                        $staffs = [
+                            ['name' => 'Ir. Yudi Indra, M.M.', 'role' => 'Kepala Bagian Organisasi', 'img' => '/assets/img/staff/kepala_pejabat_khaki_1785375439464.png'],
+                            ['name' => 'Dra. Rina Novita', 'role' => 'Kasubbag Tata Usaha', 'img' => '/assets/img/staff/rina_rawita_1785375153231.png'],
+                            ['name' => 'Hendra Putra, S.Kom.', 'role' => 'Kasubbag Rumah Tangga', 'img' => '/assets/img/staff/hendra_putra_1785375385658.png'],
+                            ['name' => 'Yeni Martina, S.E.', 'role' => 'Kasubbag Perlengkapan', 'img' => '/assets/img/staff/yeni_martina_1785375402271.png'],
+                            ['name' => 'Feri Andika, A.Md.', 'role' => 'Pengadministrasi Umum', 'img' => '/assets/img/staff/feri_andika_1785375418991.png'],
+                        ];
+                    @endphp
+
+                    @foreach($staffs as $staff)
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-[0_4px_25px_rgb(0,0,0,0.03)] flex flex-col h-full">
+                        <div class="bg-[#e4e7ec] aspect-[4/5] w-full">
+                            <img src="{{ $staff['img'] }}" alt="{{ $staff['name'] }}" class="w-full h-full object-cover object-top">
+                        </div>
+                        <div class="p-4 text-center bg-white flex-1 flex flex-col justify-center">
+                            <h4 class="font-bold text-[#1a202c] text-[13px] mb-0.5 line-clamp-1" title="{{ $staff['name'] }}">{{ $staff['name'] }}</h4>
+                            <p class="text-[11px] text-gray-500 font-medium line-clamp-2">{{ $staff['role'] }}</p>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+
+                <div class="flex justify-center gap-1.5 mt-8">
+                    <span class="w-6 h-1.5 rounded-full bg-orange-400"></span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-gray-300"></span>
+                </div>
+            </div>
+        </section>
+        
+        {{-- KONTAK & LOKASI --}}
+        <section>
+            <div class="max-w-7xl mx-auto px-5 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+                    
+                    {{-- Left: Kontak --}}
+                    <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-[0_4px_25px_rgb(0,0,0,0.03)]">
+                        <h2 class="text-xl font-black text-[#1a202c] mb-8">Kontak Kami</h2>
+                        <div class="space-y-5">
+                            <div class="flex items-start gap-4">
+                                <i class="ph-bold ph-phone-call text-orange-400 text-xl mt-0.5"></i>
+                                <div>
+                                    <p class="text-[13px] text-gray-700 font-medium">(0751) 123456</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <i class="ph-bold ph-envelope-simple text-orange-400 text-xl mt-0.5"></i>
+                                <div>
+                                    <p class="text-[13px] text-gray-700 font-medium">bag.organisasi@padang.go.id</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <i class="ph-bold ph-map-pin text-orange-400 text-xl mt-0.5"></i>
+                                <div>
+                                    <p class="text-[13px] text-gray-700 font-medium leading-relaxed">Jl. Jenderal Sudirman No. 1<br>Padang, Sumatera Barat 25129</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <i class="ph-bold ph-clock text-orange-400 text-xl mt-0.5"></i>
+                                <div>
+                                    <p class="text-[13px] text-[#1a202c] font-bold mb-0.5">Senin - Jumat</p>
+                                    <p class="text-[13px] text-gray-500 font-medium">08.00 - 16.00 WIB</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 mt-8 pt-6">
+                            <a href="#" class="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-orange-400 hover:text-white hover:border-orange-400 transition-colors shadow-sm"><i class="ph-bold ph-instagram-logo"></i></a>
+                            <a href="#" class="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-orange-400 hover:text-white hover:border-orange-400 transition-colors shadow-sm"><i class="ph-bold ph-facebook-logo"></i></a>
+                            <a href="#" class="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-orange-400 hover:text-white hover:border-orange-400 transition-colors shadow-sm"><i class="ph-bold ph-twitter-logo"></i></a>
+                            <a href="#" class="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-orange-400 hover:text-white hover:border-orange-400 transition-colors shadow-sm"><i class="ph-bold ph-youtube-logo"></i></a>
+                        </div>
+                    </div>
+
+                    {{-- Right: Lokasi (Maps) --}}
+                    <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-[0_4px_25px_rgb(0,0,0,0.03)] flex flex-col">
+                        <h2 class="text-xl font-black text-[#1a202c] mb-6">Lokasi Kami</h2>
+                        <div class="flex-1 bg-gray-100 rounded-2xl overflow-hidden relative border border-gray-100 min-h-[300px]">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2683976643275!2d100.35692807531795!3d-0.9512986353524716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b948c7c72e11%3A0x6771787fa612c99f!2sSekretariat%20Daerah%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1785310213215!5m2!1sid!2sid" 
+                                class="w-full h-full absolute inset-0" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                            <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-black/5 pointer-events-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    {{-- ═══ MEGA FOOTER (Dari Welcome) ═══ --}}
+    {{-- ═══ FOOTER ═══ --}}
     @include('components.footer')
 </body>
 </html>
