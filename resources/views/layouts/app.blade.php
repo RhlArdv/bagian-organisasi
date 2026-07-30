@@ -56,6 +56,45 @@
                     <span class="text-sm">Halaman Profil (Visi, dkk)</span>
                 </a>
 
+                <p class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 mt-8">Kelembagaan</p>
+
+                <!-- Kelembagaan Dropdown -->
+                <div x-data="{ open: {{ (request()->routeIs('layanan.*') || request()->routeIs('documents.*')) ? 'true' : 'false' }} }" class="space-y-1">
+                    <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all {{ (request()->routeIs('layanan.*') || request()->routeIs('documents.*')) ? 'bg-brand-50 text-brand-500 font-bold' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
+                        <div class="flex items-center gap-3">
+                            <i class="ph-bold ph-buildings text-xl"></i>
+                            <span class="text-sm">Layanan Kelembagaan</span>
+                        </div>
+                        <i class="ph-bold ph-caret-down text-sm transition-transform duration-200" :class="{ 'rotate-180': open }"></i>
+                    </button>
+                    
+                    <div x-show="open" 
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0 transform -translate-y-2"
+                         x-transition:enter-end="opacity-100 transform translate-y-0"
+                         x-transition:leave="transition ease-in duration-150"
+                         x-transition:leave-start="opacity-100 transform translate-y-0"
+                         x-transition:leave-end="opacity-0 transform -translate-y-2"
+                         class="pl-11 pr-4 py-2 space-y-1" style="display: none;">
+                        
+                        <a href="{{ route('layanan.index', 'penataan-kelembagaan') }}" class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/layanan/penataan-kelembagaan*') ? 'bg-brand-50 text-brand-600 font-bold' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            Penataan Kelembagaan
+                        </a>
+                        <a href="{{ route('layanan.index', 'evaluasi-kelembagaan') }}" class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/layanan/evaluasi-kelembagaan*') ? 'bg-brand-50 text-brand-600 font-bold' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            Evaluasi Kelembagaan
+                        </a>
+                        <a href="{{ route('layanan.index', 'nomenklatur-opd') }}" class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/layanan/nomenklatur-opd*') ? 'bg-brand-50 text-brand-600 font-bold' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            Nomenklatur OPD
+                        </a>
+                        <a href="{{ route('documents.index', 'peta-jabatan') }}" class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/peta-jabatan*') ? 'bg-brand-50 text-brand-600 font-bold' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            Peta Jabatan
+                        </a>
+                        <a href="{{ route('documents.index', 'produk-hukum') }}" class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/produk-hukum*') ? 'bg-brand-50 text-brand-600 font-bold' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            Produk Hukum
+                        </a>
+                    </div>
+                </div>
+
                 <p class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 mt-8">Pengaturan Beranda</p>
 
                 <a href="{{ route('banners.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('banners.*') ? 'bg-brand-50 text-brand-500 font-bold' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">

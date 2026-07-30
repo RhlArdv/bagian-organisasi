@@ -25,80 +25,104 @@
         <form action="{{ route('pegawai.store') }}" method="POST" enctype="multipart/form-data" class="bg-white rounded-3xl p-8 border border-gray-100 shadow-[0_4px_25px_rgb(0,0,0,0.03)] space-y-6">
             @csrf
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="nama" class="block text-sm font-bold text-gray-700 mb-2">Nama Lengkap</label>
-                    <input type="text" name="nama" id="nama" value="{{ old('nama') }}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium" required>
-                </div>
-                <div>
-                    <label for="nip" class="block text-sm font-bold text-gray-700 mb-2">NIP</label>
-                    <input type="text" name="nip" id="nip" value="{{ old('nip') }}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium" required>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="jabatan" class="block text-sm font-bold text-gray-700 mb-2">Jabatan</label>
-                    <input type="text" name="jabatan" id="jabatan" value="{{ old('jabatan') }}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium" required>
-                </div>
-                <div>
-                    <label for="level" class="block text-sm font-bold text-gray-700 mb-2">Tingkatan (Level)</label>
-                    <select name="level" id="level" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium" required>
-                        <option value="staf" {{ old('level') == 'staf' ? 'selected' : '' }}>Staf</option>
-                        <option value="kasubag" {{ old('level') == 'kasubag' ? 'selected' : '' }}>Kepala Sub Bagian (Kasubag)</option>
-                        <option value="kepala" {{ old('level') == 'kepala' ? 'selected' : '' }}>Kepala Bagian</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="pangkat_golongan" class="block text-sm font-bold text-gray-700 mb-2">Pangkat / Golongan</label>
-                    <input type="text" name="pangkat_golongan" id="pangkat_golongan" value="{{ old('pangkat_golongan') }}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium">
-                </div>
-                <div>
-                    <label for="pendidikan" class="block text-sm font-bold text-gray-700 mb-2">Pendidikan</label>
-                    <input type="text" name="pendidikan" id="pendidikan" value="{{ old('pendidikan') }}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium">
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="email" class="block text-sm font-bold text-gray-700 mb-2">Email (Opsional)</label>
-                    <input type="email" name="email" id="email" value="{{ old('email') }}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium">
-                </div>
-                <div>
-                    <label for="phone" class="block text-sm font-bold text-gray-700 mb-2">Nomor Telepon (Opsional)</label>
-                    <input type="text" name="phone" id="phone" value="{{ old('phone') }}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium">
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="order_index" class="block text-sm font-bold text-gray-700 mb-2">Urutan Tampil (Order)</label>
-                    <input type="number" name="order_index" id="order_index" value="{{ old('order_index', 0) }}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium" required>
-                    <p class="text-[10px] text-gray-400 mt-1">Angka lebih kecil tampil lebih dulu (0, 1, 2, 3...)</p>
-                </div>
-                <div>
-                    <label for="parent_id" class="block text-sm font-bold text-gray-700 mb-2">Atasan Langsung (Untuk Struktur)</label>
-                    <select name="parent_id" id="parent_id" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium">
-                        <option value="">-- Tidak Ada --</option>
-                        @foreach($parents as $parent)
-                            <option value="{{ $parent->id }}" {{ old('parent_id') == $parent->id ? 'selected' : '' }}>{{ $parent->nama }} ({{ $parent->jabatan }})</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
+            <!-- SECTION 1: INFORMASI DASAR -->
             <div>
-                <label class="block text-sm font-bold text-gray-700 mb-2">Foto Pegawai</label>
-                <input type="file" name="foto" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-brand-50 file:text-brand-600 hover:file:bg-brand-100 transition-colors cursor-pointer">
-                <p class="text-xs text-gray-400 mt-2 font-medium">Format: JPG/PNG, Maksimal: 2MB. Disarankan foto berlatar biru/merah dengan pakaian dinas rasio 3:4.</p>
+                <h3 class="text-lg font-black text-gray-900 mb-4 border-b border-gray-100 pb-2">Informasi Dasar</h3>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="nama" class="block text-sm font-bold text-gray-700 mb-2">Nama Lengkap</label>
+                            <input type="text" name="nama" id="nama" value="{{ old('nama') }}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium" required>
+                        </div>
+                        <div>
+                            <label for="nip" class="block text-sm font-bold text-gray-700 mb-2">NIP</label>
+                            <input type="text" name="nip" id="nip" value="{{ old('nip') }}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: JABATAN & KARIR -->
+            <div>
+                <h3 class="text-lg font-black text-gray-900 mb-4 border-b border-gray-100 pb-2">Jabatan & Karir</h3>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="jabatan" class="block text-sm font-bold text-gray-700 mb-2">Jabatan</label>
+                            <input type="text" name="jabatan" id="jabatan" value="{{ old('jabatan') }}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium" required>
+                        </div>
+                        <div>
+                            <label for="level" class="block text-sm font-bold text-gray-700 mb-2">Tingkatan (Level)</label>
+                            <select name="level" id="level" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium" required>
+                                <option value="staf" {{ old('level') == 'staf' ? 'selected' : '' }}>Staf</option>
+                                <option value="kasubag" {{ old('level') == 'kasubag' ? 'selected' : '' }}>Kepala Sub Bagian (Kasubag)</option>
+                                <option value="kepala" {{ old('level') == 'kepala' ? 'selected' : '' }}>Kepala Bagian</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="pangkat_golongan" class="block text-sm font-bold text-gray-700 mb-2">Pangkat / Golongan</label>
+                            <input type="text" name="pangkat_golongan" id="pangkat_golongan" value="{{ old('pangkat_golongan') }}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium">
+                        </div>
+                        <div>
+                            <label for="pendidikan" class="block text-sm font-bold text-gray-700 mb-2">Pendidikan</label>
+                            <input type="text" name="pendidikan" id="pendidikan" value="{{ old('pendidikan') }}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium">
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <div class="flex items-center gap-3 bg-gray-50 p-4 rounded-xl border border-gray-200">
-                <input type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', true) ? 'checked' : '' }} class="w-5 h-5 text-brand-500 bg-white border-gray-300 rounded focus:ring-brand-500 focus:ring-2">
-                <label for="is_active" class="text-sm font-bold text-gray-700">Tampilkan Profil ini secara Publik (Aktif)</label>
+            <!-- SECTION 3: KONTAK & STRUKTUR -->
+            <div>
+                <h3 class="text-lg font-black text-gray-900 mb-4 border-b border-gray-100 pb-2">Kontak & Struktur</h3>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="email" class="block text-sm font-bold text-gray-700 mb-2">Email (Opsional)</label>
+                            <input type="email" name="email" id="email" value="{{ old('email') }}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-bold text-gray-700 mb-2">Nomor Telepon (Opsional)</label>
+                            <input type="text" name="phone" id="phone" value="{{ old('phone') }}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="order_index" class="block text-sm font-bold text-gray-700 mb-2">Urutan Tampil (Order)</label>
+                            <input type="number" name="order_index" id="order_index" value="{{ old('order_index', 0) }}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium" required>
+                            <p class="text-[10px] text-gray-400 mt-1">Angka lebih kecil tampil lebih dulu (0, 1, 2, 3...)</p>
+                        </div>
+                        <div>
+                            <label for="parent_id" class="block text-sm font-bold text-gray-700 mb-2">Atasan Langsung (Untuk Struktur)</label>
+                            <select name="parent_id" id="parent_id" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all font-medium">
+                                <option value="">-- Tidak Ada --</option>
+                                @foreach($parents as $parent)
+                                    <option value="{{ $parent->id }}" {{ old('parent_id') == $parent->id ? 'selected' : '' }}>{{ $parent->nama }} ({{ $parent->jabatan }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 4: MEDIA & PENGATURAN -->
+            <div>
+                <h3 class="text-lg font-black text-gray-900 mb-4 border-b border-gray-100 pb-2">Media & Pengaturan</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Foto Pegawai</label>
+                        <input type="file" name="foto" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-brand-50 file:text-brand-600 hover:file:bg-brand-100 transition-colors cursor-pointer">
+                        <p class="text-xs text-gray-400 mt-2 font-medium">Format: JPG/PNG, Maksimal: 2MB. Disarankan foto berlatar biru/merah dengan pakaian dinas rasio 3:4.</p>
+                    </div>
+                    
+                    <div class="flex items-center gap-3 bg-gray-50 p-4 rounded-xl border border-gray-200">
+                        <input type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', true) ? 'checked' : '' }} class="w-5 h-5 text-brand-500 bg-white border-gray-300 rounded focus:ring-brand-500 focus:ring-2">
+                        <label for="is_active" class="text-sm font-bold text-gray-700">Tampilkan Profil ini secara Publik (Aktif)</label>
+                    </div>
+                </div>
             </div>
 
             <div class="pt-6 border-t border-gray-100 flex justify-end gap-3">
