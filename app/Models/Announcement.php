@@ -10,6 +10,7 @@ class Announcement extends Model
         'title',
         'content',
         'attachment',
+        'image',
         'is_pinned',
         'is_active',
         'published_at',

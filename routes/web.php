@@ -41,6 +41,10 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/documents/{kategori_slug}/{id}/edit', [\App\Http\Controllers\Admin\DocumentController::class, 'edit'])->name('documents.edit');
     Route::put('admin/documents/{kategori_slug}/{id}', [\App\Http\Controllers\Admin\DocumentController::class, 'update'])->name('documents.update');
     Route::delete('admin/documents/{kategori_slug}/{id}', [\App\Http\Controllers\Admin\DocumentController::class, 'destroy'])->name('documents.destroy');
+    
+    // Berita & Pengumuman
+    Route::resource('admin/posts', \App\Http\Controllers\Admin\PostController::class);
+    Route::resource('admin/announcements', \App\Http\Controllers\Admin\AnnouncementController::class);
 });
 
 require __DIR__.'/auth.php';

@@ -13,6 +13,9 @@ class LayananController extends Controller
         'penataan-kelembagaan' => 'Penataan Kelembagaan',
         'evaluasi-kelembagaan' => 'Evaluasi Kelembagaan',
         'nomenklatur-opd' => 'Nomenklatur OPD',
+        // Pelayanan Publik
+        'standar-pelayanan' => 'Standar Pelayanan',
+        'forum-konsultasi-publik' => 'Forum Konsultasi Publik',
     ];
 
     /**
