@@ -30,10 +30,10 @@ services:
     container_name: bagian-organisasi_db
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: "${DB_DATABASE}"
-      MYSQL_USER: "${DB_USERNAME}"
-      MYSQL_PASSWORD: "${DB_PASSWORD}"
-      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_DATABASE: "${DB_DATABASE:-organisasi}"
+      MYSQL_USER: "${DB_USERNAME:-organisasiuser}"
+      MYSQL_PASSWORD: "${DB_PASSWORD:-secret}"
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD:-secret}"
     expose:
       - "3306"
     volumes:
