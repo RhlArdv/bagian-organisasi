@@ -101,8 +101,7 @@
         </div>
 
         {{-- Absolute Huge Image (Anchored to the absolute right of the screen) --}}
-        <div
-            class="hidden lg:block absolute top-1/2 -translate-y-[45%] right-0 w-[1100px] xl:w-[1300px] pointer-events-none z-0">
+        <div class="absolute top-1/2 -translate-y-[45%] -right-40 md:right-0 w-[800px] lg:w-[1100px] xl:w-[1300px] pointer-events-none z-0 opacity-15 lg:opacity-100">
             <img src="{{ asset('assets/img/hero.png') }}" alt="Bagian Organisasi Sekretariat Daerah Kota Padang"
                 class="w-full h-auto object-contain object-right mix-blend-multiply"
                 style="-webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%); mask-image: linear-gradient(to right, transparent 0%, black 15%);"
