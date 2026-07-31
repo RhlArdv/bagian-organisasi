@@ -14,6 +14,14 @@ echo "[HOOK] Memaksa update konfigurasi database ke MySQL (mengganti sisa SQLite
 sed -i 's/^DB_CONNECTION=.*/DB_CONNECTION=mysql/g' .env || true
 sed -i 's/^DB_HOST=.*/DB_HOST=bagian-organisasi_db/g' .env || true
 
+# Jika DB_PASSWORD kosong (karena sisa .env lama), isi dengan secret
+if grep -q "^DB_PASSWORD=$" .env; then
+    sed -i 's/^DB_PASSWORD=$/DB_PASSWORD=secret/g' .env
+fi
+
+echo "[HOOK] Menghapus cache config agar perubahan .env terbaca..."
+docker compose exec -T app php artisan config:clear || true
+
 echo "[HOOK] Menyesuaikan permission folder public..."
 chmod -R o+rX public
 
