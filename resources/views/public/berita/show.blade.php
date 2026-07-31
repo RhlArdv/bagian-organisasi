@@ -226,7 +226,7 @@
                                     </div>
                                     Penataan Kelembagaan
                                 </a>
-                                <a href="{{ route('public.pengaduan') }}" class="flex items-center gap-3 text-sm font-bold text-gray-600 hover:text-brand-500 transition-colors group">
+                                <a href="https://www.lapor.go.id/" target="_blank" class="flex items-center gap-3 text-sm font-bold text-gray-600 hover:text-brand-500 transition-colors group">
                                     <div class="w-8 h-8 bg-red-50 text-red-500 rounded-lg flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                                         <i class="ph-bold ph-megaphone text-sm"></i>
                                     </div>

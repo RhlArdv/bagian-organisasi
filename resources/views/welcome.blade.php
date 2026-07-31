@@ -92,7 +92,7 @@
                 
                 <h2 class="text-2xl sm:text-3xl lg:text-4xl font-medium text-gray-400 tracking-wide mb-8 flex items-center gap-4">
                     <div class="h-px bg-gray-300 w-10 hidden sm:block"></div>
-                    Setda Kota Padang
+                    Sekretariat Daerah Kota Padang
                 </h2>
                 
                 {{-- Tagline --}}
@@ -238,7 +238,7 @@
                     </div>
                     <p class="text-gray-400 text-sm font-medium leading-relaxed max-w-sm">Sampaikan aspirasi dan laporan Anda untuk perbaikan layanan publik secara cepat dan responsif.</p>
                 </div>
-                <a href="{{ route('public.pengaduan') }}" class="relative z-10 shrink-0 inline-flex items-center justify-center gap-2 px-6 py-4 bg-white text-gray-900 font-bold rounded-2xl hover:scale-105 hover:bg-gray-100 transition-all shadow-xl group/btn">
+                <a href="https://www.lapor.go.id/" target="_blank" class="relative z-10 shrink-0 inline-flex items-center justify-center gap-2 px-6 py-4 bg-white text-gray-900 font-bold rounded-2xl hover:scale-105 hover:bg-gray-100 transition-all shadow-xl group/btn">
                     Buat Laporan <i class="ph-bold ph-arrow-up-right text-lg group-hover/btn:rotate-45 transition-transform"></i>
                 </a>
             </div>
