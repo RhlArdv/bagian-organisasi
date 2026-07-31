@@ -10,6 +10,12 @@ include:
     ref: v1.3.5
     file: '/templates/laravel.yml'
 
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: never
+    - when: always
+
 variables:
   APP_NAME: "bagian-organisasi"
   NOTIFY_VIA: "discord"            # none | whatsapp | discord | both
