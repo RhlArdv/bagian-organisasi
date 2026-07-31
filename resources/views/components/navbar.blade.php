@@ -3,8 +3,8 @@
     :class="scrolled ? 'border-gray-100' : ''">
     <div class="max-w-[1400px] mx-auto px-5 lg:px-8 h-20 lg:h-24 flex items-center justify-between">
 
-        {{-- Logo Area --}}
-        <a href="/" class="flex items-center gap-3 lg:gap-4 group shrink-0">
+        {{-- Logo Area (min-w to balance the right side) --}}
+        <a href="/" class="flex items-center gap-3 lg:gap-4 group shrink-0 min-w-[240px]">
             <div
                 class="relative w-10 h-12 lg:w-12 lg:h-14 shrink-0 transition-transform duration-500 group-hover:scale-105">
                 <img src="{{ asset('assets/img/logo.png') }}" alt="Logo Padang"
@@ -207,37 +207,5 @@
             </div>
         </nav>
 
-        {{-- Right side --}}
-        <div class="flex items-center justify-end gap-4 shrink-0">
-            {{-- Language Switcher --}}
-            <div class="hidden lg:block relative group py-2">
-                <button
-                    class="flex items-center gap-1.5 text-gray-500 group-hover:text-brand-500 transition-colors px-3 py-1.5 rounded-xl group-hover:bg-gray-50 text-sm font-bold">
-                    <i class="ph-bold ph-globe-hemisphere-west text-xl"></i>
-                    <span>ID</span>
-                    <i
-                        class="ph-bold ph-caret-down text-[10px] transition-transform duration-300 group-hover:rotate-180"></i>
-                </button>
-                <div
-                    class="absolute top-full right-0 pt-2 w-36 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-                    <div
-                        class="bg-white border border-gray-100 shadow-xl shadow-gray-900/5 rounded-2xl py-2 flex flex-col">
-                        <a href="#"
-                            class="px-4 py-2.5 text-[13px] font-bold text-brand-500 bg-brand-50 flex items-center justify-between">
-                            Indonesia <i class="ph-bold ph-check"></i>
-                        </a>
-                        <a href="#"
-                            class="px-4 py-2.5 text-[13px] font-bold text-gray-500 hover:text-brand-500 hover:bg-brand-50 transition-colors">
-                            English
-                        </a>
-                    </div>
-                </div>
-            </div>
-            {{-- Mobile Toggle --}}
-            <button @click="mobileOpen = !mobileOpen"
-                class="lg:hidden text-gray-900 text-2xl w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-50 transition-colors">
-                <i class="ph" :class="mobileOpen ? 'ph-x' : 'ph-list'"></i>
-            </button>
-        </div>
     </div>
 </header>

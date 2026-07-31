@@ -38,8 +38,6 @@
 
     @stack('scripts')
 
-    {{-- Accessibility Widget --}}
-    <script src="https://cdn.jsdelivr.net/npm/sienna-accessibility/dist/sienna-accessibility.umd.js" async></script>
     
     {{-- AOS Scroll Animations --}}
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
