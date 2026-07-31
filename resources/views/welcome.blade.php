@@ -509,48 +509,49 @@
             {{-- Vertical Line --}}
             <div class="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-brand-500/0 via-brand-500/50 to-brand-500/0 md:-translate-x-1/2 hidden sm:block"></div>
 
-            @php
-                $activities = [
-                    ['d'=>'01', 'm'=>'JUL', 't'=>'Kunjungan Kerja ke Kec. Bungus', 'l'=>'Kec. Bungus', 'img'=>'photo-1552664730-d307ca884978', 'pos'=>'left'],
-                    ['d'=>'30', 'm'=>'JUN', 't'=>'Rapat Koordinasi Prioritas Daerah', 'l'=>'Ruang Rapat Sekda', 'img'=>'photo-1542744173-8e7e53415bb0', 'pos'=>'right'],
-                    ['d'=>'29', 'm'=>'JUN', 't'=>'Penandatanganan Komitmen', 'l'=>'Aula Wako', 'img'=>'photo-1557804506-669a67965ba0', 'pos'=>'left'],
-                ];
-            @endphp
-
             <div class="space-y-10 sm:space-y-12">
-                @foreach($activities as $index => $act)
-                <div class="relative flex items-center justify-between md:justify-normal w-full group {{ $act['pos'] == 'left' ? 'md:flex-row-reverse' : '' }}">
+                @foreach($agendas as $index => $agenda)
+                @php
+                    $pos = $loop->odd ? 'left' : 'right';
+                @endphp
+                <div class="relative flex items-center justify-between md:justify-normal w-full group {{ $pos == 'left' ? 'md:flex-row-reverse' : '' }}">
                     
                     {{-- Timeline Dot --}}
                     <div class="absolute left-6 md:left-1/2 w-5 h-5 bg-[#0a0f1c] border-[3px] border-brand-500 rounded-full md:-translate-x-1/2 shadow-[0_0_15px_rgba(245,158,11,0.5)] group-hover:scale-125 group-hover:bg-brand-500 transition-all duration-500 z-20 hidden sm:block"></div>
                 
                     {{-- The Date (Opposite side of the card on Desktop) --}}
-                    <div class="hidden md:block w-5/12 {{ $act['pos'] == 'left' ? 'text-left pl-12' : 'text-right pr-12' }}">
+                    <div class="hidden md:block w-5/12 {{ $pos == 'left' ? 'text-left pl-12' : 'text-right pr-12' }}">
                         <div class="inline-flex flex-col opacity-60 group-hover:opacity-100 transition-opacity">
-                            <span class="text-4xl font-black text-white leading-none mb-0.5">{{ $act['d'] }}</span>
-                            <span class="text-xs font-bold text-brand-500 uppercase tracking-[0.2em]">{{ $act['m'] }} 2026</span>
+                            <span class="text-4xl font-black text-white leading-none mb-0.5">{{ $agenda->date->format('d') }}</span>
+                            <span class="text-xs font-bold text-brand-500 uppercase tracking-[0.2em]">{{ $agenda->date->translatedFormat('M Y') }}</span>
                         </div>
                     </div>
                 
                     {{-- The Content Card --}}
-                    <div class="w-full sm:w-[calc(100%-4rem)] sm:ml-16 md:ml-0 md:w-5/12 {{ $act['pos'] == 'left' ? 'md:pr-12' : 'md:pl-12' }}">
+                    <div class="w-full sm:w-[calc(100%-4rem)] sm:ml-16 md:ml-0 md:w-5/12 {{ $pos == 'left' ? 'md:pr-12' : 'md:pl-12' }}">
                         <div class="bg-white/5 backdrop-blur-md border border-white/10 p-5 lg:p-6 rounded-[2rem] hover:bg-white/10 transition-all duration-500 hover:shadow-xl hover:shadow-brand-500/10 hover:-translate-y-1 relative group/card">
                             
                             {{-- Mobile Date (Hidden on Desktop) --}}
                             <div class="md:hidden flex items-center gap-2 mb-4">
-                                <span class="text-brand-500 font-bold bg-brand-500/10 px-2.5 py-1 rounded-md text-[11px]">{{ $act['d'] }} {{ $act['m'] }} 2026</span>
+                                <span class="text-brand-500 font-bold bg-brand-500/10 px-2.5 py-1 rounded-md text-[11px]">{{ $agenda->date->format('d') }} {{ $agenda->date->translatedFormat('M Y') }}</span>
                             </div>
                 
-                            <h3 class="text-lg lg:text-xl font-bold text-white mb-2.5 leading-snug group-hover/card:text-brand-400 transition-colors">{{ $act['t'] }}</h3>
+                            <h3 class="text-lg lg:text-xl font-bold text-white mb-2.5 leading-snug group-hover/card:text-brand-400 transition-colors">{{ $agenda->title }}</h3>
                             
                             <div class="flex flex-wrap items-center gap-3 text-xs text-gray-400 font-medium mb-4">
-                                <span class="flex items-center gap-1.5"><i class="ph-fill ph-map-pin text-brand-500"></i> {{ $act['l'] }}</span>
-                                <span class="flex items-center gap-1.5"><i class="ph-fill ph-clock text-blue-500"></i> 09:00 WIB</span>
+                                <span class="flex items-center gap-1.5"><i class="ph-fill ph-map-pin text-brand-500"></i> {{ $agenda->location }}</span>
+                                @if($agenda->time)
+                                    <span class="flex items-center gap-1.5"><i class="ph-fill ph-clock text-blue-500"></i> {{ $agenda->time }}</span>
+                                @endif
                             </div>
                 
                             {{-- Image Thumbnail --}}
                             <div class="rounded-xl overflow-hidden aspect-[21/9] relative">
-                                <img src="https://images.unsplash.com/{{ $act['img'] }}?w=600&q=80" alt="Aktivitas" class="w-full h-full object-cover opacity-70 group-hover/card:opacity-100 group-hover/card:scale-105 transition-all duration-700">
+                                @if($agenda->image)
+                                    <img src="{{ asset('storage/' . $agenda->image) }}" alt="{{ $agenda->title }}" class="w-full h-full object-cover opacity-70 group-hover/card:opacity-100 group-hover/card:scale-105 transition-all duration-700">
+                                @else
+                                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80" alt="Placeholder" class="w-full h-full object-cover opacity-70 group-hover/card:opacity-100 group-hover/card:scale-105 transition-all duration-700">
+                                @endif
                                 <div class="absolute inset-0 bg-gradient-to-t from-[#0a0f1c]/80 to-transparent"></div>
                             </div>
                         </div>
@@ -560,10 +561,58 @@
             </div>
 
             <div class="text-center mt-16 relative z-10">
-                <a href="#" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm text-white font-bold transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.1)]">
+                <a href="{{ route('public.agendas.index') }}" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm text-white font-bold transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.1)]">
                     Jelajahi Seluruh Agenda <i class="ph-bold ph-arrow-right"></i>
                 </a>
             </div>
+        </div>
+    </div>
+</section>
+
+{{-- ═══ FAQ SECTION ═══ --}}
+<section class="py-24 bg-white relative overflow-hidden" id="faq">
+    {{-- Decorative Background Elements --}}
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-50 rounded-full blur-[100px] opacity-50 -translate-y-1/2 translate-x-1/3"></div>
+    <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-50 rounded-full blur-[120px] opacity-50 translate-y-1/3 -translate-x-1/4"></div>
+
+    <div class="max-w-4xl mx-auto px-5 lg:px-8 relative z-10">
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 text-brand-600 text-sm font-bold tracking-widest mb-4 border border-brand-100 uppercase">
+                <i class="ph-bold ph-question"></i> FAQ
+            </div>
+            <h2 class="text-4xl lg:text-5xl font-black text-gray-900 tracking-tight mb-4">Pertanyaan yang Sering Diajukan</h2>
+            <p class="text-lg text-gray-500 font-medium max-w-2xl mx-auto">Temukan jawaban cepat untuk pertanyaan seputar layanan dan informasi di Bagian Organisasi.</p>
+        </div>
+
+        <div class="space-y-4" x-data="{ selected: null }">
+            @forelse($faqs as $index => $faq)
+            <div class="bg-white border border-gray-200 rounded-[1.5rem] overflow-hidden transition-all duration-300 hover:border-brand-300 hover:shadow-xl hover:shadow-brand-500/5"
+                 :class="{ 'border-brand-500 ring-4 ring-brand-500/10 shadow-xl shadow-brand-500/10': selected === {{ $index }} }">
+                <button type="button" 
+                        class="w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none"
+                        @click="selected !== {{ $index }} ? selected = {{ $index }} : selected = null">
+                    <span class="text-lg font-bold text-gray-900 pr-8" :class="{ 'text-brand-600': selected === {{ $index }} }">
+                        {{ $faq->question }}
+                    </span>
+                    <span class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300"
+                          :class="selected === {{ $index }} ? 'bg-brand-500 text-white rotate-180' : 'bg-gray-100 text-gray-500'">
+                        <i class="ph-bold ph-caret-down text-lg"></i>
+                    </span>
+                </button>
+                
+                <div class="relative overflow-hidden transition-all max-h-0 duration-500" style="" x-ref="container{{ $index }}" x-bind:style="selected === {{ $index }} ? 'max-height: ' + $refs.container{{ $index }}.scrollHeight + 'px' : ''">
+                    <div class="px-6 pb-6 text-gray-600 leading-relaxed font-medium">
+                        <div class="pt-4 border-t border-gray-100">
+                            {!! nl2br(e($faq->answer)) !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @empty
+            <div class="text-center py-10">
+                <p class="text-gray-500 font-medium">Belum ada data FAQ.</p>
+            </div>
+            @endforelse
         </div>
     </div>
 </section>

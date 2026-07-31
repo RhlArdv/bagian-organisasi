@@ -16,6 +16,8 @@ Route::get('/', function () {
     $postCategories = \App\Models\PostCategory::orderBy('name')->get();
     $announcements = \App\Models\Announcement::active()->limit(5)->get();
     $statistics = \App\Models\Statistic::orderBy('order')->get();
+    $agendas = \App\Models\Agenda::orderBy('date', 'asc')->limit(3)->get();
+    $faqs = \App\Models\Faq::active()->get();
     
     // Visitor Stats
     $visitorToday = \App\Models\VisitorStat::getTodayVisitors();
@@ -26,7 +28,8 @@ Route::get('/', function () {
 
     return view('welcome', compact(
         'latestPosts', 'postCategories', 'announcements', 'statistics',
-        'visitorToday', 'visitorMonth', 'visitorYear', 'visitorTotal', 'visitorChartData'
+        'visitorToday', 'visitorMonth', 'visitorYear', 'visitorTotal', 'visitorChartData',
+        'agendas', 'faqs'
     ));
 });
 
@@ -63,8 +66,16 @@ Route::middleware('auth')->group(function () {
     Route::resource('admin/banners', \App\Http\Controllers\Admin\BannerController::class);
     Route::resource('admin/metrics', \App\Http\Controllers\Admin\PerformanceMetricController::class);
     Route::resource('admin/statistics', \App\Http\Controllers\Admin\StatisticController::class);
+    Route::resource('admin/agendas', \App\Http\Controllers\Admin\AgendaController::class);
     
     // Kelembagaan (Layanan)
+    Route::get('/layanan', [App\Http\Controllers\PublicLayananController::class, 'index'])->name('public.layanan.index');
+    Route::get('/layanan/{id}', [App\Http\Controllers\PublicLayananController::class, 'show'])->name('public.layanan.show');
+    
+    // Public Agenda Routes
+    Route::get('/agenda', [App\Http\Controllers\PublicAgendaController::class, 'index'])->name('public.agendas.index');
+    Route::get('/agenda/{id}', [App\Http\Controllers\PublicAgendaController::class, 'show'])->name('public.agendas.show');
+    
     Route::get('admin/layanan/{kategori}', [\App\Http\Controllers\Admin\LayananController::class, 'index'])->name('layanan.index');
     Route::get('admin/layanan/{kategori}/create', [\App\Http\Controllers\Admin\LayananController::class, 'create'])->name('layanan.create');
     Route::post('admin/layanan/{kategori}', [\App\Http\Controllers\Admin\LayananController::class, 'store'])->name('layanan.store');
