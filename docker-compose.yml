@@ -1,0 +1,48 @@
+# AUTO-GENERATED - Edit sesuai kebutuhan.
+services:
+  app:
+    build: .
+    container_name: bagian-organisasi_app
+    restart: unless-stopped
+    volumes:
+      - ./.env:/var/www/.env
+      - bagian-organisasi_storage:/var/www/storage
+    networks: [default]
+  web:
+    image: nginx:alpine
+    restart: unless-stopped
+    expose: ["80"]
+    environment:
+      VIRTUAL_HOST: "${VIRTUAL_HOST}"
+      VIRTUAL_PORT: "80"
+      VIRTUAL_NETWORK: global-gateway
+      LETSENCRYPT_HOST: "${LETSENCRYPT_HOST}"
+      LETSENCRYPT_EMAIL: "${LETSENCRYPT_EMAIL:-admin@sv.padang.go.id}"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./public:/var/www/public:ro
+      - bagian-organisasi_storage:/var/www/storage:ro
+    depends_on: [app]
+    networks: [default, global-gateway]
+  db:
+    image: mysql:8.0
+    container_name: bagian-organisasi_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_USER: "${DB_USERNAME}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+    expose:
+      - "3306"
+    volumes:
+      - bagian-organisasi_db_data:/var/lib/mysql
+    networks: [default]
+
+networks:
+  global-gateway:
+    external: true
+
+volumes:
+  bagian-organisasi_db_data:
+  bagian-organisasi_storage:
