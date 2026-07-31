@@ -321,17 +321,17 @@
                     </div>
                 </div>
 
-                <a href="{{ route('statistics.index') }}" class="flex items-center gap-3 px-4 py-3 mt-1 rounded-xl transition-all {{ request()->routeIs('statistics.*') ? 'bg-brand-50 text-brand-500 font-bold' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
+                <!-- <a href="{{ route('statistics.index') }}" class="flex items-center gap-3 px-4 py-3 mt-1 rounded-xl transition-all {{ request()->routeIs('statistics.*') ? 'bg-brand-50 text-brand-500 font-bold' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                     <i class="ph-bold ph-chart-bar text-xl"></i>
                     <span class="text-sm">Statistik Utama</span>
-                </a>
+                </a> -->
                 
                 <a href="{{ route('agendas.index') }}" class="flex items-center gap-3 px-4 py-3 mt-1 rounded-xl transition-all {{ request()->routeIs('agendas.*') ? 'bg-brand-50 text-brand-500 font-bold' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                     <i class="ph-bold ph-calendar text-xl"></i>
                     <span class="text-sm">Agenda & Aktivitas</span>
                 </a>
 
-                <a href="{{ route('faqs.index') }}" class="flex items-center gap-3 px-4 py-3 mt-1 rounded-xl transition-all {{ request()->requestIs('faqs.*') ? 'bg-brand-50 text-brand-500 font-bold' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
+                <a href="{{ route('faqs.index') }}" class="flex items-center gap-3 px-4 py-3 mt-1 rounded-xl transition-all {{ request()->routeIs('faqs.*') ? 'bg-brand-50 text-brand-500 font-bold' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                     <i class="ph-bold ph-question text-xl"></i>
                     <span class="text-sm">FAQ (Tanya Jawab)</span>
                 </a>
