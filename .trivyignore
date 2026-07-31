@@ -1,0 +1,10 @@
+# =====================================================================
+# DOCKERFILE MISCONFIGURATIONS
+# =====================================================================
+# DS-0002: Image user should not be 'root' 
+# Reason: Running Nginx + PHP-FPM in a single Alpine container requires root to bind port 80 and manage processes.
+DS-0002
+
+# DS-0026: No HEALTHCHECK defined
+# Reason: Relying on Docker Compose/GitLab CI service health checks instead.
+DS-0026

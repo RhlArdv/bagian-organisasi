@@ -1,0 +1,22 @@
+# ==============================================================================
+#  .gitlab-ci.yml — consumer entry point (dibangkitkan oleh install.sh)
+#  Pipeline DevSecOps via remote include. Folder .gitlab/ci/ TIDAK divendor.
+#  Upgrade = ubah ref di bawah (pin ke tag v1.x.x utk reproducibility).
+#  STAGING_APP_PATH (/home/ubuntuserver/bagian-organisasi) & STAGING_APP_URL
+#  (https://bagian-organisasi.sv.padang.go.id) ter-derive dari APP_NAME — tak perlu diset.
+# ==============================================================================
+include:
+  - project: 'platform/devsecops-pipeline'
+    ref: v1.3.5
+    file: '/templates/laravel.yml'
+
+variables:
+  APP_NAME: "bagian-organisasi"
+  NOTIFY_VIA: "discord"            # none | whatsapp | discord | both
+  GIT_STRATEGY: clone
+  SMOKE_TEST_PATHS: "/"
+  STAGING_APP_URL: "https://bagian-organisasi.sv.padang.go.id"
+
+  # ── Override opsional (uncomment bila perlu) ───────────────────────────────
+  # ZAP_SCAN_TYPE: "full"           # default baseline; full = active scan
+  # DEPLOY_TO_PRODUCTION: "false"   # set "true" utk aktifkan deploy-prod + verify

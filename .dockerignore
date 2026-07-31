@@ -1,0 +1,11 @@
+.git
+.env
+.env.*
+!.env.example
+node_modules
+vendor
+*.log
+docker-compose.yml
+.trivyignore
+.gitlab-ci.yml
+.phpunit.cache
