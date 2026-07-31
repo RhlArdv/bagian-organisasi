@@ -14,10 +14,10 @@ services:
     restart: unless-stopped
     expose: ["80"]
     environment:
-      VIRTUAL_HOST: "${VIRTUAL_HOST}"
+      VIRTUAL_HOST: "${VIRTUAL_HOST:-bagian-organisasi.sv.padang.go.id}"
       VIRTUAL_PORT: "80"
       VIRTUAL_NETWORK: global-gateway
-      LETSENCRYPT_HOST: "${LETSENCRYPT_HOST}"
+      LETSENCRYPT_HOST: "${LETSENCRYPT_HOST:-bagian-organisasi.sv.padang.go.id}"
       LETSENCRYPT_EMAIL: "${LETSENCRYPT_EMAIL:-admin@sv.padang.go.id}"
     volumes:
       - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
