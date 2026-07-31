@@ -12,13 +12,16 @@ fi
 
 echo "[HOOK] Memaksa update konfigurasi database ke MySQL (mengganti sisa SQLite lama)..."
 sed -i 's/^DB_CONNECTION=.*/DB_CONNECTION=mysql/g' .env || true
-sed -i 's/^DB_HOST=.*/DB_HOST=db/g' .env || true
+sed -i 's/^DB_HOST=.*/DB_HOST=bagian-organisasi_db/g' .env || true
 
 echo "[HOOK] Menyesuaikan permission folder public..."
 chmod -R o+rX public
 
 echo "[HOOK] Membuat symbolic link untuk storage..."
 docker compose exec -T app php artisan storage:link || true
+
+echo "[HOOK] Menunggu database siap (15 detik)..."
+sleep 15
 
 echo "[HOOK] Menjalankan migrasi database..."
 docker compose exec -T app php artisan migrate --force
