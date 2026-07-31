@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             SiteSettingsSeeder::class,
             BannersSeeder::class,
             PerformanceMetricsSeeder::class,
+            PageSeeder::class,
             PostCategoriesSeeder::class,
             DocumentCategoriesSeeder::class,
             FaqsSeeder::class,

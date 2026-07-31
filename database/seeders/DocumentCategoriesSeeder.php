@@ -30,11 +30,17 @@ class DocumentCategoriesSeeder extends Seeder
             ['name' => 'Standar Pelayanan', 'slug' => 'standar-pelayanan', 'group' => 'pelayanan', 'order_index' => 1],
             ['name' => 'Maklumat Pelayanan', 'slug' => 'maklumat-pelayanan', 'group' => 'pelayanan', 'order_index' => 2],
             ['name' => 'Dokumen Pelayanan Publik', 'slug' => 'dokumen-pelayanan-publik', 'group' => 'pelayanan', 'order_index' => 3],
+            ['name' => 'SKM', 'slug' => 'skm', 'group' => 'pelayanan', 'order_index' => 4],
+            ['name' => 'Pengelolaan Pengaduan', 'slug' => 'pengelolaan-pengaduan', 'group' => 'pelayanan', 'order_index' => 5],
 
             // Tata Laksana
             ['name' => 'SOP Pelayanan', 'slug' => 'sop-pelayanan', 'group' => 'tatalaksana', 'order_index' => 1],
             ['name' => 'Peta Proses Bisnis', 'slug' => 'peta-proses-bisnis', 'group' => 'tatalaksana', 'order_index' => 2],
             ['name' => 'Tata Naskah Dinas', 'slug' => 'tata-naskah-dinas', 'group' => 'tatalaksana', 'order_index' => 3],
+
+            // Reformasi Birokrasi
+            ['name' => 'Indeks RB', 'slug' => 'indeks-rb', 'group' => 'reformasi_birokrasi', 'order_index' => 1],
+            ['name' => 'SAKIP', 'slug' => 'sakip', 'group' => 'reformasi_birokrasi', 'order_index' => 2],
 
             // Regulasi
             ['name' => 'Undang-Undang', 'slug' => 'undang-undang', 'group' => 'regulasi', 'order_index' => 1],
