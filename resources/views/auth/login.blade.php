@@ -38,7 +38,7 @@
                     </div>
 
                     <!-- Password -->
-                    <div>
+                    <div x-data="{ show: false }">
                         <div class="flex items-center justify-between mb-2">
                             <label for="password" class="block text-sm font-bold text-gray-700">Kata Sandi</label>
                             @if (Route::has('password.request'))
@@ -49,9 +49,12 @@
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <i class="ph-bold ph-lock-key text-gray-400 text-lg"></i>
                             </div>
-                            <input id="password" type="password" name="password" required autocomplete="current-password" 
-                                class="block w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 focus:bg-white transition-all font-medium placeholder:text-gray-400"
+                            <input id="password" :type="show ? 'text' : 'password'" name="password" required autocomplete="current-password" 
+                                class="block w-full pl-11 pr-12 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 focus:bg-white transition-all font-medium placeholder:text-gray-400"
                                 placeholder="••••••••" />
+                            <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-brand-500 focus:outline-none transition-colors" title="Tampilkan/Sembunyikan Kata Sandi">
+                                <i class="ph-bold text-lg" :class="show ? 'ph-eye-slash' : 'ph-eye'"></i>
+                            </button>
                         </div>
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>

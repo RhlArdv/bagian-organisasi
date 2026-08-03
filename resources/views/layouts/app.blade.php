@@ -14,7 +14,6 @@
 
     {{-- Phosphor Icons --}}
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
 
     {{-- Tailwind & Vite --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -405,6 +404,20 @@
                     @endphp
                     @if($pendingCount > 0)
                         <span class="px-2 py-0.5 bg-brand-500 text-white text-[11px] font-black rounded-full shadow-sm shadow-brand-500/30">{{ $pendingCount }}</span>
+                    @endif
+                </a>
+
+                <a href="{{ route('admin.live-chat.index') }}"
+                    class="flex items-center justify-between px-4 py-3 mt-1 rounded-xl transition-all {{ request()->routeIs('admin.live-chat.*') ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
+                    <div class="flex items-center gap-3">
+                        <i class="ph-bold ph-chat-circle-dots text-xl"></i>
+                        <span class="text-sm">Live Chat Pengguna</span>
+                    </div>
+                    @php
+                        $chatUnreadCount = \App\Models\ChatSession::where('status', 'open')->where('unread_admin', '>', 0)->count();
+                    @endphp
+                    @if($chatUnreadCount > 0)
+                        <span class="px-2 py-0.5 bg-red-500 text-white text-[11px] font-black rounded-full shadow-sm animate-pulse">{{ $chatUnreadCount }}</span>
                     @endif
                 </a>
 
