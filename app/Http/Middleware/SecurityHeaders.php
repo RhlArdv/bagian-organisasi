@@ -49,10 +49,11 @@ class SecurityHeaders
     {
         // ── Host Header Validation ────────────────────────────────────────────
         // Only validate in production (APP_ENV=production) to avoid blocking
-        // local dev with arbitrary hostnames.
+        // local dev testing (e.g. via artisan serve or Ngrok)
         if (app()->environment('production')) {
             $host = $request->getHost(); // strips port automatically
             if (!in_array($host, $this->allowedHosts, true)) {
+                \Illuminate\Support\Facades\Log::error("Host Header Validation Failed. Received Host: '{$host}' - Allowed: " . implode(', ', $this->allowedHosts));
                 abort(400, 'Invalid Host header.');
             }
         }
