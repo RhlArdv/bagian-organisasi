@@ -103,7 +103,7 @@
 
     {{-- ═══ HERO ═══ --}}
     <section id="beranda"
-        class="relative overflow-hidden bg-white min-h-screen flex flex-col justify-center pt-24 lg:pt-20">
+        class="relative overflow-hidden bg-white min-h-screen flex flex-col justify-center pt-36 lg:pt-32">
 
         {{-- Dot Pattern Background --}}
         <div class="absolute inset-0 z-0 opacity-50"
