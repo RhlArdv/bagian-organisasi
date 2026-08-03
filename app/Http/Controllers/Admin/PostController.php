@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\PostCategory;
+use App\Services\HtmlPurifierService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -12,6 +13,8 @@ use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
+    public function __construct(private readonly HtmlPurifierService $purifier) {}
+
     public function index()
     {
         $posts = Post::with(['author', 'category'])->latest()->paginate(15);
@@ -36,7 +39,10 @@ class PostController extends Controller
             'title.regex' => 'Kolom judul tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
-        $data = $request->only(['title', 'content', 'excerpt', 'status', 'category_id']);
+        $data = $request->only(['title', 'excerpt', 'status', 'category_id']);
+
+        // Sanitize rich-text content via HTMLPurifier (fixes WEB-510025 Stored XSS)
+        $data['content']   = $this->purifier->purify($request->input('content', ''));
         $data['slug']      = Str::slug($request->title) . '-' . Str::random(5);
         $data['author_id'] = Auth::id();
 
@@ -71,7 +77,10 @@ class PostController extends Controller
             'title.regex' => 'Kolom judul tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
-        $data = $request->only(['title', 'content', 'excerpt', 'status', 'category_id']);
+        $data = $request->only(['title', 'excerpt', 'status', 'category_id']);
+
+        // Sanitize rich-text content via HTMLPurifier (fixes WEB-510025 Stored XSS)
+        $data['content'] = $this->purifier->purify($request->input('content', ''));
 
         if ($request->status === 'published' && !$post->published_at) {
             $data['published_at'] = now();

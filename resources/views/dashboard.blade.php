@@ -147,7 +147,7 @@
     </div>
 
     @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts" integrity="sha384-mJV8BBub153uq3sC/2rRR776669na79SoJgVgRO94Oc20Prl7DiRwRXTfiVt83j8" crossorigin="anonymous"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var options = {

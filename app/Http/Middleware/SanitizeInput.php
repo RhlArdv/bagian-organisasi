@@ -16,6 +16,10 @@ class SanitizeInput extends TransformsRequest
         'password_confirmation',
         'current_password',
         'google_maps_embed',
+        // 'content' is excluded here because PostController sanitizes it via
+        // HtmlPurifierService, which is context-aware and preserves safe HTML.
+        // strip_tags() would destroy rich text formatting before purification.
+        'content',
     ];
 
     /**
