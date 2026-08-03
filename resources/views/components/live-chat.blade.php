@@ -113,7 +113,7 @@
     };
 </script>
 
-<div x-data="liveChatWidget()" x-init="initWidget()" class="fixed right-6 bottom-6" style="position: fixed; bottom: 24px; right: 24px; z-index: 999999;">
+<div id="padang-live-chat" x-data="liveChatWidget()" x-init="initWidget()" class="fixed right-6 bottom-6" style="position: fixed; bottom: 24px; right: 24px; z-index: 999999;">
     {{-- Tombol Trigger Floating (Minimalist) --}}
     <button type="button" @click="toggleChat()" 
         class="relative flex items-center justify-center w-14 h-14 bg-white text-gray-800 rounded-full shadow-[0_10px_40px_rgba(0,0,0,0.15)] hover:shadow-[0_10px_40px_rgba(0,0,0,0.25)] hover:scale-110 transition-all duration-300 group border border-gray-100"

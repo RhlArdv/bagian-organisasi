@@ -19,6 +19,14 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @stack('styles')
+    <style>
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+            width: 100% !important;
+            position: relative;
+        }
+    </style>
 </head>
 <body class="bg-[#f4f7f6] text-gray-900 antialiased overflow-x-hidden min-h-screen flex flex-col"
       x-data="{ scrolled: false, mobileOpen: false }"
@@ -60,6 +68,10 @@
                 easing: 'ease-out-cubic',
             });
         });
+
+    {{-- Widget Aksesibilitas Disabilitas (Ramah Inklusi) --}}
+    <x-accessibility-widget />
+
     {{-- Widget Live Chat Pengguna (IP Locked System) --}}
     <x-live-chat />
 </body>

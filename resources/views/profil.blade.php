@@ -14,8 +14,16 @@
 
     {{-- Tailwind & Vite --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+            width: 100% !important;
+            position: relative;
+        }
+    </style>
 </head>
-<body class="bg-[#f4f7f6] text-gray-900 antialiased overflow-x-hidden min-h-screen flex flex-col" x-data="{ scrolled: false }" @scroll.window.passive="scrolled = (window.pageYOffset > 30)">
+<body class="bg-[#f4f7f6] text-gray-900 antialiased overflow-x-hidden min-h-screen flex flex-col" x-data="{ scrolled: false, mobileOpen: false }" @scroll.window.passive="scrolled = (window.pageYOffset > 30)">
 
     {{-- ═══ NAVBAR ═══ --}}
     @include('components.navbar')
