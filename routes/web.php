@@ -43,6 +43,7 @@ Route::get('/layanan/sop', [PublicLayananController::class, 'sop'])->name('publi
 Route::get('/layanan/anjab-abk', [PublicLayananController::class, 'anjabAbk'])->name('public.anjab-abk');
 Route::get('/layanan/pengaduan', [PublicLayananController::class, 'pengaduan'])->name('public.pengaduan');
 Route::post('/layanan/pengaduan', [PublicLayananController::class, 'storePengaduan'])->middleware('throttle:5,1')->name('public.pengaduan.store');
+Route::post('/layanan/kritik-saran', [PublicLayananController::class, 'storeKritikSaran'])->middleware('throttle:5,1')->name('public.kritik-saran.store');
 Route::get('/layanan/kelembagaan', [PublicLayananController::class, 'kelembagaan'])->name('public.kelembagaan');
 Route::get('/layanan/standar-pelayanan', [PublicLayananController::class, 'standarPelayanan'])->name('public.standar-pelayanan');
 
@@ -101,6 +102,9 @@ Route::middleware('auth')->group(function () {
     
     // FAQ
     Route::resource('admin/faqs', \App\Http\Controllers\Admin\FaqController::class);
+    
+    // Kritik, Saran & Pengaduan (Feedback)
+    Route::resource('admin/feedbacks', \App\Http\Controllers\Admin\FeedbackController::class)->only(['index', 'show', 'update', 'destroy']);
 });
 
 require __DIR__.'/auth.php';
