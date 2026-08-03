@@ -37,6 +37,11 @@ class SecurityHeaders
             'www.' . $mainHost,
             'localhost',        // local dev
             '127.0.0.1',       // local dev
+            // Hardcode the known production domains in case APP_URL is not set correctly on the server
+            'bagian-organisasi.sv.padang.go.id',
+            'www.bagian-organisasi.sv.padang.go.id',
+            // Allow direct IP access for deployment testing on port 8080
+            '103.141.74.153'
         ]));
     }
 
