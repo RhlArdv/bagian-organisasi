@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description"
         content="Portal resmi Bagian Organisasi Sekretariat Daerah Kota Padang. Informasi kelembagaan, pelayanan publik, tata laksana, dan reformasi birokrasi.">
     <title>Bagian Organisasi — Sekretariat Daerah Kota Padang</title>
@@ -36,7 +37,6 @@
         </script>
     @endif
 
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
@@ -1087,6 +1087,8 @@
             });
         });
     </script>
-</body>
 
+    {{-- Widget Live Chat Pengguna (IP Locked System) --}}
+    <x-live-chat />
+</body>
 </html>

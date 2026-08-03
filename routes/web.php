@@ -51,6 +51,10 @@ Route::get('/layanan/standar-pelayanan', [PublicLayananController::class, 'stand
 Route::get('/berita', [PublicBeritaController::class, 'index'])->name('public.berita.index');
 Route::get('/berita/{slug}', [PublicBeritaController::class, 'show'])->name('public.berita.show');
 
+// Halaman Publik — Live Chat Pengguna (IP Locked)
+Route::get('/live-chat/load', [\App\Http\Controllers\LiveChatController::class, 'load'])->name('public.live-chat.load');
+Route::post('/live-chat/send', [\App\Http\Controllers\LiveChatController::class, 'send'])->middleware('throttle:30,1')->name('public.live-chat.send');
+
 
 Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -105,6 +109,13 @@ Route::middleware('auth')->group(function () {
     
     // Kritik, Saran & Pengaduan (Feedback)
     Route::resource('admin/feedbacks', \App\Http\Controllers\Admin\FeedbackController::class)->only(['index', 'show', 'update', 'destroy']);
+
+    // Live Chat Pengguna (IP Locked System)
+    Route::get('admin/live-chat', [\App\Http\Controllers\Admin\LiveChatController::class, 'index'])->name('admin.live-chat.index');
+    Route::get('admin/live-chat/{session}/messages', [\App\Http\Controllers\Admin\LiveChatController::class, 'messages'])->name('admin.live-chat.messages');
+    Route::post('admin/live-chat/{session}/reply', [\App\Http\Controllers\Admin\LiveChatController::class, 'reply'])->name('admin.live-chat.reply');
+    Route::put('admin/live-chat/{session}/status', [\App\Http\Controllers\Admin\LiveChatController::class, 'updateStatus'])->name('admin.live-chat.status');
+    Route::delete('admin/live-chat/{session}', [\App\Http\Controllers\Admin\LiveChatController::class, 'destroy'])->name('admin.live-chat.destroy');
 });
 
 require __DIR__.'/auth.php';
