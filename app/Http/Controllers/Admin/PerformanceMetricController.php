@@ -44,8 +44,10 @@ class PerformanceMetricController extends Controller
                 })
             ],
             'score' => 'required|numeric|min:0',
-            'predicate' => 'nullable|string|max:255',
+            'predicate' => ['nullable', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'description' => 'nullable|string',
+        ], [
+            'predicate.regex' => 'Kolom predikat tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         PerformanceMetric::create($validated);
@@ -79,8 +81,10 @@ class PerformanceMetricController extends Controller
                 })
             ],
             'score' => 'required|numeric|min:0',
-            'predicate' => 'nullable|string|max:255',
+            'predicate' => ['nullable', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'description' => 'nullable|string',
+        ], [
+            'predicate.regex' => 'Kolom predikat tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         $metric->update($validated);

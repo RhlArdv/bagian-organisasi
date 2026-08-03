@@ -33,9 +33,11 @@ class PageController extends Controller
     public function update(Request $request, Page $page)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'content' => 'nullable|string',
             'featured_image' => 'nullable|image|max:2048',
+        ], [
+            'title.regex' => 'Kolom judul tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         $data = [

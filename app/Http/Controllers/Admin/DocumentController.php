@@ -38,11 +38,14 @@ class DocumentController extends Controller
         $kategori = DocumentCategory::where('slug', $kategori_slug)->firstOrFail();
 
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'document_number' => 'nullable|string|max:255',
+            'title' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'document_number' => ['nullable', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'year' => 'nullable|integer|min:1900|max:' . (date('Y') + 5),
             'description' => 'nullable|string',
             'file' => 'required|file|mimes:pdf|max:20480', // max 20MB
+        ], [
+            'title.regex' => 'Kolom judul tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'document_number.regex' => 'Kolom nomor dokumen tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         $filePath = $request->file('file')->store('documents', 'public');
@@ -82,11 +85,14 @@ class DocumentController extends Controller
         $document = Document::where('category_id', $kategori->id)->findOrFail($id);
 
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'document_number' => 'nullable|string|max:255',
+            'title' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'document_number' => ['nullable', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'year' => 'nullable|integer|min:1900|max:' . (date('Y') + 5),
             'description' => 'nullable|string',
             'file' => 'nullable|file|mimes:pdf|max:20480',
+        ], [
+            'title.regex' => 'Kolom judul tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'document_number.regex' => 'Kolom nomor dokumen tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         $data = [

@@ -23,12 +23,14 @@ class AnnouncementController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'        => 'required|string|max:255',
+            'title'        => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'content'      => 'nullable|string',
             'published_at' => 'required|date',
             'expired_at'   => 'nullable|date|after:published_at',
             'attachment'   => 'nullable|file|mimes:pdf,doc,docx|max:5120',
             'image'        => 'nullable|image|max:2048',
+        ], [
+            'title.regex' => 'Kolom judul tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         $data = $request->only(['title', 'content', 'published_at', 'expired_at']);
@@ -56,12 +58,14 @@ class AnnouncementController extends Controller
     public function update(Request $request, Announcement $announcement)
     {
         $request->validate([
-            'title'        => 'required|string|max:255',
+            'title'        => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'content'      => 'nullable|string',
             'published_at' => 'required|date',
             'expired_at'   => 'nullable|date|after:published_at',
             'attachment'   => 'nullable|file|mimes:pdf,doc,docx|max:5120',
             'image'        => 'nullable|image|max:2048',
+        ], [
+            'title.regex' => 'Kolom judul tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         $data = $request->only(['title', 'content', 'published_at', 'expired_at']);

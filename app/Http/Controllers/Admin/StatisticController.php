@@ -22,11 +22,13 @@ class StatisticController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'  => 'required|string|max:255',
+            'name'  => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'value' => 'required|string|max:255',
             'icon'  => 'required|string|max:255',
             'color' => 'required|string|max:255',
             'order' => 'required|integer'
+        ], [
+            'name.regex' => 'Kolom nama statistik tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         Statistic::create($request->all());
@@ -42,11 +44,13 @@ class StatisticController extends Controller
     public function update(Request $request, Statistic $statistic)
     {
         $request->validate([
-            'name'  => 'required|string|max:255',
+            'name'  => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'value' => 'required|string|max:255',
             'icon'  => 'required|string|max:255',
             'color' => 'required|string|max:255',
             'order' => 'required|integer'
+        ], [
+            'name.regex' => 'Kolom nama statistik tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         $statistic->update($request->all());

@@ -32,20 +32,23 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'subtitle' => 'nullable|string',
+            'title' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'subtitle' => ['nullable', 'string', 'regex:/^[^<>=]+$/'],
             'image' => 'required|image|max:3072',
             'button_text' => 'nullable|string|max:255',
             'button_link' => 'nullable|string|max:255',
             'is_active' => 'boolean',
             'order_index' => 'required|integer',
+        ], [
+            'title.regex' => 'Kolom judul tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'subtitle.regex' => 'Kolom sub-judul tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('banners', 'public');
         }
 
-        $validated['is_active'] = $request->has('is_active');
+        $validated['is_active'] = $request->boolean('is_active');
 
         Banner::create($validated);
 
@@ -66,13 +69,16 @@ class BannerController extends Controller
     public function update(Request $request, Banner $banner)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'subtitle' => 'nullable|string',
+            'title' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'subtitle' => ['nullable', 'string', 'regex:/^[^<>=]+$/'],
             'image' => 'nullable|image|max:3072',
             'button_text' => 'nullable|string|max:255',
             'button_link' => 'nullable|string|max:255',
             'is_active' => 'boolean',
             'order_index' => 'required|integer',
+        ], [
+            'title.regex' => 'Kolom judul tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'subtitle.regex' => 'Kolom sub-judul tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         if ($request->hasFile('image')) {
@@ -82,7 +88,7 @@ class BannerController extends Controller
             $validated['image'] = $request->file('image')->store('banners', 'public');
         }
 
-        $validated['is_active'] = $request->has('is_active');
+        $validated['is_active'] = $request->boolean('is_active');
 
         $banner->update($validated);
 

@@ -56,20 +56,25 @@ class LayananController extends Controller
         }
 
         $validated = $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'dasar_hukum' => 'nullable|string',
-            'maklumat_image' => 'nullable|image|max:5120',
-            'persyaratan' => 'nullable|string',
-            'sistem_mekanisme' => 'nullable|string',
-            'flowchart_image' => 'nullable|image|max:5120',
-            'jangka_waktu' => 'nullable|string|max:255',
-            'biaya' => 'nullable|string|max:255',
-            'produk_pelayanan' => 'nullable|string|max:255',
-            'pengaduan' => 'nullable|string',
-            'informasi_tambahan' => 'nullable|string',
-            'link_sippn' => 'nullable|url|max:255',
-            'file_download' => 'nullable|file|mimes:pdf|max:10240',
+            'judul' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'deskripsi' => ['nullable', 'string'],
+            'dasar_hukum' => ['nullable', 'string'],
+            'maklumat_image' => ['nullable', 'image', 'max:5120'],
+            'persyaratan' => ['nullable', 'string'],
+            'sistem_mekanisme' => ['nullable', 'string'],
+            'flowchart_image' => ['nullable', 'image', 'max:5120'],
+            'jangka_waktu' => ['nullable', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'biaya' => ['nullable', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'produk_pelayanan' => ['nullable', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'pengaduan' => ['nullable', 'string'],
+            'informasi_tambahan' => ['nullable', 'string'],
+            'link_sippn' => ['nullable', 'url', 'max:255'],
+            'file_download' => ['nullable', 'file', 'mimes:pdf', 'max:10240'],
+        ], [
+            'judul.regex' => 'Kolom judul tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'jangka_waktu.regex' => 'Kolom jangka waktu tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'biaya.regex' => 'Kolom biaya tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'produk_pelayanan.regex' => 'Kolom produk pelayanan tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         $validated['kategori'] = $kategori;
@@ -116,20 +121,25 @@ class LayananController extends Controller
         $layanan = Layanan::where('kategori', $kategori)->findOrFail($id);
 
         $validated = $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'dasar_hukum' => 'nullable|string',
-            'maklumat_image' => 'nullable|image|max:5120',
-            'persyaratan' => 'nullable|string',
-            'sistem_mekanisme' => 'nullable|string',
-            'flowchart_image' => 'nullable|image|max:5120',
-            'jangka_waktu' => 'nullable|string|max:255',
-            'biaya' => 'nullable|string|max:255',
-            'produk_pelayanan' => 'nullable|string|max:255',
-            'pengaduan' => 'nullable|string',
-            'informasi_tambahan' => 'nullable|string',
-            'link_sippn' => 'nullable|url|max:255',
-            'file_download' => 'nullable|file|mimes:pdf|max:10240',
+            'judul' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'deskripsi' => ['nullable', 'string'],
+            'dasar_hukum' => ['nullable', 'string'],
+            'maklumat_image' => ['nullable', 'image', 'max:5120'],
+            'persyaratan' => ['nullable', 'string'],
+            'sistem_mekanisme' => ['nullable', 'string'],
+            'flowchart_image' => ['nullable', 'image', 'max:5120'],
+            'jangka_waktu' => ['nullable', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'biaya' => ['nullable', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'produk_pelayanan' => ['nullable', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'pengaduan' => ['nullable', 'string'],
+            'informasi_tambahan' => ['nullable', 'string'],
+            'link_sippn' => ['nullable', 'url', 'max:255'],
+            'file_download' => ['nullable', 'file', 'mimes:pdf', 'max:10240'],
+        ], [
+            'judul.regex' => 'Kolom judul tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'jangka_waktu.regex' => 'Kolom jangka waktu tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'biaya.regex' => 'Kolom biaya tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'produk_pelayanan.regex' => 'Kolom produk pelayanan tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         if ($request->hasFile('maklumat_image')) {

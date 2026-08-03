@@ -23,12 +23,15 @@ class AgendaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title'       => 'required|string|max:255',
-            'location'    => 'required|string|max:255',
+            'title'       => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'location'    => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'date'        => 'required|date',
             'time'        => 'nullable|string|max:255',
             'image'       => 'nullable|image|max:2048',
             'description' => 'nullable|string',
+        ], [
+            'title.regex' => 'Kolom judul tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'location.regex' => 'Kolom lokasi tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         if ($request->hasFile('image')) {
@@ -48,12 +51,15 @@ class AgendaController extends Controller
     public function update(Request $request, Agenda $agenda)
     {
         $validated = $request->validate([
-            'title'       => 'required|string|max:255',
-            'location'    => 'required|string|max:255',
+            'title'       => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'location'    => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'date'        => 'required|date',
             'time'        => 'nullable|string|max:255',
             'image'       => 'nullable|image|max:2048',
             'description' => 'nullable|string',
+        ], [
+            'title.regex' => 'Kolom judul tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'location.regex' => 'Kolom lokasi tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         if ($request->hasFile('image')) {
