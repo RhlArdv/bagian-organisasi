@@ -40,8 +40,8 @@
         </script>
     @endif
 
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1" integrity="sha384-cPFV+/abYd3INVFHPmSKpBmcnH+Q+bTZW7dv/EiuShUNPkHyFmRF8PsL7Ibfvunk" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js" integrity="sha384-IntiqSJhM3wcHA/7O7MOj9GM6+qIPnjxugImfm81JveaSWrT7m3K0CfsWwOscMCu" crossorigin="anonymous"></script>
 
     <style>
         html, body {
@@ -1073,7 +1073,7 @@
     </script>
     
     {{-- AOS Scroll Animations --}}
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" integrity="sha384-wziAfh6b/qT+3LrqebF9WeK4+J5sehS6FA10J1t3a866kJ/fvU5UwofWnQyzLtwu" crossorigin="anonymous"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Dynamically add data-aos to section containers to avoid hardcoding everywhere
