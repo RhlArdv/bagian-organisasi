@@ -394,6 +394,20 @@
                     <span class="text-sm">FAQ (Tanya Jawab)</span>
                 </a>
 
+                <a href="{{ route('feedbacks.index') }}"
+                    class="flex items-center justify-between px-4 py-3 mt-1 rounded-xl transition-all {{ request()->routeIs('feedbacks.*') ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
+                    <div class="flex items-center gap-3">
+                        <i class="ph-bold ph-chat-text text-xl"></i>
+                        <span class="text-sm">Kritik, Saran & Pengaduan</span>
+                    </div>
+                    @php
+                        $pendingCount = \App\Models\Feedback::where('status', 'pending')->count();
+                    @endphp
+                    @if($pendingCount > 0)
+                        <span class="px-2 py-0.5 bg-brand-500 text-white text-[11px] font-black rounded-full shadow-sm shadow-brand-500/30">{{ $pendingCount }}</span>
+                    @endif
+                </a>
+
                 <p class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 mt-8">Pengaturan
                     Kontak</p>
                 <a href="{{ route('settings.contact') }}"
