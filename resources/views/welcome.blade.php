@@ -41,6 +41,13 @@
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
     <style>
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+            width: 100% !important;
+            position: relative;
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
         }
@@ -1087,6 +1094,9 @@
             });
         });
     </script>
+
+    {{-- Widget Aksesibilitas Disabilitas (Ramah Inklusi) --}}
+    <x-accessibility-widget />
 
     {{-- Widget Live Chat Pengguna (IP Locked System) --}}
     <x-live-chat />

@@ -22,7 +22,7 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             {{-- Panel Kiri: Daftar Sesi Obrolan --}}
-            <div class="lg:col-span-4 bg-white rounded-3xl border border-gray-100 shadow-[0_4px_25px_rgb(0,0,0,0.03)] overflow-hidden flex flex-col h-[680px]">
+            <div class="lg:col-span-4 bg-white rounded-3xl border border-gray-100 shadow-[0_4px_25px_rgb(0,0,0,0.03)] overflow-hidden flex flex-col h-[380px] lg:h-[680px]">
                 <div class="p-5 border-b border-gray-100 bg-gray-50/50 flex items-center justify-between gap-2">
                     <h3 class="font-extrabold text-gray-900 text-base flex items-center gap-2">
                         <i class="ph-bold ph-chats text-brand-500 text-xl"></i> Daftar Pengguna
@@ -84,7 +84,7 @@
             </div>
 
             {{-- Panel Kanan: Jendela Percakapan Aktif --}}
-            <div class="lg:col-span-8 bg-white rounded-3xl border border-gray-100 shadow-[0_4px_25px_rgb(0,0,0,0.03)] overflow-hidden flex flex-col h-[680px]">
+            <div class="lg:col-span-8 bg-white rounded-3xl border border-gray-100 shadow-[0_4px_25px_rgb(0,0,0,0.03)] overflow-hidden flex flex-col h-[550px] lg:h-[680px]">
                 @if($activeSession)
                     {{-- Header Ruang Obrolan --}}
                     <div class="p-5 border-b border-gray-100 bg-gradient-to-r from-[#0a0f1c] to-[#1e293b] text-white flex flex-wrap items-center justify-between gap-4">

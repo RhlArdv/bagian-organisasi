@@ -17,8 +17,15 @@
 
     {{-- Tailwind & Vite --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+            width: 100% !important;
+            position: relative;
+        }
+    </style>
 </head>
-
 <body class="bg-[#f4f7f6] text-gray-900 antialiased overflow-x-hidden">
     <div class="min-h-screen flex" x-data="{ sidebarOpen: false }">
 
@@ -453,45 +460,48 @@
         </aside>
 
         {{-- MAIN CONTENT AREA --}}
-        <div class="flex-1 lg:ml-72 flex flex-col min-h-screen">
+        <div class="flex-1 lg:ml-72 flex flex-col min-h-screen w-full lg:w-[calc(100%-18rem)] max-w-full overflow-x-hidden">
 
             {{-- TOPBAR --}}
             <header
-                class="h-24 bg-white border-b border-gray-100 flex items-center justify-between px-6 lg:px-10 sticky top-0 z-30">
+                class="h-20 md:h-24 bg-white border-b border-gray-100 flex items-center justify-between px-4 sm:px-6 lg:px-10 sticky top-0 z-30">
 
                 {{-- Left side Topbar --}}
-                <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2 sm:gap-4">
                     <button @click="sidebarOpen = true"
                         class="lg:hidden w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 text-gray-600 hover:bg-brand-50 hover:text-brand-500 transition-colors">
                         <i class="ph-bold ph-list text-xl"></i>
                     </button>
-                    @isset($header)
-                        {{ $header }}
-                    @endisset
+                    <div class="overflow-hidden truncate max-w-[200px] sm:max-w-md md:max-w-none">
+                        @isset($header)
+                            {{ $header }}
+                        @endisset
+                    </div>
                 </div>
 
                 {{-- Right side Topbar (Profile Dropdown) --}}
-                <div class="relative" x-data="{ open: false }">
+                <div class="relative shrink-0" x-data="{ open: false }">
                     <button @click="open = !open" @click.outside="open = false"
-                        class="flex items-center gap-3 p-2 pr-4 rounded-full border border-gray-100 hover:border-brand-200 hover:bg-brand-50 transition-all group">
+                        class="flex items-center gap-2 sm:gap-3 p-1.5 sm:p-2 sm:pr-4 rounded-full border border-gray-100 hover:border-brand-200 hover:bg-brand-50 transition-all group">
                         <div
-                            class="w-10 h-10 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-sm">
+                            class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-sm">
                             {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
-                        <div class="text-left hidden sm:block">
+                        <div class="text-left hidden md:block">
                             <span
                                 class="block text-sm font-bold text-gray-900 group-hover:text-brand-600">{{ Auth::user()->name }}</span>
                             <span class="block text-[10px] font-bold text-gray-400 uppercase">Administrator</span>
                         </div>
-                        <i class="ph-bold ph-caret-down text-gray-400 text-xs transition-transform duration-300 ml-2"
+                        <i class="ph-bold ph-caret-down text-gray-400 text-xs transition-transform duration-300 ml-1 sm:ml-2"
                             :class="open ? 'rotate-180' : ''"></i>
                     </button>
 
                     <div x-show="open" x-transition.opacity.duration.200ms
-                        class="absolute right-0 mt-3 w-56 bg-white border border-gray-100 shadow-xl shadow-brand-500/5 rounded-2xl py-3 z-50">
-                        <div class="px-5 py-2 mb-2 border-b border-gray-50 sm:hidden">
-                            <span class="block text-sm font-bold text-gray-900">{{ Auth::user()->name }}</span>
-                            <span class="block text-[10px] font-bold text-gray-400">{{ Auth::user()->email }}</span>
+                        class="absolute right-0 mt-3 w-56 bg-white border border-gray-100 shadow-xl shadow-brand-500/5 rounded-2xl py-3 z-50"
+                        style="display: none;">
+                        <div class="px-5 py-2 mb-2 border-b border-gray-50 md:hidden">
+                            <span class="block text-sm font-bold text-gray-900 truncate">{{ Auth::user()->name }}</span>
+                            <span class="block text-[10px] font-bold text-gray-400 truncate">{{ Auth::user()->email }}</span>
                         </div>
                         <a href="{{ route('profile.edit') }}"
                             class="flex items-center gap-3 px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 transition-colors">
@@ -509,7 +519,7 @@
             </header>
 
             {{-- PAGE CONTENT --}}
-            <main class="flex-1 p-6 lg:p-10">
+            <main class="flex-1 p-4 sm:p-6 lg:p-10 max-w-full overflow-x-hidden">
                 {{ $slot }}
             </main>
 
