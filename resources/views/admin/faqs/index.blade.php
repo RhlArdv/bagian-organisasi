@@ -73,6 +73,11 @@
                     </tbody>
                 </table>
             </div>
+            @if($faqs->hasPages())
+                <div class="p-6 border-t border-gray-100">
+                    {{ $faqs->links() }}
+                </div>
+            @endif
         </div>
     </div>
 </x-app-layout>

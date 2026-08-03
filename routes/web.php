@@ -42,7 +42,7 @@ Route::get('/layanan/reformasi-birokrasi', [PublicLayananController::class, 'ref
 Route::get('/layanan/sop', [PublicLayananController::class, 'sop'])->name('public.sop');
 Route::get('/layanan/anjab-abk', [PublicLayananController::class, 'anjabAbk'])->name('public.anjab-abk');
 Route::get('/layanan/pengaduan', [PublicLayananController::class, 'pengaduan'])->name('public.pengaduan');
-Route::post('/layanan/pengaduan', [PublicLayananController::class, 'storePengaduan'])->name('public.pengaduan.store');
+Route::post('/layanan/pengaduan', [PublicLayananController::class, 'storePengaduan'])->middleware('throttle:5,1')->name('public.pengaduan.store');
 Route::get('/layanan/kelembagaan', [PublicLayananController::class, 'kelembagaan'])->name('public.kelembagaan');
 Route::get('/layanan/standar-pelayanan', [PublicLayananController::class, 'standarPelayanan'])->name('public.standar-pelayanan');
 

@@ -107,11 +107,15 @@ class PublicLayananController extends Controller
         ]);
 
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'phone' => 'nullable|string|max:20',
-            'subject' => 'required|string|max:255',
-            'message' => 'required|string|max:5000',
+            'name' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:20', 'regex:/^[0-9\+\-\s\(\)]+$/'],
+            'subject' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'message' => ['required', 'string', 'max:5000'],
+        ], [
+            'name.regex' => 'Nama tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'phone.regex' => 'Nomor telepon hanya boleh berisi angka dan simbol dasar (+, -, atau spasi).',
+            'subject.regex' => 'Subjek tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         $ticketNumber = Feedback::generateTicketNumber('pengaduan');
