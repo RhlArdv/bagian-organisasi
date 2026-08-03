@@ -7,21 +7,30 @@
             newMessage: '',
             sending: false,
             ipAddress: '',
-            intervalId: null,
+            pollInterval: 30000,
+            intervalTimer: null,
 
             initWidget() {
                 this.loadChat(false);
-                // Polling otomatis setiap 3.5 detik (bekerja mulus tanpa bug/tanpa refresh)
-                this.intervalId = setInterval(() => {
-                    this.loadChat(this.open);
-                }, 3500);
+                this.startPolling();
 
                 this.$watch('open', value => {
                     if (value) {
+                        this.pollInterval = 5000; // 5 detik saat terbuka
                         this.loadChat(true);
                         this.$nextTick(() => this.scrollToBottom());
+                    } else {
+                        this.pollInterval = 30000; // 30 detik saat tertutup
                     }
+                    this.startPolling();
                 });
+            },
+
+            startPolling() {
+                if (this.intervalTimer) clearInterval(this.intervalTimer);
+                this.intervalTimer = setInterval(() => {
+                    this.loadChat(this.open);
+                }, this.pollInterval);
             },
 
             toggleChat() {
@@ -105,21 +114,17 @@
 </script>
 
 <div x-data="liveChatWidget()" x-init="initWidget()" class="fixed right-6 bottom-6" style="position: fixed; bottom: 24px; right: 24px; z-index: 999999;">
-    {{-- Tombol Trigger Floating --}}
+    {{-- Tombol Trigger Floating (Minimalist) --}}
     <button type="button" @click="toggleChat()" 
-        class="relative flex items-center gap-3 px-5 py-3.5 bg-gradient-to-r from-[#0a0f1c] to-amber-500 text-white font-bold rounded-full shadow-2xl hover:scale-105 transition-all duration-300 group border border-white/20"
-        style="display: flex; align-items: center; gap: 10px; padding: 12px 22px; background: linear-gradient(135deg, #0a0f1c 0%, #d97706 100%); color: #ffffff; font-weight: 800; border-radius: 9999px; box-shadow: 0 10px 35px rgba(0,0,0,0.35); border: 2px solid rgba(255,255,255,0.25); cursor: pointer; font-size: 14px;">
+        class="relative flex items-center justify-center w-14 h-14 bg-white text-gray-800 rounded-full shadow-[0_10px_40px_rgba(0,0,0,0.15)] hover:shadow-[0_10px_40px_rgba(0,0,0,0.25)] hover:scale-110 transition-all duration-300 group border border-gray-100"
+        style="width: 60px; height: 60px; border-radius: 50%; background: #ffffff; color: #1e293b; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.15); cursor: pointer; border: 1px solid #f1f5f9;">
         
-        <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-amber-300 group-hover:rotate-12 transition-transform"
-            style="width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; color: #fde68a;">
-            <i class="ph-bold" :class="open ? 'ph-caret-down' : 'ph-chat-circle-dots'" style="font-size: 20px;"></i>
-        </div>
-        <span class="text-sm tracking-wide font-extrabold" x-text="open ? 'Tutup Chat' : 'Live Chat'">Live Chat</span>
+        <i class="ph-fill transition-transform duration-300" :class="open ? 'ph-x rotate-90 text-gray-400' : 'ph-chat-circle-dots text-amber-500 group-hover:-rotate-12'" style="font-size: 32px;"></i>
         
         {{-- Badge Notifikasi Belum Dibaca --}}
         <span x-show="unreadCount > 0" x-text="unreadCount" 
-            class="absolute -top-1 -left-1 w-6 h-6 bg-red-600 text-white text-xs font-black rounded-full flex items-center justify-center border-2 border-white shadow-md animate-bounce"
-            style="position: absolute; top: -6px; left: -6px; width: 24px; height: 24px; background-color: #dc2626; color: white; font-size: 11px; font-weight: 900; border-radius: 50%; border: 2px solid white; display: none; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+            class="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center border-2 border-white shadow-sm animate-bounce"
+            style="position: absolute; top: -2px; right: -2px; width: 22px; height: 22px; background-color: #ef4444; color: white; font-size: 11px; font-weight: 900; border-radius: 50%; border: 2px solid white; display: none; align-items: center; justify-content: center;">
         </span>
     </button>
 

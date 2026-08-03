@@ -100,11 +100,10 @@
             style="background-image: radial-gradient(#fcd34d 1.5px, transparent 1.5px); background-size: 36px 36px;">
         </div>
 
-        {{-- Absolute Huge Image (Anchored to the absolute right of the screen) --}}
-        <div class="absolute top-1/2 -translate-y-[45%] -right-40 md:right-0 w-[800px] lg:w-[1100px] xl:w-[1300px] pointer-events-none z-0 opacity-15 lg:opacity-100">
-            <img src="{{ asset('assets/img/hero.webp') }}" alt="Bagian Organisasi Sekretariat Daerah Kota Padang"
-                class="w-full h-auto object-contain object-right mix-blend-multiply"
-                style="-webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%); mask-image: linear-gradient(to right, transparent 0%, black 15%);"
+        {{-- Absolute Huge Image (Full Background) --}}
+        <div class="absolute inset-0 w-full h-full pointer-events-none z-0">
+            <img src="{{ asset('assets/img/hero2.webp') }}" alt="Bagian Organisasi Sekretariat Daerah Kota Padang"
+                class="w-full h-full object-cover object-bottom"
                 onerror="this.src='https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=900&q=80'">
         </div>
 
@@ -113,11 +112,11 @@
             <div class="w-full max-w-[90rem] mx-auto px-5 lg:px-12 relative z-10">
                 <div class="w-full lg:w-[55%] relative z-20">
                     <div
-                        class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-600 text-xs font-black tracking-widest uppercase mb-6 shadow-sm">
+                        class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400 text-[#1e293b] text-xs font-black tracking-widest uppercase mb-6 shadow-sm">
                         <span class="relative flex h-2 w-2">
                             <span
-                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1e293b] opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#1e293b]"></span>
                         </span>
                         Selamat Datang di
                     </div>
