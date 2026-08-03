@@ -21,6 +21,9 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <script>
             tailwind.config = {
+                safelist: [
+                    { pattern: /(bg|text)-(brand|blue|green|purple)-(50|500)/ }
+                ],
                 theme: {
                     extend: {
                         fontFamily: {
