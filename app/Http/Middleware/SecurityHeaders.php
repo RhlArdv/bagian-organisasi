@@ -41,7 +41,7 @@ class SecurityHeaders
             'bagian-organisasi.sv.padang.go.id',
             'www.bagian-organisasi.sv.padang.go.id',
             // Allow direct IP access for deployment testing on port 8080
-            '103.141.74.153'
+            '103.141.74.157'
         ]));
     }
 
