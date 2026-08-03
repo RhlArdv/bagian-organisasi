@@ -13,8 +13,6 @@ services:
     image: nginx:alpine
     restart: unless-stopped
     expose: ["80"]
-    ports:
-      - "8080:80"
     environment:
       VIRTUAL_HOST: "${VIRTUAL_HOST:-bagian-organisasi.sv.padang.go.id}"
       VIRTUAL_PORT: "80"
