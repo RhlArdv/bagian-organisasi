@@ -18,6 +18,7 @@ Route::get('/', function () {
     $statistics = \App\Models\Statistic::orderBy('order')->get();
     $agendas = \App\Models\Agenda::orderBy('date', 'asc')->limit(3)->get();
     $faqs = \App\Models\Faq::active()->get();
+    $pegawais = \App\Models\Pegawai::where('is_active', true)->orderBy('order_index', 'asc')->limit(5)->get();
     
     // Visitor Stats
     $visitorToday = \App\Models\VisitorStat::getTodayVisitors();
@@ -29,12 +30,18 @@ Route::get('/', function () {
     return view('welcome', compact(
         'latestPosts', 'postCategories', 'announcements', 'statistics',
         'visitorToday', 'visitorMonth', 'visitorYear', 'visitorTotal', 'visitorChartData',
-        'agendas', 'faqs'
+        'agendas', 'faqs', 'pegawais'
     ));
 });
 
 Route::get('/profil', function () {
-    return view('profil');
+    $pages = \App\Models\Page::all()->keyBy('slug');
+    $kepala = \App\Models\Pegawai::where('level', 'kepala')->where('is_active', true)->first()
+              ?: \App\Models\Pegawai::where('is_active', true)->first();
+    $pegawais = \App\Models\Pegawai::where('is_active', true)->orderBy('order_index', 'asc')->get();
+    $settings = \App\Models\SiteSetting::pluck('value', 'key_name')->toArray();
+
+    return view('profil', compact('pages', 'kepala', 'pegawais', 'settings'));
 });
 
 // Halaman Publik — Layanan Unggulan (6 cards dari landing page)
@@ -118,4 +125,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('admin/live-chat/{session}', [\App\Http\Controllers\Admin\LiveChatController::class, 'destroy'])->name('admin.live-chat.destroy');
 });
 
+require __DIR__.'/auth.php';
 require __DIR__.'/auth.php';
