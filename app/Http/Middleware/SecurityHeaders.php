@@ -69,10 +69,10 @@ class SecurityHeaders
         // required by Alpine.js, but object-src/frame-src are locked down.
         $csp = implode('; ', [
             "default-src 'self'",
-            "script-src 'self' cdn.jsdelivr.net 'unsafe-inline'",
-            "style-src 'self' fonts.googleapis.com cdn.jsdelivr.net 'unsafe-inline'",
-            "font-src 'self' fonts.gstatic.com cdn.jsdelivr.net data:",
-            "img-src 'self' data: blob: images.unsplash.com *.padang.go.id",
+            "script-src 'self' cdn.jsdelivr.net unpkg.com cdn.tailwindcss.com 'unsafe-inline'",
+            "style-src 'self' fonts.googleapis.com cdn.jsdelivr.net unpkg.com cdn.tailwindcss.com 'unsafe-inline'",
+            "font-src 'self' fonts.gstatic.com cdn.jsdelivr.net unpkg.com data:",
+            "img-src 'self' data: blob: images.unsplash.com *.padang.go.id unpkg.com",
             "connect-src 'self'",
             "frame-src 'self'",
             "frame-ancestors 'self'",  // replaces X-Frame-Options
