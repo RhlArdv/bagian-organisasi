@@ -646,21 +646,26 @@
     </section>
 
     {{-- ═══ AGENDA & AKTIVITAS (TIMELINE) ═══ --}}
-    <section class="py-20 bg-[#0a0f1c] text-white relative overflow-hidden">
+    <section class="py-20 bg-gradient-to-br from-blue-50 via-white to-brand-50 text-gray-900 relative overflow-hidden">
+        {{-- Decorative Dot Pattern --}}
+        <div class="absolute inset-0 z-0 opacity-[0.15]"
+            style="background-image: radial-gradient(#3b82f6 1.5px, transparent 1.5px); background-size: 36px 36px;">
+        </div>
+
         {{-- Glow effects --}}
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-full pointer-events-none">
-            <div class="absolute top-20 left-10 w-96 h-96 bg-brand-500/10 rounded-full blur-[100px]"></div>
-            <div class="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px]"></div>
+            <div class="absolute top-20 left-10 w-96 h-96 bg-brand-300/30 rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-blue-300/30 rounded-full blur-[100px]"></div>
         </div>
 
         <div class="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
             <div class="text-center mb-16">
-                <h2 class="text-4xl lg:text-5xl font-black mb-3 tracking-tight flex items-center justify-center gap-3">
+                <h2 class="text-4xl lg:text-5xl font-black mb-3 tracking-tight flex items-center justify-center gap-3 text-gray-900">
                     Agenda
                     <span class="text-brand-500 font-script font-normal text-5xl lg:text-6xl -mt-2">&</span>
                     Aktivitas
                 </h2>
-                <p class="text-gray-400 font-medium max-w-xl mx-auto text-sm lg:text-base leading-relaxed">Rekam jejak
+                <p class="text-gray-500 font-medium max-w-xl mx-auto text-sm lg:text-base leading-relaxed">Rekam jejak
                     kegiatan dan agenda harian Bagian Organisasi Setda Kota Padang.</p>
             </div>
 
@@ -680,17 +685,17 @@
 
                             {{-- Timeline Dot --}}
                             <div
-                                class="absolute left-6 md:left-1/2 w-5 h-5 bg-[#0a0f1c] border-[3px] border-brand-500 rounded-full md:-translate-x-1/2 shadow-[0_0_15px_rgba(245,158,11,0.5)] group-hover:scale-125 group-hover:bg-brand-500 transition-all duration-500 z-20 hidden sm:block">
+                                class="absolute left-6 md:left-1/2 w-5 h-5 bg-white border-[3px] border-brand-500 rounded-full md:-translate-x-1/2 shadow-[0_0_15px_rgba(245,158,11,0.3)] group-hover:scale-125 group-hover:bg-brand-500 transition-all duration-500 z-20 hidden sm:block">
                             </div>
 
                             {{-- The Date (Opposite side of the card on Desktop) --}}
                             <div
                                 class="hidden md:block w-5/12 {{ $pos == 'left' ? 'text-left pl-12' : 'text-right pr-12' }}">
-                                <div class="inline-flex flex-col opacity-60 group-hover:opacity-100 transition-opacity">
+                                <div class="inline-flex flex-col opacity-80 group-hover:opacity-100 transition-opacity">
                                     <span
-                                        class="text-4xl font-black text-white leading-none mb-0.5">{{ $agenda->date->format('d') }}</span>
+                                        class="text-4xl font-black text-gray-900 leading-none mb-0.5">{{ $agenda->date->format('d') }}</span>
                                     <span
-                                        class="text-xs font-bold text-brand-500 uppercase tracking-[0.2em]">{{ $agenda->date->translatedFormat('M Y') }}</span>
+                                        class="text-xs font-bold text-brand-600 uppercase tracking-[0.2em]">{{ $agenda->date->translatedFormat('M Y') }}</span>
                                 </div>
                             </div>
 
@@ -698,20 +703,20 @@
                             <div
                                 class="w-full sm:w-[calc(100%-4rem)] sm:ml-16 md:ml-0 md:w-5/12 {{ $pos == 'left' ? 'md:pr-12' : 'md:pl-12' }}">
                                 <div
-                                    class="bg-white/5 backdrop-blur-md border border-white/10 p-5 lg:p-6 rounded-[2rem] hover:bg-white/10 transition-all duration-500 hover:shadow-xl hover:shadow-brand-500/10 hover:-translate-y-1 relative group/card">
+                                    class="bg-white border border-gray-100 p-5 lg:p-6 rounded-[2rem] hover:bg-gray-50 transition-all duration-500 hover:shadow-xl hover:shadow-brand-500/10 hover:-translate-y-1 relative group/card">
 
                                     {{-- Mobile Date (Hidden on Desktop) --}}
                                     <div class="md:hidden flex items-center gap-2 mb-4">
                                         <span
-                                            class="text-brand-500 font-bold bg-brand-500/10 px-2.5 py-1 rounded-md text-[11px]">{{ $agenda->date->format('d') }}
+                                            class="text-brand-600 font-bold bg-brand-50 px-2.5 py-1 rounded-md text-[11px]">{{ $agenda->date->format('d') }}
                                             {{ $agenda->date->translatedFormat('M Y') }}</span>
                                     </div>
 
                                     <h3
-                                        class="text-lg lg:text-xl font-bold text-white mb-2.5 leading-snug group-hover/card:text-brand-400 transition-colors">
+                                        class="text-lg lg:text-xl font-bold text-gray-900 mb-2.5 leading-snug group-hover/card:text-brand-600 transition-colors">
                                         {{ $agenda->title }}</h3>
 
-                                    <div class="flex flex-wrap items-center gap-3 text-xs text-gray-400 font-medium mb-4">
+                                    <div class="flex flex-wrap items-center gap-3 text-xs text-gray-500 font-medium mb-4">
                                         <span class="flex items-center gap-1.5"><i
                                                 class="ph-fill ph-map-pin text-brand-500"></i>
                                             {{ $agenda->location }}</span>
@@ -725,14 +730,12 @@
                                     <div class="rounded-xl overflow-hidden aspect-[21/9] relative">
                                         @if($agenda->image)
                                             <img src="{{ asset('storage/' . $agenda->image) }}" alt="{{ $agenda->title }}"
-                                                class="w-full h-full object-cover opacity-70 group-hover/card:opacity-100 group-hover/card:scale-105 transition-all duration-700">
+                                                class="w-full h-full object-cover opacity-90 group-hover/card:opacity-100 group-hover/card:scale-105 transition-all duration-700">
                                         @else
                                             <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80"
                                                 alt="Placeholder"
-                                                class="w-full h-full object-cover opacity-70 group-hover/card:opacity-100 group-hover/card:scale-105 transition-all duration-700">
+                                                class="w-full h-full object-cover opacity-90 group-hover/card:opacity-100 group-hover/card:scale-105 transition-all duration-700">
                                         @endif
-                                        <div class="absolute inset-0 bg-gradient-to-t from-[#0a0f1c]/80 to-transparent">
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -742,7 +745,7 @@
 
                 <div class="text-center mt-16 relative z-10">
                     <a href="{{ route('public.agendas.index') }}"
-                        class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm text-white font-bold transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.1)]">
+                        class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-white hover:bg-gray-50 border border-gray-200 text-sm text-gray-900 font-bold transition-all hover:scale-105 hover:shadow-lg">
                         Jelajahi Seluruh Agenda <i class="ph-bold ph-arrow-right"></i>
                     </a>
                 </div>
