@@ -180,30 +180,12 @@
                 </div>
             </div>
 
-            {{-- Dropdown Download --}}
-            <div class="relative group py-2">
-                <button
-                    class="text-[12px] xl:text-[13px] font-bold text-gray-500 group-hover:text-brand-500 transition-colors uppercase tracking-wide flex items-center gap-1 whitespace-nowrap">
-                    Download <i
-                        class="ph-bold ph-caret-down text-brand-500 transition-transform duration-300 group-hover:rotate-180"></i>
-                </button>
-                <div
-                    class="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-56 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-                    <div
-                        class="bg-white border border-gray-100 shadow-xl shadow-brand-500/5 rounded-2xl py-3 flex flex-col">
-                        <a href="#"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Formulir</a>
-                        <a href="#"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">SOP</a>
-                        <a href="#"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Standar
-                            Pelayanan</a>
-                        <a href="#"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Pedoman</a>
-                        <a href="#"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Template</a>
-                    </div>
-                </div>
+            {{-- Survei Kepuasan Masyarakat --}}
+            <div class="py-2">
+                <a href="https://surveidigital.spbe.go.id/embed/survey/eyJzdXJ2ZXlfaWQiOjIsInNlcnZpY2VfaWQiOjkxNiwiaG9zdCI6Imh0dHBzOi8vYmFnb3JnYW5pc2FzaS5wYWRhbmcuZ28uaWQiLCJrZXkiOiJyWTc3Z1VOciJ9/embed/view/?jenis_layanan=Website" target="_blank" rel="noopener noreferrer"
+                    class="text-[12px] xl:text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide flex items-center whitespace-nowrap">
+                    SKM
+                </a>
             </div>
         </nav>
 
