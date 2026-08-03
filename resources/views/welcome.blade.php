@@ -115,7 +115,7 @@
         </div>
 
         {{-- Main Hero Content --}}
-        <div class="flex-1 flex items-center">
+        <div class="flex-1 flex flex-col justify-center">
             <div class="w-full max-w-[90rem] mx-auto px-5 lg:px-12 relative z-10">
                 <div class="w-full lg:w-[55%] relative z-20">
                     <div
@@ -159,13 +159,12 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        {{-- Statistics Bar (pinned to bottom of hero) --}}
-        <div class="relative z-20 w-full mt-auto">
-            <div class="max-w-7xl mx-auto px-5 lg:px-8 pb-8">
-                <div class="flex flex-wrap lg:flex-nowrap gap-4">
-                    @foreach($statistics as $stat)
+            {{-- Statistics Bar (moved closer to text) --}}
+            <div class="relative z-20 w-full mt-12 lg:mt-20">
+                <div class="max-w-[90rem] mx-auto px-5 lg:px-12 pb-8">
+                    <div class="flex flex-wrap lg:flex-nowrap gap-4">
+                        @foreach($statistics as $stat)
                         @if($loop->last && $loop->count > 1)
                             {{-- The last statistic is highlighted with solid brand bg --}}
                             <div class="w-full sm:w-full lg:flex-1 rounded-2xl p-5 shadow-lg bg-brand-500">
