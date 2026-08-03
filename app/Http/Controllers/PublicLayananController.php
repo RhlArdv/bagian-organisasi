@@ -107,11 +107,15 @@ class PublicLayananController extends Controller
         ]);
 
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'phone' => 'nullable|string|max:20',
-            'subject' => 'required|string|max:255',
-            'message' => 'required|string|max:5000',
+            'name' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:20', 'regex:/^[0-9\+\-\s\(\)]+$/'],
+            'subject' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'message' => ['required', 'string', 'max:5000'],
+        ], [
+            'name.regex' => 'Nama tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'phone.regex' => 'Nomor telepon hanya boleh berisi angka dan simbol dasar (+, -, atau spasi).',
+            'subject.regex' => 'Subjek tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         $ticketNumber = Feedback::generateTicketNumber('pengaduan');
@@ -174,5 +178,40 @@ class PublicLayananController extends Controller
         }
 
         return view('public.layanan.standar-pelayanan', compact('layanans', 'documents'));
+    }
+
+    /**
+     * Handle kritik & saran form submission from landing page.
+     */
+    public function storeKritikSaran(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'contact' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'message' => ['required', 'string', 'max:5000'],
+        ], [
+            'name.regex' => 'Nama tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'contact.regex' => 'Kontak tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'name.required' => 'Nama wajib diisi.',
+            'contact.required' => 'Nomor WA atau Email wajib diisi.',
+            'message.required' => 'Pesan atau masukan wajib diisi.',
+        ]);
+
+        $ticketNumber = Feedback::generateTicketNumber('kritik_saran');
+        $isEmail = filter_var($validated['contact'], FILTER_VALIDATE_EMAIL);
+
+        Feedback::create([
+            'type' => 'kritik_saran',
+            'ticket_number' => $ticketNumber,
+            'name' => $validated['name'],
+            'email' => $isEmail ? $validated['contact'] : '-',
+            'phone' => !$isEmail ? $validated['contact'] : $validated['contact'],
+            'subject' => 'Masukan dari Landing Page (HIT US)',
+            'message' => $validated['message'],
+            'status' => 'pending',
+        ]);
+
+        return redirect()->to(url()->previous() . '#kontak')
+            ->with('success_feedback', 'Terima kasih! Pesan dan masukan Anda berhasil dikirimkan kepada kami.');
     }
 }

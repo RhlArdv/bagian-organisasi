@@ -10,7 +10,7 @@ class FaqController extends Controller
 {
     public function index()
     {
-        $faqs = Faq::orderBy('order_index')->get();
+        $faqs = Faq::orderBy('order_index')->paginate(10);
         return view('admin.faqs.index', compact('faqs'));
     }
 
@@ -26,17 +26,19 @@ class FaqController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'question' => 'required|string|max:255',
+            'question' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'answer' => 'required|string',
             'order_index' => 'required|integer|min:1',
             'is_active' => 'nullable|boolean',
+        ], [
+            'question.regex' => 'Kolom pertanyaan tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         Faq::create([
             'question' => $request->question,
             'answer' => $request->answer,
             'order_index' => $request->order_index,
-            'is_active' => $request->has('is_active'),
+            'is_active' => $request->boolean('is_active'),
         ]);
 
         return redirect()->route('faqs.index')->with('success', 'FAQ berhasil ditambahkan.');
@@ -50,17 +52,19 @@ class FaqController extends Controller
     public function update(Request $request, Faq $faq)
     {
         $request->validate([
-            'question' => 'required|string|max:255',
+            'question' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'answer' => 'required|string',
             'order_index' => 'required|integer|min:1',
             'is_active' => 'nullable|boolean',
+        ], [
+            'question.regex' => 'Kolom pertanyaan tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         $faq->update([
             'question' => $request->question,
             'answer' => $request->answer,
             'order_index' => $request->order_index,
-            'is_active' => $request->has('is_active'),
+            'is_active' => $request->boolean('is_active'),
         ]);
 
         return redirect()->route('faqs.index')->with('success', 'FAQ berhasil diperbarui.');

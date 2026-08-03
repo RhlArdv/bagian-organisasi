@@ -146,7 +146,7 @@
 
                     {{-- Article Body --}}
                     <div class="article-content">
-                        {!! $post->content !!}
+                        {!! nl2br(e($post->content)) !!}
                     </div>
 
                     {{-- Share & Back --}}

@@ -14,7 +14,6 @@
 
     {{-- Phosphor Icons --}}
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     
     {{-- Tailwind & Vite --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -61,6 +60,7 @@
                 easing: 'ease-out-cubic',
             });
         });
-    </script>
+    {{-- Widget Live Chat Pengguna (IP Locked System) --}}
+    <x-live-chat />
 </body>
 </html>

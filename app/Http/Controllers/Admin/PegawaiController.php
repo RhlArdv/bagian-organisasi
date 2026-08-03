@@ -34,8 +34,8 @@ class PegawaiController extends Controller
     {
         $validated = $request->validate([
             'nip' => 'required|string|max:20|unique:pegawai',
-            'nama' => 'required|string|max:255',
-            'jabatan' => 'required|string|max:255',
+            'nama' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'jabatan' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'pangkat_golongan' => 'nullable|string|max:255',
             'pendidikan' => 'nullable|string|max:255',
             'foto' => 'nullable|image|max:2048',
@@ -45,13 +45,16 @@ class PegawaiController extends Controller
             'parent_id' => 'nullable|exists:pegawai,id',
             'order_index' => 'required|integer',
             'is_active' => 'boolean',
+        ], [
+            'nama.regex' => 'Kolom nama tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'jabatan.regex' => 'Kolom jabatan tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         if ($request->hasFile('foto')) {
             $validated['foto'] = $request->file('foto')->store('pegawai', 'public');
         }
 
-        $validated['is_active'] = $request->has('is_active');
+        $validated['is_active'] = $request->boolean('is_active');
 
         Pegawai::create($validated);
 
@@ -74,8 +77,8 @@ class PegawaiController extends Controller
     {
         $validated = $request->validate([
             'nip' => 'required|string|max:20|unique:pegawai,nip,' . $pegawai->id,
-            'nama' => 'required|string|max:255',
-            'jabatan' => 'required|string|max:255',
+            'nama' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
+            'jabatan' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'pangkat_golongan' => 'nullable|string|max:255',
             'pendidikan' => 'nullable|string|max:255',
             'foto' => 'nullable|image|max:2048',
@@ -84,6 +87,9 @@ class PegawaiController extends Controller
             'level' => 'required|in:kepala,kasubag,staf',
             'parent_id' => 'nullable|exists:pegawai,id',
             'order_index' => 'required|integer',
+        ], [
+            'nama.regex' => 'Kolom nama tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'jabatan.regex' => 'Kolom jabatan tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         if ($request->hasFile('foto')) {
@@ -93,7 +99,7 @@ class PegawaiController extends Controller
             $validated['foto'] = $request->file('foto')->store('pegawai', 'public');
         }
 
-        $validated['is_active'] = $request->has('is_active');
+        $validated['is_active'] = $request->boolean('is_active');
 
         $pegawai->update($validated);
 

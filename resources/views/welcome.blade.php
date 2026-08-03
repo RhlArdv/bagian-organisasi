@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description"
         content="Portal resmi Bagian Organisasi Sekretariat Daerah Kota Padang. Informasi kelembagaan, pelayanan publik, tata laksana, dan reformasi birokrasi.">
     <title>Bagian Organisasi — Sekretariat Daerah Kota Padang</title>
@@ -36,7 +37,6 @@
         </script>
     @endif
 
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
@@ -863,26 +863,43 @@
                     </div>
                     <div class="relative z-10">
                         <h3 class="text-2xl font-black text-white mb-2 tracking-tight">Kirim Masukan</h3>
-                        <p class="text-gray-300 text-sm mb-8 font-medium">Bantu kami jadi lebih baik dari hari kemarin.
+                        <p class="text-gray-300 text-sm mb-6 font-medium">Bantu kami jadi lebih baik dari hari kemarin.
                         </p>
 
-                        <form class="space-y-4">
+                        @if(session('success_feedback'))
+                            <div class="mb-6 bg-green-500/20 border border-green-400/30 text-green-200 px-5 py-4 rounded-2xl text-sm font-bold flex items-center gap-3">
+                                <i class="ph-bold ph-check-circle text-2xl shrink-0 text-green-400"></i>
+                                <span>{{ session('success_feedback') }}</span>
+                            </div>
+                        @endif
+
+                        <form action="{{ route('public.kritik-saran.store') }}" method="POST" class="space-y-4">
+                            @csrf
                             <div>
-                                <input type="text"
+                                <input type="text" name="name" value="{{ old('name') }}" required
                                     class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-sm focus:bg-white/10 focus:ring-2 focus:ring-brand-400 focus:border-transparent outline-none transition-all font-bold text-white placeholder-gray-400"
                                     placeholder="Siapa namamu?">
+                                @error('name')
+                                    <p class="text-red-300 text-xs font-semibold mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div>
-                                <input type="text"
+                                <input type="text" name="contact" value="{{ old('contact') }}" required
                                     class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-sm focus:bg-white/10 focus:ring-2 focus:ring-brand-400 focus:border-transparent outline-none transition-all font-bold text-white placeholder-gray-400"
                                     placeholder="Nomor WA / Email">
+                                @error('contact')
+                                    <p class="text-red-300 text-xs font-semibold mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div>
-                                <textarea rows="4"
+                                <textarea name="message" rows="4" required
                                     class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-sm focus:bg-white/10 focus:ring-2 focus:ring-brand-400 focus:border-transparent outline-none transition-all resize-none font-bold text-white placeholder-gray-400"
-                                    placeholder="Ketik apa aja saran/masukanmu disini..."></textarea>
+                                    placeholder="Ketik apa aja saran/masukanmu disini...">{{ old('message') }}</textarea>
+                                @error('message')
+                                    <p class="text-red-300 text-xs font-semibold mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
-                            <button type="button"
+                            <button type="submit"
                                 class="w-full bg-brand-500 hover:bg-brand-400 text-white font-black py-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 shadow-xl shadow-brand-500/30 hover:scale-[1.02]">
                                 KIRIM SEKARANG <i class="ph-bold ph-paper-plane-tilt"></i>
                             </button>
@@ -1069,6 +1086,8 @@
             });
         });
     </script>
-</body>
 
+    {{-- Widget Live Chat Pengguna (IP Locked System) --}}
+    <x-live-chat />
+</body>
 </html>

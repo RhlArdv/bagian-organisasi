@@ -27,11 +27,13 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'       => 'required|string|max:255',
+            'title'       => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'category_id' => 'nullable|exists:post_categories,id',
             'content'     => 'required|string',
             'status'      => 'required|in:draft,published',
             'thumbnail'   => 'nullable|image|max:2048',
+        ], [
+            'title.regex' => 'Kolom judul tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         $data = $request->only(['title', 'content', 'excerpt', 'status', 'category_id']);
@@ -60,11 +62,13 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $request->validate([
-            'title'       => 'required|string|max:255',
+            'title'       => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'category_id' => 'nullable|exists:post_categories,id',
             'content'     => 'required|string',
             'status'      => 'required|in:draft,published,archived',
             'thumbnail'   => 'nullable|image|max:2048',
+        ], [
+            'title.regex' => 'Kolom judul tidak boleh memuat karakter khusus HTML (<, >, atau =).',
         ]);
 
         $data = $request->only(['title', 'content', 'excerpt', 'status', 'category_id']);
