@@ -93,11 +93,21 @@
                                 <i class="ph-fill ph-desktop"></i>
                             </div>
                             <div>
-                                <div class="flex items-center gap-2">
+                                <div class="flex flex-wrap items-center gap-2">
                                     <h3 class="font-black text-base">{{ $activeSession->visitor_name }}</h3>
                                     <span class="px-2 py-0.5 bg-brand-500 text-white font-mono font-extrabold text-xs rounded-lg shadow-sm">
                                         IP: {{ $activeSession->ip_address }}
                                     </span>
+                                    @if($activeSession->visitor_email)
+                                        <span class="px-2 py-0.5 bg-white/10 text-amber-300 font-bold text-xs rounded-lg border border-white/15 flex items-center gap-1">
+                                            <i class="ph-bold ph-envelope-simple"></i> {{ $activeSession->visitor_email }}
+                                        </span>
+                                    @endif
+                                    @if($activeSession->visitor_phone)
+                                        <span class="px-2 py-0.5 bg-white/10 text-emerald-300 font-bold text-xs rounded-lg border border-white/15 flex items-center gap-1">
+                                            <i class="ph-bold ph-phone"></i> {{ $activeSession->visitor_phone }}
+                                        </span>
+                                    @endif
                                 </div>
                                 <p class="text-xs text-gray-300 font-medium mt-0.5 flex items-center gap-1.5">
                                     <span class="w-2 h-2 rounded-full {{ $activeSession->status === 'open' ? 'bg-green-400 animate-pulse' : 'bg-gray-400' }}"></span>

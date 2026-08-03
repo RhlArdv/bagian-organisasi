@@ -16,6 +16,8 @@ class ChatSession extends Model
         'ip_address',
         'session_token',
         'visitor_name',
+        'visitor_email',
+        'visitor_phone',
         'status',
         'unread_admin',
         'unread_visitor',
@@ -46,42 +48,55 @@ class ChatSession extends Model
     }
 
     /**
-     * Cari atau buat sesi obrolan berdasarkan kunci IP Address & Cookie/Token Pengguna.
+     * Cari sesi yang sudah ada berdasarkan Token Pengguna (Tanpa membuat baru).
+     */
+    public static function findForVisitor(Request $request): ?self
+    {
+        $token = $request->header('X-Chat-Token') ?: $request->cookie('live_chat_token');
+        if (!empty($token)) {
+            return static::where('session_token', $token)->first();
+        }
+        return null;
+    }
+
+    /**
+     * Cari atau buat sesi obrolan berdasarkan Token Pengguna (Cookie / Header LocalStorage) secara eksklusif.
      */
     public static function findOrCreateForVisitor(Request $request): self
     {
         $ip = $request->ip();
-        $token = $request->cookie('live_chat_token');
-
-        // Pertama cari berdasarkan token cookie jika ada
-        if ($token) {
-            $session = static::where('session_token', $token)->first();
-            if ($session) {
-                // Perbarui IP bila berubah namun token sama
-                if ($session->ip_address !== $ip) {
-                    $session->update(['ip_address' => $ip]);
-                }
-                return $session;
-            }
-        }
-
-        // Kedua cari berdasarkan kunci IP Address yang masih aktif atau terbaru (kunci IP)
-        $session = static::where('ip_address', $ip)
-            ->where('status', 'open')
-            ->latest('last_message_at')
-            ->first();
+        $session = static::findForVisitor($request);
 
         if ($session) {
+            $updates = [];
+            if ($session->ip_address !== $ip) {
+                $updates['ip_address'] = $ip;
+            }
+            if ($request->filled('name') && $session->visitor_name !== $request->name) {
+                $updates['visitor_name'] = strip_tags($request->name);
+            }
+            if ($request->filled('email') && $session->visitor_email !== $request->email) {
+                $updates['visitor_email'] = strip_tags($request->email);
+            }
+            if ($request->filled('phone') && $session->visitor_phone !== $request->phone) {
+                $updates['visitor_phone'] = strip_tags($request->phone);
+            }
+            if (!empty($updates)) {
+                $session->update($updates);
+            }
             return $session;
         }
 
-        // Jika belum ada sama sekali, buat sesi baru
+        // Jika belum ada token yang cocok (laptop/browser baru), buat sesi independen baru dengan data onboarding
         $newToken = Str::uuid()->toString();
+        $name = $request->filled('name') ? strip_tags($request->name) : 'Tamu (' . substr($newToken, 0, 8) . ')';
         
         return static::create([
             'ip_address' => $ip,
             'session_token' => $newToken,
-            'visitor_name' => 'Tamu (' . $ip . ')',
+            'visitor_name' => $name,
+            'visitor_email' => $request->filled('email') ? strip_tags($request->email) : null,
+            'visitor_phone' => $request->filled('phone') ? strip_tags($request->phone) : null,
             'status' => 'open',
             'unread_admin' => 0,
             'unread_visitor' => 0,

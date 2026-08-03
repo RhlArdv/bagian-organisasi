@@ -2,6 +2,7 @@
     window.liveChatWidget = function() {
         return {
             open: false,
+            started: false, // Apakah sesi obrolan sudah aktif / dibuat
             messages: [],
             unreadCount: 0,
             newMessage: '',
@@ -9,6 +10,12 @@
             ipAddress: '',
             pollInterval: 30000,
             intervalTimer: null,
+
+            // Form Onboarding
+            formName: '',
+            formEmail: '',
+            formPhone: '',
+            formMessage: '',
 
             initWidget() {
                 this.loadChat(false);
@@ -18,7 +25,9 @@
                     if (value) {
                         this.pollInterval = 5000; // 5 detik saat terbuka
                         this.loadChat(true);
-                        this.$nextTick(() => this.scrollToBottom());
+                        if (this.started) {
+                            this.$nextTick(() => this.scrollToBottom());
+                        }
                     } else {
                         this.pollInterval = 30000; // 30 detik saat tertutup
                     }
@@ -29,7 +38,9 @@
             startPolling() {
                 if (this.intervalTimer) clearInterval(this.intervalTimer);
                 this.intervalTimer = setInterval(() => {
-                    this.loadChat(this.open);
+                    if (this.started) {
+                        this.loadChat(this.open);
+                    }
                 }, this.pollInterval);
             },
 
@@ -42,11 +53,20 @@
                     const res = await fetch(`/live-chat/load?mark_read=${markRead ? '1' : '0'}`, {
                         headers: {
                             'Accept': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest'
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-Chat-Token': localStorage.getItem('padang_chat_token') || ''
                         }
                     });
                     const data = await res.json();
-                    if (data.status === 'success') {
+                    if (data.status === 'unstarted') {
+                        this.started = false;
+                        this.messages = [];
+                        this.unreadCount = 0;
+                    } else if (data.status === 'success') {
+                        if (data.session_token) {
+                            localStorage.setItem('padang_chat_token', data.session_token);
+                        }
+                        this.started = true;
                         const previousCount = this.messages.length;
                         this.messages = data.messages;
                         this.unreadCount = data.unread_count || 0;
@@ -58,6 +78,46 @@
                     }
                 } catch (e) {
                     console.error("Gagal memuat live chat:", e);
+                }
+            },
+
+            async startNewChat() {
+                if (!this.formMessage.trim() || this.sending) return;
+                this.sending = true;
+
+                try {
+                    const res = await fetch(`/live-chat/send`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}',
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-Chat-Token': localStorage.getItem('padang_chat_token') || ''
+                        },
+                        body: JSON.stringify({ 
+                            message: this.formMessage,
+                            name: this.formName || '',
+                            email: this.formEmail || '',
+                            phone: this.formPhone || ''
+                        })
+                    });
+                    const data = await res.json();
+                    if (data.status === 'success') {
+                        if (data.session_token) {
+                            localStorage.setItem('padang_chat_token', data.session_token);
+                        }
+                        this.messages = data.messages;
+                        this.unreadCount = data.unread_count || 0;
+                        this.ipAddress = data.ip_address || '';
+                        this.started = true;
+                        this.formMessage = '';
+                        this.$nextTick(() => this.scrollToBottom());
+                    }
+                } catch (e) {
+                    alert("Gagal memulai percakapan. Mohon periksa koneksi atau karakter yang digunakan.");
+                } finally {
+                    this.sending = false;
                 }
             },
 
@@ -85,12 +145,16 @@
                             'Content-Type': 'application/json',
                             'Accept': 'application/json',
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}',
-                            'X-Requested-With': 'XMLHttpRequest'
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-Chat-Token': localStorage.getItem('padang_chat_token') || ''
                         },
                         body: JSON.stringify({ message: messageText })
                     });
                     const data = await res.json();
                     if (data.status === 'success') {
+                        if (data.session_token) {
+                            localStorage.setItem('padang_chat_token', data.session_token);
+                        }
                         this.messages = data.messages;
                         this.unreadCount = data.unread_count || 0;
                         this.$nextTick(() => this.scrollToBottom());
@@ -137,87 +201,138 @@
         x-transition:leave-start="scale-100 opacity-100 translate-y-0"
         x-transition:leave-end="scale-90 opacity-0 translate-y-4"
         class="fixed right-6 bottom-24 w-[350px] sm:w-[390px] bg-white rounded-3xl overflow-hidden shadow-2xl border border-gray-200 flex flex-col"
-        style="display: none; position: fixed; right: 24px; bottom: 85px; width: 360px; max-width: calc(100vw - 40px); height: 520px; max-height: calc(100vh - 120px); background: #ffffff; border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); border: 1px solid #e5e7eb; z-index: 999999; flex-direction: column; overflow: hidden;">
+        style="display: none; position: fixed; right: 24px; bottom: 85px; width: 360px; max-width: calc(100vw - 40px); height: 540px; max-height: calc(100vh - 120px); background: #ffffff; border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); border: 1px solid #e5e7eb; z-index: 999999; flex-direction: column; overflow: hidden;">
         
         {{-- Header Chat --}}
-        <div class="bg-gradient-to-r from-[#0a0f1c] via-[#111827] to-amber-900 p-5 text-white flex items-center justify-between border-b border-white/10 shrink-0"
-            style="background: linear-gradient(to right, #0a0f1c, #1a202c, #78350f); padding: 16px 20px; color: white; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <div class="bg-gradient-to-r from-emerald-700 via-emerald-800 to-teal-900 p-5 text-white flex items-center justify-between border-b border-white/10 shrink-0"
+            style="background: linear-gradient(to right, #047857, #065f46, #134e4a); padding: 16px 20px; color: white; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1);">
             <div class="flex items-center gap-3" style="display: flex; align-items: center; gap: 12px;">
-                <div class="relative" style="position: relative;">
-                    <div class="w-11 h-11 rounded-2xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-400 font-black text-xl shadow-inner"
-                        style="width: 44px; height: 44px; border-radius: 14px; background: rgba(245,158,11,0.2); border: 1px solid rgba(251,191,36,0.3); display: flex; align-items: center; justify-content: center; color: #fbbf24; font-size: 22px;">
-                        <i class="ph-fill ph-headset font-normal"></i>
-                    </div>
-                    <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2 border-[#0a0f1c] animate-pulse"
-                        style="position: absolute; bottom: 0; right: 0; width: 12px; height: 12px; background: #4ade80; border-radius: 50%; border: 2px solid #0a0f1c;"></span>
+                <div class="w-11 h-11 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white font-black text-xl shadow-inner shrink-0"
+                    style="width: 44px; height: 44px; border-radius: 14px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 24px;">
+                    <i class="ph-bold ph-chat-circle-dots font-normal"></i>
                 </div>
                 <div>
-                    <h4 class="font-black text-sm tracking-tight" style="font-weight: 900; font-size: 15px; margin: 0; color: white;">Bagian Organisasi</h4>
+                    <h4 class="font-black text-sm md:text-base tracking-tight m-0 text-white" style="font-weight: 900; font-size: 16px; margin: 0; color: white;">Live Chat Bagian Organisasi</h4>
                     <div class="flex items-center gap-1.5 mt-0.5" style="display: flex; align-items: center; gap: 6px; margin-top: 2px;">
-                        <span class="text-[10px] font-bold text-gray-300 uppercase tracking-wider" style="font-size: 10px; font-weight: 700; color: #d1d5db; text-transform: uppercase; letter-spacing: 0.05em;">Admin Online • IP Locked</span>
+                        <span class="inline-block w-2.5 h-2.5 rounded-full bg-green-300 animate-pulse" style="width: 10px; height: 10px; background: #86efac; border-radius: 50%; display: inline-block;"></span>
+                        <span class="text-[11px] font-bold text-emerald-100" style="font-size: 11px; font-weight: 700; color: #d1fae5;">Layanan Informasi Digital</span>
                     </div>
                 </div>
             </div>
-            <button type="button" @click="open = false" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center transition-colors"
+            <button type="button" @click="open = false" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-200 flex items-center justify-center transition-colors"
                 style="width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.15); border: none; color: #f3f4f6; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                <i class="ph-bold ph-x text-sm" style="font-size: 16px;"></i>
+                <i class="ph-bold ph-caret-down text-base" style="font-size: 18px;"></i>
             </button>
         </div>
 
-        {{-- Isi Pesan --}}
-        <div id="chat-messages-container" class="flex-1 overflow-y-auto p-4 space-y-3.5 bg-gray-50 text-xs"
-            style="flex: 1; overflow-y: auto; padding: 16px; background: #f8fafc; font-size: 13px; display: flex; flex-direction: column; gap: 14px;">
-            
-            {{-- Pesan Sapaan Otomatis --}}
-            <div class="flex items-start gap-2.5 max-w-[88%]" style="display: flex; align-items: flex-start; gap: 10px; max-width: 88%;">
-                <div class="w-7 h-7 rounded-full bg-[#0a0f1c] text-white flex items-center justify-center shrink-0 text-[10px] font-bold mt-1 shadow-sm"
-                    style="width: 28px; height: 28px; border-radius: 50%; background: #0a0f1c; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; margin-top: 4px;">
-                    <i class="ph-fill ph-robot"></i>
-                </div>
+        {{-- KONDISI 1: FORMULIR MULAI PERCAKAPAN (ONBOARDING) --}}
+        <div x-show="!started" class="flex-1 overflow-y-auto p-6 bg-white flex flex-col justify-between text-xs" style="flex: 1; overflow-y: auto; padding: 22px; background: #ffffff; display: flex; flex-direction: column; justify-content: space-between;">
+            <div class="space-y-4" style="display: flex; flex-direction: column; gap: 16px;">
                 <div>
-                    <div class="p-3.5 bg-white text-gray-800 rounded-2xl rounded-tl-sm shadow-sm border border-gray-100/80 leading-relaxed font-medium"
-                        style="padding: 14px; background: white; color: #1e293b; border-radius: 16px; border-top-left-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #f1f5f9; line-height: 1.5; font-weight: 500;">
-                        Halo! 👋 Selamat datang di Portal Resmi Bagian Organisasi Setda Kota Padang. Anda terhubung melalui proteksi IP Address (<span x-text="ipAddress || 'Checking...'" style="font-family: monospace; font-weight: 800; color: #d97706;"></span>). Ada yang bisa kami bantu hari ini?
-                    </div>
-                    <span class="text-[9px] font-bold text-gray-400 ml-1 mt-1 block" style="font-size: 10px; font-weight: 700; color: #94a3b8; margin-left: 4px; margin-top: 4px; display: block;">System • Just now</span>
+                    <h3 class="font-black text-lg text-[#0a0f1c] mb-1" style="font-size: 20px; font-weight: 900; color: #0f172a; margin: 0 0 4px 0;">Mulai Percakapan</h3>
+                    <p class="text-xs font-semibold text-gray-400 m-0" style="font-size: 13px; color: #64748b; font-weight: 500; margin: 0;">Silakan isi data diri Anda untuk memulai chat</p>
                 </div>
-            </div>
 
-            {{-- Pesan dari Database --}}
-            <template x-for="msg in messages" :key="msg.id">
-                <div :style="msg.sender_type === 'visitor' ? 'display: flex; flex-direction: column; align-items: flex-end; align-self: flex-end; margin-left: auto; max-width: 85%;' : 'display: flex; align-items: flex-start; gap: 10px; max-width: 85%;'">
-                    <template x-if="msg.sender_type === 'admin'">
-                        <div style="width: 28px; height: 28px; border-radius: 50%; background: #d97706; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; margin-top: 4px;">
-                            <i class="ph-fill ph-user"></i>
-                        </div>
-                    </template>
-                    
-                    <div :style="msg.sender_type === 'visitor' ? 'width: 100%;' : 'flex: 1;'">
-                        <div :style="msg.sender_type === 'visitor' ? 'padding: 14px; background: #d97706; color: white; border-radius: 16px; border-top-right-radius: 4px; box-shadow: 0 2px 6px rgba(217,119,6,0.25); line-height: 1.5; font-weight: 500;' : 'padding: 14px; background: white; color: #1e293b; border-radius: 16px; border-top-left-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #f1f5f9; line-height: 1.5; font-weight: 500;'" x-text="msg.message"></div>
-                        <div style="display: flex; align-items: center; gap: 5px; margin-top: 4px;" :style="msg.sender_type === 'visitor' ? 'justify-content: flex-end; margin-right: 4px;' : 'margin-left: 4px;'">
-                            <span x-text="msg.sender_type === 'visitor' ? 'Anda' : (msg.sender_name || 'Admin')" style="font-size: 10px; font-weight: 800;" :style="msg.sender_type === 'visitor' ? 'color: #64748b;' : 'color: #d97706;'"></span>
-                            <span style="font-size: 10px; color: #cbd5e1;">•</span>
-                            <span x-text="msg.time" style="font-size: 10px; color: #94a3b8; font-weight: 500;"></span>
-                        </div>
+                <form @submit.prevent="startNewChat()" class="space-y-3.5" style="display: flex; flex-direction: column; gap: 14px; margin-top: 8px;">
+                    <div>
+                        <input type="text" x-model="formName" placeholder="Nama Anda (opsional)"
+                            style="width: 100%; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 16px; padding: 12px 16px; font-size: 13px; color: #0f172a; font-weight: 600; outline: none; transition: all 0.2s;"
+                            @focus="$el.style.borderColor = '#059669'; $el.style.background = '#ffffff'"
+                            @blur="$el.style.borderColor = '#e2e8f0'; $el.style.background = '#f8fafc'">
                     </div>
-                </div>
-            </template>
+                    <div>
+                        <input type="email" x-model="formEmail" placeholder="Email (opsional)"
+                            style="width: 100%; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 16px; padding: 12px 16px; font-size: 13px; color: #0f172a; font-weight: 600; outline: none; transition: all 0.2s;"
+                            @focus="$el.style.borderColor = '#059669'; $el.style.background = '#ffffff'"
+                            @blur="$el.style.borderColor = '#e2e8f0'; $el.style.background = '#f8fafc'">
+                    </div>
+                    <div>
+                        <input type="tel" x-model="formPhone" placeholder="No. HP (opsional)"
+                            style="width: 100%; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 16px; padding: 12px 16px; font-size: 13px; color: #0f172a; font-weight: 600; outline: none; transition: all 0.2s;"
+                            @focus="$el.style.borderColor = '#059669'; $el.style.background = '#ffffff'"
+                            @blur="$el.style.borderColor = '#e2e8f0'; $el.style.background = '#f8fafc'">
+                    </div>
+                    <div>
+                        <textarea x-model="formMessage" rows="3" placeholder="Tulis pesan Anda..." required
+                            style="width: 100%; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 16px; padding: 12px 16px; font-size: 13px; color: #0f172a; font-weight: 600; outline: none; transition: all 0.2s; resize: none;"
+                            @focus="$el.style.borderColor = '#059669'; $el.style.background = '#ffffff'"
+                            @blur="$el.style.borderColor = '#e2e8f0'; $el.style.background = '#f8fafc'"></textarea>
+                    </div>
+
+                    <button type="submit" :disabled="sending || !formMessage.trim()"
+                        style="width: 100%; padding: 14px; background: #059669; color: white; font-weight: 800; font-size: 14px; border-radius: 16px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 6px 20px rgba(5, 150, 105, 0.3); transition: background 0.2s; margin-top: 4px;"
+                        class="hover:bg-emerald-700 active:scale-[0.99]">
+                        <span x-text="sending ? 'Memproses...' : 'Mulai Chat'"></span>
+                        <i class="ph-bold ph-arrow-right" style="font-size: 18px;" :class="sending ? 'animate-spin ph-spinner' : ''"></i>
+                    </button>
+                </form>
+            </div>
+            <div style="font-size: 11px; color: #94a3b8; font-weight: 600; text-align: center; margin-top: 16px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                <i class="ph-fill ph-lock-key" style="color: #059669; font-size: 15px;"></i>
+                <span>Privasi data & percakapan diamankan per-perangkat.</span>
+            </div>
         </div>
 
-        {{-- Input Pesan --}}
-        <div class="p-3.5 bg-white border-t border-gray-100 shrink-0" style="padding: 14px; background: white; border-top: 1px solid #e2e8f0; flex-shrink: 0;">
-            <form @submit.prevent="sendMessage()" style="display: flex; align-items: center; gap: 8px; margin: 0;">
-                <input type="text" x-model="newMessage" :disabled="sending" 
-                    placeholder="Tulis pesan obrolan..." 
-                    style="flex: 1; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 10px 14px; font-size: 13px; color: #0f172a; font-weight: 500; outline: none; transition: border 0.2s;">
-                <button type="submit" :disabled="sending || !newMessage.trim()" 
-                    style="width: 42px; height: 42px; border-radius: 12px; background: #d97706; color: white; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; box-shadow: 0 4px 12px rgba(217,119,6,0.3); transition: background 0.2s;">
-                    <i class="ph-bold ph-paper-plane-right" style="font-size: 18px;" :class="sending ? 'animate-spin ph-spinner' : ''"></i>
-                </button>
-            </form>
-            <div style="font-size: 10px; color: #94a3b8; font-weight: 600; text-align: center; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 4px;">
-                <i class="ph-fill ph-lock-key" style="color: #d97706;"></i>
-                <span>Sesi diamankan dengan pencatatan IP Address per perangkat.</span>
+        {{-- KONDISI 2: RUANG OBROLAN (SETELAH MULAI CHAT) --}}
+        <div x-show="started" class="flex-1 flex flex-col overflow-hidden" style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
+            {{-- Isi Pesan --}}
+            <div id="chat-messages-container" class="flex-1 overflow-y-auto p-4 space-y-3.5 bg-gray-50 text-xs"
+                style="flex: 1; overflow-y: auto; padding: 16px; background: #f8fafc; font-size: 13px; display: flex; flex-direction: column; gap: 14px;">
+                
+                {{-- Pesan Sapaan Otomatis --}}
+                <div class="flex items-start gap-2.5 max-w-[88%]" style="display: flex; align-items: flex-start; gap: 10px; max-width: 88%;">
+                    <div class="w-7 h-7 rounded-full bg-emerald-700 text-white flex items-center justify-center shrink-0 text-[10px] font-bold mt-1 shadow-sm"
+                        style="width: 28px; height: 28px; border-radius: 50%; background: #047857; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; margin-top: 4px;">
+                        <i class="ph-fill ph-robot"></i>
+                    </div>
+                    <div>
+                        <div class="p-3.5 bg-white text-gray-800 rounded-2xl rounded-tl-sm shadow-sm border border-gray-100/80 leading-relaxed font-medium"
+                            style="padding: 14px; background: white; color: #1e293b; border-radius: 16px; border-top-left-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #f1f5f9; line-height: 1.5; font-weight: 500;">
+                            Halo! 👋 Selamat datang di Live Chat Bagian Organisasi Setda Kota Padang. Pesan Anda telah kami terima dan akan segera direspon oleh admin kami.
+                        </div>
+                        <span class="text-[9px] font-bold text-gray-400 ml-1 mt-1 block" style="font-size: 10px; font-weight: 700; color: #94a3b8; margin-left: 4px; margin-top: 4px; display: block;">System • Just now</span>
+                    </div>
+                </div>
+
+                {{-- Pesan dari Database --}}
+                <template x-for="msg in messages" :key="msg.id">
+                    <div :style="msg.sender_type === 'visitor' ? 'display: flex; flex-direction: column; align-items: flex-end; align-self: flex-end; margin-left: auto; max-width: 85%;' : 'display: flex; align-items: flex-start; gap: 10px; max-width: 85%;'">
+                        <template x-if="msg.sender_type === 'admin'">
+                            <div style="width: 28px; height: 28px; border-radius: 50%; background: #059669; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; margin-top: 4px;">
+                                <i class="ph-fill ph-user-circle-check" style="font-size: 16px;"></i>
+                            </div>
+                        </template>
+                        
+                        <div :style="msg.sender_type === 'visitor' ? 'width: 100%;' : 'flex: 1;'">
+                            <div :style="msg.sender_type === 'visitor' ? 'padding: 14px; background: #059669; color: white; border-radius: 16px; border-top-right-radius: 4px; box-shadow: 0 2px 8px rgba(5,150,105,0.25); line-height: 1.5; font-weight: 500;' : 'padding: 14px; background: white; color: #1e293b; border-radius: 16px; border-top-left-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #f1f5f9; line-height: 1.5; font-weight: 500;'" x-text="msg.message"></div>
+                            <div style="display: flex; align-items: center; gap: 5px; margin-top: 4px;" :style="msg.sender_type === 'visitor' ? 'justify-content: flex-end; margin-right: 4px;' : 'margin-left: 4px;'">
+                                <span x-text="msg.sender_type === 'visitor' ? 'Anda' : (msg.sender_name || 'Admin')" style="font-size: 10px; font-weight: 800;" :style="msg.sender_type === 'visitor' ? 'color: #64748b;' : 'color: #059669;'"></span>
+                                <span style="font-size: 10px; color: #cbd5e1;">•</span>
+                                <span x-text="msg.time" style="font-size: 10px; color: #94a3b8; font-weight: 500;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            {{-- Input Pesan --}}
+            <div class="p-3.5 bg-white border-t border-gray-100 shrink-0" style="padding: 14px; background: white; border-top: 1px solid #e2e8f0; flex-shrink: 0;">
+                <form @submit.prevent="sendMessage()" style="display: flex; align-items: center; gap: 8px; margin: 0;">
+                    <input type="text" x-model="newMessage" :disabled="sending" 
+                        placeholder="Tulis pesan obrolan..." 
+                        style="flex: 1; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 14px; padding: 10px 16px; font-size: 13px; color: #0f172a; font-weight: 500; outline: none; transition: all 0.2s;"
+                        @focus="$el.style.borderColor = '#059669'; $el.style.background = '#ffffff'"
+                        @blur="$el.style.borderColor = '#cbd5e1'; $el.style.background = '#f8fafc'">
+                    <button type="submit" :disabled="sending || !newMessage.trim()" 
+                        style="width: 44px; height: 44px; border-radius: 14px; background: #059669; color: white; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; box-shadow: 0 4px 12px rgba(5,150,105,0.3); transition: background 0.2s;"
+                        class="hover:bg-emerald-700">
+                        <i class="ph-bold ph-paper-plane-right" style="font-size: 20px;" :class="sending ? 'animate-spin ph-spinner' : ''"></i>
+                    </button>
+                </form>
+                <div style="font-size: 10px; color: #94a3b8; font-weight: 600; text-align: center; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 4px;">
+                    <i class="ph-fill ph-shield-check" style="color: #059669;"></i>
+                    <span>Percakapan aktif & terproteksi per-perangkat.</span>
+                </div>
             </div>
         </div>
     </div>

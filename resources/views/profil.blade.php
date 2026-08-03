@@ -316,5 +316,11 @@
 
     {{-- ═══ FOOTER ═══ --}}
     @include('components.footer')
+
+    {{-- Widget Aksesibilitas Disabilitas (Ramah Inklusi) --}}
+    <x-accessibility-widget />
+
+    {{-- Widget Live Chat Pengguna (IP Locked System) --}}
+    <x-live-chat />
 </body>
 </html>

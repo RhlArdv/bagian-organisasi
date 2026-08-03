@@ -68,6 +68,7 @@
                 easing: 'ease-out-cubic',
             });
         });
+    </script>
 
     {{-- Widget Aksesibilitas Disabilitas (Ramah Inklusi) --}}
     <x-accessibility-widget />

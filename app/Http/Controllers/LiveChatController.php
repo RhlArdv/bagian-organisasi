@@ -11,9 +11,17 @@ class LiveChatController extends Controller
     /**
      * Memuat riwayat obrolan untuk tamu (dikunci oleh IP address dan token).
      */
-    public function load(Request $request)
+    public function load(Request $request, ?ChatSession $forceSession = null)
     {
-        $session = ChatSession::findOrCreateForVisitor($request);
+        $session = $forceSession ?: ChatSession::findForVisitor($request);
+
+        if (!$session) {
+            return response()->json([
+                'status' => 'unstarted',
+                'unread_count' => 0,
+                'messages' => [],
+            ]);
+        }
 
         // Jika widget sedang dibuka oleh visitor, tandai pesan admin sebagai sudah dibaca
         if ($request->boolean('mark_read')) {
@@ -39,12 +47,13 @@ class LiveChatController extends Controller
         $response = response()->json([
             'status' => 'success',
             'session_id' => $session->id,
+            'session_token' => $session->session_token,
             'ip_address' => $session->ip_address,
             'unread_count' => $session->unread_visitor,
             'messages' => $messages,
         ]);
 
-        // Simpan cookie token selama 1 tahun (525600 menit) sebagai identitas sekunder bersama IP
+        // Simpan cookie token selama 1 tahun (525600 menit)
         return $response->cookie('live_chat_token', $session->session_token, 525600);
     }
 
@@ -85,7 +94,7 @@ class LiveChatController extends Controller
             ]);
         }
 
-        // Langsung kembalikan daftar pesan terbaru
-        return $this->load($request);
+        // Langsung kembalikan daftar pesan terbaru dan token sesi aktif
+        return $this->load($request, $session);
     }
 }
