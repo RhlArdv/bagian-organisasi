@@ -8,6 +8,7 @@
     <meta name="description"
         content="Portal resmi Bagian Organisasi Sekretariat Daerah Kota Padang. Informasi kelembagaan, pelayanan publik, tata laksana, dan reformasi birokrasi.">
     <title>Bagian Organisasi — Sekretariat Daerah Kota Padang</title>
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/logo.png') }}?v=1.0">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

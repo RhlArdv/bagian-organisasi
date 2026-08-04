@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="{{ $metaDescription ?? 'Portal resmi Bagian Organisasi Sekretariat Daerah Kota Padang.' }}">
     <title>{{ $title ?? 'Bagian Organisasi' }} — Setda Kota Padang</title>
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/logo.png') }}?v=1.0">
 
     {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.bunny.net">
