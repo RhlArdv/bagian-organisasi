@@ -127,11 +127,11 @@
                     :class="currentSlide === {{ $index }} ? 'opacity-100' : 'opacity-0'">
                     <img src="{{ asset('storage/' . $banner->image) }}" alt="{{ $banner->title }}"
                         class="w-full h-full object-cover object-bottom"
-                        onerror="this.src='{{ asset('assets/img/hero2.webp') }}'">
+                        onerror="this.src='{{ asset('assets/img/image.png') }}'">
                 </div>
                 @endforeach
             @else
-                <img src="{{ asset('assets/img/hero2.webp') }}" alt="Bagian Organisasi Sekretariat Daerah Kota Padang"
+                <img src="{{ asset('assets/img/image.png') }}" alt="Bagian Organisasi Sekretariat Daerah Kota Padang"
                     class="w-full h-full object-cover object-bottom"
                     onerror="this.src='https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=900&q=80'">
             @endif
