@@ -46,6 +46,7 @@ Route::post('/layanan/pengaduan', [PublicLayananController::class, 'storePengadu
 Route::post('/layanan/kritik-saran', [PublicLayananController::class, 'storeKritikSaran'])->middleware('throttle:5,1')->name('public.kritik-saran.store');
 Route::get('/layanan/kelembagaan', [PublicLayananController::class, 'kelembagaan'])->name('public.kelembagaan');
 Route::get('/layanan/standar-pelayanan', [PublicLayananController::class, 'standarPelayanan'])->name('public.standar-pelayanan');
+Route::get('/layanan/regulasi', [PublicLayananController::class, 'regulasi'])->name('public.regulasi');
 
 // Halaman Publik — Berita
 Route::get('/berita', [PublicBeritaController::class, 'index'])->name('public.berita.index');

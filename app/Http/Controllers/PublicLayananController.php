@@ -49,17 +49,20 @@ class PublicLayananController extends Controller
      */
     public function sop()
     {
-        $kategori = DocumentCategory::where('slug', 'sop-pelayanan')->first();
+        $categories = DocumentCategory::byGroup('tata-laksana')->get();
 
-        $documents = collect();
-        if ($kategori) {
-            $documents = Document::active()
-                ->where('category_id', $kategori->id)
-                ->latest()
-                ->get();
+        $groupedDocuments = [];
+        foreach ($categories as $category) {
+            $groupedDocuments[$category->slug] = [
+                'name' => $category->name,
+                'documents' => Document::active()
+                    ->where('category_id', $category->id)
+                    ->latest()
+                    ->get(),
+            ];
         }
 
-        return view('public.layanan.sop', compact('documents'));
+        return view('public.layanan.sop', compact('groupedDocuments', 'categories'));
     }
 
     /**
@@ -148,7 +151,7 @@ class PublicLayananController extends Controller
      */
     public function kelembagaan()
     {
-        $layanans = Layanan::where('kategori', 'penataan-kelembagaan')->latest()->get();
+        $layanans = Layanan::whereIn('kategori', ['penataan-kelembagaan', 'evaluasi-kelembagaan', 'nomenklatur-opd'])->latest()->get()->groupBy('kategori');
 
         $docCategories = DocumentCategory::byGroup('kelembagaan')->get();
         $documents = Document::active()
@@ -166,18 +169,16 @@ class PublicLayananController extends Controller
      */
     public function standarPelayanan()
     {
-        $layanans = Layanan::where('kategori', 'standar-pelayanan')->latest()->get();
+        $layanans = Layanan::whereIn('kategori', ['standar-pelayanan', 'forum-konsultasi-publik'])->latest()->get()->groupBy('kategori');
 
-        $kategori = DocumentCategory::where('slug', 'standar-pelayanan')->first();
-        $documents = collect();
-        if ($kategori) {
-            $documents = Document::active()
-                ->where('category_id', $kategori->id)
-                ->latest()
-                ->get();
-        }
+        $docCategories = DocumentCategory::byGroup('pelayanan-publik')->get();
+        $documents = Document::active()
+            ->whereIn('category_id', $docCategories->pluck('id'))
+            ->latest()
+            ->get()
+            ->groupBy(fn ($doc) => $doc->category->slug);
 
-        return view('public.layanan.standar-pelayanan', compact('layanans', 'documents'));
+        return view('public.layanan.standar-pelayanan', compact('layanans', 'documents', 'docCategories'));
     }
 
     /**
@@ -213,5 +214,27 @@ class PublicLayananController extends Controller
 
         return redirect()->to(url()->previous() . '#kontak')
             ->with('success_feedback', 'Terima kasih! Pesan dan masukan Anda berhasil dikirimkan kepada kami.');
+    }
+
+    /**
+     * 7. Regulasi
+     * Displays documents grouped by sub-categories under 'regulasi'.
+     */
+    public function regulasi()
+    {
+        $categories = DocumentCategory::byGroup('regulasi')->get();
+
+        $groupedDocuments = [];
+        foreach ($categories as $category) {
+            $groupedDocuments[$category->slug] = [
+                'name' => $category->name,
+                'documents' => Document::active()
+                    ->where('category_id', $category->id)
+                    ->latest()
+                    ->get(),
+            ];
+        }
+
+        return view('public.layanan.regulasi', compact('groupedDocuments', 'categories'));
     }
 }

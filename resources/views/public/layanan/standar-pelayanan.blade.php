@@ -38,179 +38,226 @@
         </div>
     </section>
 
-    {{-- STANDAR PELAYANAN LIST --}}
-    <section class="mb-10">
+    {{-- DAFTAR LAYANAN & DOKUMEN PELAYANAN PUBLIK (TABBED) --}}
+    @php
+        $layananCategories = [
+            'standar-pelayanan' => 'Standar Pelayanan',
+            'forum-konsultasi-publik' => 'Forum Konsultasi Publik',
+        ];
+    @endphp
+
+    <section class="mb-10" x-data="{ activeTab: new URLSearchParams(location.search).get('tab') || 'standar-pelayanan' }">
         <div class="max-w-7xl mx-auto px-5 lg:px-8">
-            @if($layanans->count() > 0)
-                <div class="space-y-4" x-data="{ openItem: null }">
-                    @foreach($layanans as $layanan)
-                        <div class="bg-white rounded-[2rem] shadow-[0_4px_25px_rgb(0,0,0,0.03)] border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-lg">
-                            {{-- Header --}}
-                            <button @click="openItem = openItem === {{ $layanan->id }} ? null : {{ $layanan->id }}"
-                                    class="w-full p-6 lg:p-8 flex items-center gap-5 text-left">
-                                <div class="w-12 h-12 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-300"
-                                     :class="openItem === {{ $layanan->id }} ? 'rotate-6 scale-110' : ''">
-                                    <i class="ph-bold ph-star text-xl"></i>
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <h4 class="text-base lg:text-lg font-black text-[#1a202c] truncate">{{ $layanan->judul }}</h4>
-                                    @if($layanan->deskripsi)
-                                        <p class="text-sm text-gray-500 font-medium mt-1 line-clamp-1">{{ $layanan->deskripsi }}</p>
-                                    @endif
-                                </div>
-                                <i class="ph-bold ph-caret-down text-gray-400 text-lg transition-transform duration-300 shrink-0"
-                                   :class="openItem === {{ $layanan->id }} ? 'rotate-180' : ''"></i>
-                            </button>
+            
+            {{-- Tab Buttons --}}
+            <div class="flex flex-wrap gap-2 mb-8">
+                @foreach($layananCategories as $slug => $name)
+                    <button @click="activeTab = '{{ $slug }}'"
+                            :class="activeTab === '{{ $slug }}' ? 'bg-rose-600 text-white shadow-lg shadow-rose-500/20' : 'bg-white text-gray-600 border border-gray-200 hover:border-rose-300 hover:text-rose-600'"
+                            class="px-5 py-2.5 text-sm font-bold rounded-full transition-all duration-200">
+                        {{ $name }}
+                        @if(isset($layanans[$slug]))
+                            <span class="ml-1.5 text-xs opacity-70">({{ $layanans[$slug]->count() }})</span>
+                        @endif
+                    </button>
+                @endforeach
 
-                            {{-- Detail --}}
-                            <div x-show="openItem === {{ $layanan->id }}"
-                                 x-transition:enter="transition ease-out duration-200"
-                                 x-transition:enter-start="opacity-0 -translate-y-2"
-                                 x-transition:enter-end="opacity-100 translate-y-0"
-                                 x-transition:leave="transition ease-in duration-150"
-                                 x-transition:leave-start="opacity-100 translate-y-0"
-                                 x-transition:leave-end="opacity-0 -translate-y-2"
-                                 class="px-6 lg:px-8 pb-8 border-t border-gray-50">
-                                <div class="pt-6 space-y-6">
-                                    @if($layanan->deskripsi)
-                                        <div>
-                                            <h5 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Deskripsi Layanan</h5>
-                                            <p class="text-sm text-gray-700 font-medium leading-relaxed">{{ $layanan->deskripsi }}</p>
+                @foreach($docCategories as $cat)
+                    <button @click="activeTab = '{{ $cat->slug }}'"
+                            :class="activeTab === '{{ $cat->slug }}' ? 'bg-rose-600 text-white shadow-lg shadow-rose-500/20' : 'bg-white text-gray-600 border border-gray-200 hover:border-rose-300 hover:text-rose-600'"
+                            class="px-5 py-2.5 text-sm font-bold rounded-full transition-all duration-200">
+                        {{ $cat->name }}
+                        @if(isset($documents[$cat->slug]))
+                            <span class="ml-1.5 text-xs opacity-70">({{ $documents[$cat->slug]->count() }})</span>
+                        @endif
+                    </button>
+                @endforeach
+            </div>
+
+            {{-- Tab Content - Layanan --}}
+            @foreach($layananCategories as $slug => $name)
+                <div x-show="activeTab === '{{ $slug }}'"
+                     x-cloak
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 translate-y-2"
+                     x-transition:enter-end="opacity-100 translate-y-0">
+                     
+                     @if(isset($layanans[$slug]) && $layanans[$slug]->count() > 0)
+                        <div class="space-y-4" x-data="{ openItem: null }">
+                            @foreach($layanans[$slug] as $layanan)
+                                <div class="bg-white rounded-[2rem] shadow-[0_4px_25px_rgb(0,0,0,0.03)] border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-lg">
+                                    {{-- Header --}}
+                                    <button @click="openItem = openItem === {{ $layanan->id }} ? null : {{ $layanan->id }}"
+                                            class="w-full p-6 lg:p-8 flex items-center gap-5 text-left">
+                                        <div class="w-12 h-12 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-300"
+                                             :class="openItem === {{ $layanan->id }} ? 'rotate-6 scale-110' : ''">
+                                            <i class="ph-bold ph-star text-xl"></i>
                                         </div>
-                                    @endif
-
-                                    @if($layanan->dasar_hukum)
-                                        <div>
-                                            <h5 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Dasar Hukum</h5>
-                                            <div class="text-sm text-gray-700 font-medium leading-relaxed bg-gray-50 rounded-xl p-5">{!! nl2br(e($layanan->dasar_hukum)) !!}</div>
+                                        <div class="flex-1 min-w-0">
+                                            <h4 class="text-base lg:text-lg font-black text-[#1a202c] truncate">{{ $layanan->judul }}</h4>
+                                            @if($layanan->deskripsi)
+                                                <p class="text-sm text-gray-500 font-medium mt-1 line-clamp-1">{{ $layanan->deskripsi }}</p>
+                                            @endif
                                         </div>
-                                    @endif
+                                        <i class="ph-bold ph-caret-down text-gray-400 text-lg transition-transform duration-300 shrink-0"
+                                           :class="openItem === {{ $layanan->id }} ? 'rotate-180' : ''"></i>
+                                    </button>
 
-                                    @if($layanan->persyaratan)
-                                        <div>
-                                            <h5 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Persyaratan</h5>
-                                            <div class="text-sm text-gray-700 font-medium leading-relaxed bg-gray-50 rounded-xl p-5">{!! nl2br(e($layanan->persyaratan)) !!}</div>
-                                        </div>
-                                    @endif
+                                    {{-- Detail --}}
+                                    <div x-show="openItem === {{ $layanan->id }}"
+                                         x-cloak
+                                         x-transition:enter="transition ease-out duration-200"
+                                         x-transition:enter-start="opacity-0 -translate-y-2"
+                                         x-transition:enter-end="opacity-100 translate-y-0"
+                                         x-transition:leave="transition ease-in duration-150"
+                                         x-transition:leave-start="opacity-100 translate-y-0"
+                                         x-transition:leave-end="opacity-0 -translate-y-2"
+                                         class="px-6 lg:px-8 pb-8 border-t border-gray-50">
+                                        <div class="pt-6 space-y-6">
+                                            @if($layanan->deskripsi)
+                                                <div>
+                                                    <h5 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Deskripsi Layanan</h5>
+                                                    <p class="text-sm text-gray-700 font-medium leading-relaxed">{{ $layanan->deskripsi }}</p>
+                                                </div>
+                                            @endif
 
-                                    @if($layanan->sistem_mekanisme)
-                                        <div>
-                                            <h5 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Sistem & Mekanisme</h5>
-                                            <div class="text-sm text-gray-700 font-medium leading-relaxed">{!! nl2br(e($layanan->sistem_mekanisme)) !!}</div>
-                                        </div>
-                                    @endif
+                                            @if($layanan->dasar_hukum)
+                                                <div>
+                                                    <h5 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Dasar Hukum</h5>
+                                                    <div class="text-sm text-gray-700 font-medium leading-relaxed bg-gray-50 rounded-xl p-5">{!! nl2br(e($layanan->dasar_hukum)) !!}</div>
+                                                </div>
+                                            @endif
 
-                                    @if($layanan->flowchart_image)
-                                        <div>
-                                            <h5 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Alur / Flowchart</h5>
-                                            <img src="{{ asset('storage/' . $layanan->flowchart_image) }}" alt="Flowchart {{ $layanan->judul }}" class="rounded-2xl border border-gray-200 max-w-full">
-                                        </div>
-                                    @endif
+                                            @if($layanan->persyaratan)
+                                                <div>
+                                                    <h5 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Persyaratan</h5>
+                                                    <div class="text-sm text-gray-700 font-medium leading-relaxed bg-gray-50 rounded-xl p-5">{!! nl2br(e($layanan->persyaratan)) !!}</div>
+                                                </div>
+                                            @endif
 
-                                    {{-- Quick Info Grid --}}
-                                    <div class="grid sm:grid-cols-3 gap-4">
-                                        @if($layanan->jangka_waktu)
-                                            <div class="bg-blue-50 rounded-xl p-4">
-                                                <p class="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1"><i class="ph-fill ph-clock"></i> Jangka Waktu</p>
-                                                <p class="text-sm font-bold text-blue-700">{{ $layanan->jangka_waktu }}</p>
+                                            @if($layanan->sistem_mekanisme)
+                                                <div>
+                                                    <h5 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Sistem & Mekanisme</h5>
+                                                    <div class="text-sm text-gray-700 font-medium leading-relaxed">{!! nl2br(e($layanan->sistem_mekanisme)) !!}</div>
+                                                </div>
+                                            @endif
+
+                                            @if($layanan->flowchart_image)
+                                                <div>
+                                                    <h5 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Alur / Flowchart</h5>
+                                                    <img src="{{ asset('storage/' . $layanan->flowchart_image) }}" alt="Flowchart {{ $layanan->judul }}" class="rounded-2xl border border-gray-200 max-w-full">
+                                                </div>
+                                            @endif
+
+                                            {{-- Quick Info Grid --}}
+                                            <div class="grid sm:grid-cols-3 gap-4">
+                                                @if($layanan->jangka_waktu)
+                                                    <div class="bg-blue-50 rounded-xl p-4">
+                                                        <p class="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1"><i class="ph-fill ph-clock"></i> Jangka Waktu</p>
+                                                        <p class="text-sm font-bold text-blue-700">{{ $layanan->jangka_waktu }}</p>
+                                                    </div>
+                                                @endif
+                                                @if($layanan->biaya)
+                                                    <div class="bg-emerald-50 rounded-xl p-4">
+                                                        <p class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1"><i class="ph-fill ph-currency-circle-dollar"></i> Biaya</p>
+                                                        <p class="text-sm font-bold text-emerald-700">{{ $layanan->biaya }}</p>
+                                                    </div>
+                                                @endif
+                                                @if($layanan->produk_pelayanan)
+                                                    <div class="bg-purple-50 rounded-xl p-4">
+                                                        <p class="text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-1"><i class="ph-fill ph-package"></i> Produk</p>
+                                                        <p class="text-sm font-bold text-purple-700">{{ $layanan->produk_pelayanan }}</p>
+                                                    </div>
+                                                @endif
                                             </div>
-                                        @endif
-                                        @if($layanan->biaya)
-                                            <div class="bg-emerald-50 rounded-xl p-4">
-                                                <p class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1"><i class="ph-fill ph-currency-circle-dollar"></i> Biaya</p>
-                                                <p class="text-sm font-bold text-emerald-700">{{ $layanan->biaya }}</p>
+
+                                            @if($layanan->pengaduan)
+                                                <div>
+                                                    <h5 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Pengaduan</h5>
+                                                    <div class="text-sm text-gray-700 font-medium leading-relaxed">{!! nl2br(e($layanan->pengaduan)) !!}</div>
+                                                </div>
+                                            @endif
+
+                                            <div class="flex flex-wrap gap-3">
+                                                @if($layanan->file_download)
+                                                    <a href="{{ asset('storage/' . $layanan->file_download) }}" target="_blank"
+                                                       class="inline-flex items-center gap-2 bg-rose-50 text-rose-600 font-bold text-sm px-5 py-3 rounded-xl hover:bg-rose-100 transition-colors">
+                                                        <i class="ph-bold ph-download-simple"></i> Download PDF
+                                                    </a>
+                                                @endif
+                                                @if($layanan->link_sippn)
+                                                    <a href="{{ $layanan->link_sippn }}" target="_blank"
+                                                       class="inline-flex items-center gap-2 bg-gray-50 text-gray-600 font-bold text-sm px-5 py-3 rounded-xl hover:bg-gray-100 transition-colors">
+                                                        <i class="ph-bold ph-arrow-square-out"></i> Lihat di SIPPN
+                                                    </a>
+                                                @endif
                                             </div>
-                                        @endif
-                                        @if($layanan->produk_pelayanan)
-                                            <div class="bg-purple-50 rounded-xl p-4">
-                                                <p class="text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-1"><i class="ph-fill ph-package"></i> Produk</p>
-                                                <p class="text-sm font-bold text-purple-700">{{ $layanan->produk_pelayanan }}</p>
-                                            </div>
-                                        @endif
+                                        </div>
                                     </div>
-
-                                    @if($layanan->pengaduan)
-                                        <div>
-                                            <h5 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Pengaduan</h5>
-                                            <div class="text-sm text-gray-700 font-medium leading-relaxed">{!! nl2br(e($layanan->pengaduan)) !!}</div>
-                                        </div>
-                                    @endif
-
-                                    <div class="flex flex-wrap gap-3">
-                                        @if($layanan->file_download)
-                                            <a href="{{ asset('storage/' . $layanan->file_download) }}" target="_blank"
-                                               class="inline-flex items-center gap-2 bg-rose-50 text-rose-600 font-bold text-sm px-5 py-3 rounded-xl hover:bg-rose-100 transition-colors">
-                                                <i class="ph-bold ph-download-simple"></i> Download Dokumen
-                                            </a>
-                                        @endif
-                                        @if($layanan->link_sippn)
-                                            <a href="{{ $layanan->link_sippn }}" target="_blank" rel="noopener noreferrer"
-                                               class="inline-flex items-center gap-2 bg-blue-50 text-blue-600 font-bold text-sm px-5 py-3 rounded-xl hover:bg-blue-100 transition-colors">
-                                                <i class="ph-bold ph-arrow-square-out"></i> Lihat di SIPPN
-                                            </a>
-                                        @endif
-                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
-                    @endforeach
+                     @else
+                        <div class="bg-white rounded-[2.5rem] p-16 text-center shadow-[0_4px_25px_rgb(0,0,0,0.03)] border border-gray-100">
+                            <div class="w-24 h-24 mx-auto bg-rose-50 rounded-full flex items-center justify-center mb-6">
+                                <i class="ph-duotone ph-star text-5xl text-rose-200"></i>
+                            </div>
+                            <h4 class="text-xl font-black text-gray-300 mb-3">Belum Ada Layanan</h4>
+                            <p class="text-sm text-gray-400 font-medium max-w-md mx-auto">Layanan {{ $name }} belum tersedia.</p>
+                        </div>
+                     @endif
                 </div>
-            @else
-                <div class="bg-white rounded-[2.5rem] p-16 text-center shadow-[0_4px_25px_rgb(0,0,0,0.03)] border border-gray-100">
-                    <div class="w-24 h-24 mx-auto bg-rose-50 rounded-full flex items-center justify-center mb-6">
-                        <i class="ph-duotone ph-star text-5xl text-rose-200"></i>
-                    </div>
-                    <h4 class="text-xl font-black text-gray-300 mb-3">Belum Ada Standar Pelayanan</h4>
-                    <p class="text-sm text-gray-400 font-medium max-w-md mx-auto">Data standar pelayanan akan ditampilkan setelah diinput oleh admin melalui dashboard.</p>
+            @endforeach
+
+            {{-- Tab Content - Dokumen --}}
+            @foreach($docCategories as $cat)
+                <div x-show="activeTab === '{{ $cat->slug }}'"
+                     x-cloak
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 translate-y-2"
+                     x-transition:enter-end="opacity-100 translate-y-0">
+                     
+                     @if(isset($documents[$cat->slug]) && $documents[$cat->slug]->count() > 0)
+                         <div class="space-y-3">
+                             @foreach($documents[$cat->slug] as $doc)
+                                 <a href="{{ asset('storage/' . $doc->file_path) }}" target="_blank"
+                                    class="group flex items-center gap-4 lg:gap-6 bg-white p-5 lg:p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-rose-200 transition-all duration-300">
+                                     <div class="w-12 h-12 lg:w-14 lg:h-14 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                                         <i class="ph-fill ph-file-pdf text-2xl"></i>
+                                     </div>
+                                     <div class="flex-1 min-w-0">
+                                         <h4 class="text-sm lg:text-base font-bold text-[#1a202c] group-hover:text-rose-600 transition-colors truncate">{{ $doc->title }}</h4>
+                                         <div class="flex items-center gap-3 mt-1 flex-wrap">
+                                             @if($doc->document_number)
+                                                 <span class="text-xs text-gray-400 font-medium"><i class="ph ph-hash"></i> {{ $doc->document_number }}</span>
+                                             @endif
+                                             @if($doc->year)
+                                                 <span class="text-xs text-gray-400 font-medium"><i class="ph ph-calendar-blank"></i> {{ $doc->year }}</span>
+                                             @endif
+                                             @if($doc->file_size)
+                                                 <span class="text-xs text-gray-400 font-medium">{{ number_format($doc->file_size / 1024 / 1024, 1) }} MB</span>
+                                             @endif
+                                         </div>
+                                     </div>
+                                     <div class="w-10 h-10 rounded-full bg-gray-50 text-gray-400 group-hover:bg-rose-500 group-hover:text-white flex items-center justify-center transition-colors shrink-0">
+                                         <i class="ph-bold ph-download-simple"></i>
+                                     </div>
+                                 </a>
+                             @endforeach
+                         </div>
+                     @else
+                        <div class="bg-white rounded-[2rem] p-12 text-center shadow-[0_4px_25px_rgb(0,0,0,0.03)] border border-gray-100">
+                            <div class="w-20 h-20 mx-auto bg-rose-50 rounded-full flex items-center justify-center mb-6">
+                                <i class="ph-duotone ph-folder-open text-4xl text-rose-200"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-gray-300 mb-2">Belum Ada Dokumen</h4>
+                            <p class="text-sm text-gray-400 font-medium">Dokumen {{ $cat->name }} belum tersedia.</p>
+                        </div>
+                     @endif
                 </div>
-            @endif
+            @endforeach
+
         </div>
     </section>
-
-    {{-- DOKUMEN STANDAR PELAYANAN --}}
-    <section class="mb-10">
-        <div class="max-w-7xl mx-auto px-5 lg:px-8">
-            <h3 class="text-xl font-black text-[#1a202c] mb-6 flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center">
-                    <i class="ph-bold ph-file-pdf text-xl"></i>
-                </div>
-                Dokumen Standar Pelayanan
-            </h3>
-
-            @if($documents->count() > 0)
-                <div class="space-y-3">
-                    @foreach($documents as $doc)
-                        <a href="{{ asset('storage/' . $doc->file_path) }}" target="_blank"
-                           class="group flex items-center gap-4 lg:gap-6 bg-white p-5 lg:p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-rose-200 transition-all duration-300">
-                            <div class="w-12 h-12 lg:w-14 lg:h-14 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                                <i class="ph-fill ph-file-pdf text-2xl"></i>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <h4 class="text-sm lg:text-base font-bold text-[#1a202c] group-hover:text-rose-600 transition-colors truncate">{{ $doc->title }}</h4>
-                                <div class="flex items-center gap-3 mt-1 flex-wrap">
-                                    @if($doc->year)
-                                        <span class="text-xs text-gray-400 font-medium"><i class="ph ph-calendar-blank"></i> {{ $doc->year }}</span>
-                                    @endif
-                                    @if($doc->file_size)
-                                        <span class="text-xs text-gray-400 font-medium">{{ number_format($doc->file_size / 1024 / 1024, 1) }} MB</span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="w-10 h-10 rounded-full bg-gray-50 text-gray-400 group-hover:bg-rose-500 group-hover:text-white flex items-center justify-center transition-colors shrink-0">
-                                <i class="ph-bold ph-download-simple"></i>
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
-            @else
-                <div class="bg-white rounded-[2rem] p-10 text-center shadow-[0_4px_25px_rgb(0,0,0,0.03)] border border-gray-100">
-                    <div class="w-16 h-16 mx-auto bg-gray-50 rounded-full flex items-center justify-center mb-4">
-                        <i class="ph-duotone ph-file-pdf text-3xl text-gray-300"></i>
-                    </div>
-                    <p class="text-sm text-gray-400 font-medium">Belum ada dokumen standar pelayanan yang diunggah.</p>
-                </div>
-            @endif
-        </div>
-    </section>
-
 </x-public-layout>
+

@@ -34,7 +34,7 @@
     </section>
 
     {{-- INDEKS RB --}}
-    <section class="mb-10">
+    <section id="indeks-rb" class="mb-10 pt-20 -mt-20">
         <div class="max-w-7xl mx-auto px-5 lg:px-8">
             <h3 class="text-xl font-black text-[#1a202c] mb-6 flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center">
@@ -76,7 +76,7 @@
     </section>
 
     {{-- SAKIP --}}
-    <section class="mb-10">
+    <section id="sakip" class="mb-10 pt-20 -mt-20">
         <div class="max-w-7xl mx-auto px-5 lg:px-8">
             <h3 class="text-xl font-black text-[#1a202c] mb-6 flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center">
