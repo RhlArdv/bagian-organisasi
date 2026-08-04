@@ -39,7 +39,7 @@
 
         {{-- SIDEBAR --}}
         <aside
-            class="fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-gray-100 flex flex-col transition-transform duration-300 lg:translate-x-0"
+            class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-100 flex flex-col transition-transform duration-300 lg:translate-x-0"
             :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
 
             {{-- Sidebar Header (Logo) --}}
@@ -52,8 +52,8 @@
             </div>
 
             {{-- Sidebar Menu --}}
-            <div class="flex-1 overflow-y-auto py-6 px-4 space-y-1">
-                <p class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 mt-4">Menu Utama</p>
+            <div class="flex-1 overflow-y-auto py-8 px-4 space-y-1">
+                <p class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Menu Utama</p>
 
                 <a href="{{ route('dashboard') }}"
                     class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('dashboard') ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
@@ -464,7 +464,7 @@
         </aside>
 
         {{-- MAIN CONTENT AREA --}}
-        <div class="flex-1 lg:ml-72 flex flex-col min-h-screen w-full lg:w-[calc(100%-18rem)] max-w-full overflow-x-hidden">
+        <div class="flex-1 lg:ml-64 flex flex-col min-h-screen w-full lg:w-[calc(100%-16rem)] max-w-full overflow-x-hidden">
 
             {{-- TOPBAR --}}
             <header
