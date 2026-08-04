@@ -38,10 +38,20 @@
             -ms-overflow-style: none;  /* IE and Edge */
             scrollbar-width: none;  /* Firefox */
         }
+
+        /* Admin Main Content Wrapper Offset for Fixed Sidebar */
+        @media (min-width: 1024px) {
+            .admin-main-wrapper {
+                padding-left: 16rem !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-[#f4f7f6] text-gray-900 antialiased overflow-x-hidden">
-    <div class="min-h-screen flex" x-data="{ sidebarOpen: false }">
+    <div class="min-h-screen" x-data="{ sidebarOpen: false }">
 
         {{-- MOBILE OVERLAY --}}
         <div x-show="sidebarOpen" x-transition.opacity class="fixed inset-0 bg-gray-900/50 z-40 lg:hidden"
@@ -477,7 +487,7 @@
         </aside>
 
         {{-- MAIN CONTENT AREA --}}
-        <div class="flex-1 lg:ml-64 flex flex-col min-h-screen w-full lg:w-[calc(100%-16rem)] max-w-full overflow-x-hidden">
+        <div class="admin-main-wrapper lg:pl-64 flex flex-col min-h-screen w-full max-w-full overflow-x-hidden" style="box-sizing: border-box;">
 
             {{-- TOPBAR --}}
             <header

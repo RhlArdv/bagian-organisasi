@@ -47,7 +47,7 @@
                 {{-- ACCORDION STANDAR PELAYANAN (SOFT GREEN BADGES, STRICT DATABASE DATA) --}}
                 <div class="space-y-4 pt-2">
                     <h3 class="text-sm font-black text-gray-500 uppercase tracking-widest mb-4 flex items-center gap-2">
-                        <i class="ph-bold ph-list-numbers text-base" style="color: #059669;"></i> RINCIAN STANDAR PELAYANAN
+                        <i class="ph-bold ph-list-numbers text-base" style="color: #059669;"></i> RINCIAN {{ strtoupper($namaKategori) }}
                     </h3>
 
                     {{-- 1. PERSYARATAN PELAYANAN --}}
@@ -249,7 +249,7 @@
                 {{-- KARTU NAVIGASI STANDAR PELAYANAN (SOFT GREEN THEME) --}}
                 <div class="rounded-3xl p-6 shadow-md" style="background-color: #ecfdf5; border: 2px solid #a7f3d0;">
                     <h4 class="text-base font-extrabold pb-3 mb-4 flex items-center gap-2.5" style="color: #047857; border-bottom: 1px solid #86efac;">
-                        <i class="ph-fill ph-list-checks text-xl" style="color: #059669;"></i> Rincian Standar Pelayanan
+                        <i class="ph-fill ph-list-checks text-xl" style="color: #059669;"></i> Rincian {{ $namaKategori }}
                     </h4>
                     <ul class="space-y-3 text-sm font-bold text-gray-800">
                         <li><a href="#persyaratan" @click="document.getElementById('persyaratan').scrollIntoView({behavior:'smooth'})" class="hover:text-emerald-700 py-1.5 px-3 rounded-lg hover:bg-emerald-100/50 flex items-center gap-3 transition-colors"><span class="text-xs font-black px-2 py-0.5 rounded text-white shrink-0" style="background-color: #10b981;">1</span> <span>Persyaratan Pelayanan</span></a></li>

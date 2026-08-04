@@ -99,13 +99,19 @@
                         <a href="{{ route('public.standar-pelayanan') }}"
                             class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Standar
                             Pelayanan</a>
-                        <a href="#"
+                        <a href="{{ route('public.maklumat-pelayanan') }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Maklumat
+                            Pelayanan</a>
+                        <a href="{{ route('public.skm') }}"
                             class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Survei
                             Kepuasan Masyarakat</a>
-                        <a href="#"
+                        <a href="{{ route('public.forum-konsultasi-publik') }}"
                             class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Forum
                             Konsultasi Publik</a>
-                        <a href="#"
+                        <a href="{{ route('public.pengelolaan-pengaduan') }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Pengelolaan
+                            Pengaduan</a>
+                        <a href="{{ route('public.dokumen-pelayanan-publik') }}"
                             class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Dokumen
                             Pelayanan Publik</a>
                     </div>
@@ -261,8 +267,11 @@
                 </button>
                 <div x-show="openPelayanan" class="pl-4 pt-2 flex flex-col space-y-2.5 text-xs font-bold text-gray-600" style="display: none;">
                     <a href="{{ route('public.standar-pelayanan') }}" @click="mobileOpen = false" class="hover:text-brand-500">Standar Pelayanan</a>
-                    <a href="#" @click="mobileOpen = false" class="hover:text-brand-500">Survei Kepuasan Masyarakat (SKM)</a>
-                    <a href="#" @click="mobileOpen = false" class="hover:text-brand-500">Forum Konsultasi Publik</a>
+                    <a href="{{ route('public.maklumat-pelayanan') }}" @click="mobileOpen = false" class="hover:text-brand-500">Maklumat Pelayanan</a>
+                    <a href="{{ route('public.skm') }}" @click="mobileOpen = false" class="hover:text-brand-500">Survei Kepuasan Masyarakat (SKM)</a>
+                    <a href="{{ route('public.forum-konsultasi-publik') }}" @click="mobileOpen = false" class="hover:text-brand-500">Forum Konsultasi Publik</a>
+                    <a href="{{ route('public.pengelolaan-pengaduan') }}" @click="mobileOpen = false" class="hover:text-brand-500">Pengelolaan Pengaduan</a>
+                    <a href="{{ route('public.dokumen-pelayanan-publik') }}" @click="mobileOpen = false" class="hover:text-brand-500">Dokumen Pelayanan Publik</a>
                 </div>
             </div>
 
