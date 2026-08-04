@@ -49,7 +49,7 @@
 
         {{-- SIDEBAR --}}
         <aside
-            class="fixed inset-y-0 left-0 z-50 w-56 bg-white border-r border-gray-100 flex flex-col transition-transform duration-300 lg:translate-x-0"
+            class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-100 flex flex-col transition-transform duration-300 lg:translate-x-0"
             :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
 
             {{-- Sidebar Header (Logo) --}}
@@ -68,7 +68,7 @@
                 <a href="{{ route('dashboard') }}"
                     class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('dashboard') ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                     <i class="ph-bold ph-squares-four text-xl"></i>
-                    <span class="text-sm">Dashboard Overview</span>
+                    <span class="text-[13px] font-semibold truncate">Dashboard Overview</span>
                 </a>
 
                 <p class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 mt-8">Pengaturan
@@ -77,26 +77,26 @@
                 <a href="{{ route('banners.index') }}"
                     class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('banners.*') ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                     <i class="ph-bold ph-image text-xl"></i>
-                    <span class="text-sm">Banner / Slider Utama</span>
+                    <span class="text-[13px] font-semibold truncate">Banner / Slider Utama</span>
                 </a>
 
                 <a href="{{ route('metrics.index') }}"
                     class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('metrics.*') ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                     <i class="ph-bold ph-chart-bar text-xl"></i>
-                    <span class="text-sm">Indikator Kinerja (RB, )</span>
+                    <span class="text-[13px] font-semibold truncate">Indikator Kinerja (RB, SAKIP)</span>
                 </a>
 
                 <p class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 mt-8">Profil</p>
                 <a href="{{ route('pegawai.index') }}"
                     class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('pegawai.*') ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                     <i class="ph-bold ph-users text-xl"></i>
-                    <span class="text-sm">Profil Pegawai</span>
+                    <span class="text-[13px] font-semibold truncate">Profil Pegawai</span>
                 </a>
 
                 <a href="{{ route('pages.index') }}"
                     class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('pages.*') ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                     <i class="ph-bold ph-file-text text-xl"></i>
-                    <span class="text-sm">Halaman Profil (Visi, )</span>
+                    <span class="text-[13px] font-semibold truncate">Halaman Profil (Visi, Misi)</span>
                 </a>
 
                 <p class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 mt-8">Kelembagaan</p>
@@ -108,7 +108,7 @@
                         class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all {{ (request()->is('admin/layanan/penataan-kelembagaan*') || request()->is('admin/layanan/evaluasi-kelembagaan*') || request()->is('admin/layanan/nomenklatur-opd*') || request()->is('admin/documents/peta-jabatan*') || request()->is('admin/documents/produk-hukum*')) ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                         <div class="flex items-center gap-3">
                             <i class="ph-bold ph-buildings text-xl"></i>
-                            <span class="text-sm">Layanan Kelembagaan</span>
+                            <span class="text-[13px] font-semibold truncate">Layanan Kelembagaan</span>
                         </div>
                         <i class="ph-bold ph-caret-down text-sm transition-transform duration-200"
                             :class="{ 'rotate-180': open }"></i>
@@ -123,23 +123,23 @@
                         style="display: none;">
 
                         <a href="{{ route('layanan.index', 'penataan-kelembagaan') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/layanan/penataan-kelembagaan*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/layanan/penataan-kelembagaan*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Penataan Kelembagaan
                         </a>
                         <a href="{{ route('layanan.index', 'evaluasi-kelembagaan') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/layanan/evaluasi-kelembagaan*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/layanan/evaluasi-kelembagaan*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Evaluasi Kelembagaan
                         </a>
                         <a href="{{ route('layanan.index', 'nomenklatur-opd') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/layanan/nomenklatur-opd*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/layanan/nomenklatur-opd*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Nomenklatur OPD
                         </a>
                         <a href="{{ route('documents.index', 'peta-jabatan') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/peta-jabatan*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/peta-jabatan*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Peta Jabatan
                         </a>
                         <a href="{{ route('documents.index', 'produk-hukum') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/produk-hukum*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/produk-hukum*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Produk Hukum
                         </a>
                     </div>
@@ -155,7 +155,7 @@
                         class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all {{ (request()->is('admin/documents/informasi-anjab*') || request()->is('admin/documents/informasi-abk*') || request()->is('admin/documents/pedoman-anjab-abk*') || request()->is('admin/documents/formulir-permohonan*')) ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                         <div class="flex items-center gap-3">
                             <i class="ph-bold ph-chart-line-up text-xl"></i>
-                            <span class="text-sm">Analisis Jabatan & ABK</span>
+                            <span class="text-[13px] font-semibold truncate">Analisis Jabatan & ABK</span>
                         </div>
                         <i class="ph-bold ph-caret-down text-sm transition-transform duration-200"
                             :class="{ 'rotate-180': open }"></i>
@@ -170,19 +170,19 @@
                         style="display: none;">
 
                         <a href="{{ route('documents.index', 'informasi-anjab') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/informasi-anjab*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/informasi-anjab*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Informasi Anjab
                         </a>
                         <a href="{{ route('documents.index', 'informasi-abk') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/informasi-abk*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/informasi-abk*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Informasi ABK
                         </a>
                         <a href="{{ route('documents.index', 'pedoman-anjab-abk') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/pedoman-anjab-abk*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/pedoman-anjab-abk*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Buku Pedoman
                         </a>
                         <a href="{{ route('documents.index', 'formulir-permohonan') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/formulir-permohonan*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/formulir-permohonan*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Formulir Permohonan
                         </a>
                     </div>
@@ -198,7 +198,7 @@
                         class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all {{ (request()->is('admin/layanan/standar-pelayanan*') || request()->is('admin/documents/maklumat-pelayanan*') || request()->is('admin/documents/skm*') || request()->is('admin/layanan/forum-konsultasi-publik*') || request()->is('admin/documents/pengelolaan-pengaduan*') || request()->is('admin/documents/dokumen-pelayanan-publik*')) ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                         <div class="flex items-center gap-3">
                             <i class="ph-bold ph-handshake text-xl"></i>
-                            <span class="text-sm">Pelayanan Publik</span>
+                            <span class="text-[13px] font-semibold truncate">Pelayanan Publik</span>
                         </div>
                         <i class="ph-bold ph-caret-down text-sm transition-transform duration-200"
                             :class="{ 'rotate-180': open }"></i>
@@ -213,27 +213,27 @@
                         style="display: none;">
 
                         <a href="{{ route('layanan.index', 'standar-pelayanan') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/layanan/standar-pelayanan*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/layanan/standar-pelayanan*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Standar Pelayanan
                         </a>
                         <a href="{{ route('documents.index', 'maklumat-pelayanan') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/maklumat-pelayanan*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/maklumat-pelayanan*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Maklumat Pelayanan
                         </a>
                         <a href="{{ route('documents.index', 'skm') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/skm*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/skm*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Survei Kepuasan Masyarakat
                         </a>
                         <a href="{{ route('layanan.index', 'forum-konsultasi-publik') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/layanan/forum-konsultasi-publik*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/layanan/forum-konsultasi-publik*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Forum Konsultasi Publik
                         </a>
                         <a href="{{ route('documents.index', 'pengelolaan-pengaduan') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/pengelolaan-pengaduan*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/pengelolaan-pengaduan*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Pengelolaan Pengaduan
                         </a>
                         <a href="{{ route('documents.index', 'dokumen-pelayanan-publik') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/dokumen-pelayanan-publik*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/dokumen-pelayanan-publik*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Dokumen Pelayanan Publik
                         </a>
                     </div>
@@ -248,7 +248,7 @@
                         class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all {{ (request()->is('admin/documents/sop-pelayanan*') || request()->is('admin/documents/peta-proses-bisnis*') || request()->is('admin/documents/tata-naskah-dinas*')) ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                         <div class="flex items-center gap-3">
                             <i class="ph-bold ph-flow-arrow text-xl"></i>
-                            <span class="text-sm">Tata Laksana</span>
+                            <span class="text-[13px] font-semibold truncate">Tata Laksana</span>
                         </div>
                         <i class="ph-bold ph-caret-down text-sm transition-transform duration-200"
                             :class="{ 'rotate-180': open }"></i>
@@ -263,15 +263,15 @@
                         style="display: none;">
 
                         <a href="{{ route('documents.index', 'sop-pelayanan') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/sop-pelayanan*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/sop-pelayanan*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             SOP Pelayanan
                         </a>
                         <a href="{{ route('documents.index', 'peta-proses-bisnis') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/peta-proses-bisnis*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/peta-proses-bisnis*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Peta Proses Bisnis
                         </a>
                         <a href="{{ route('documents.index', 'tata-naskah-dinas') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/tata-naskah-dinas*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/tata-naskah-dinas*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Tata Naskah Dinas
                         </a>
                     </div>
@@ -287,7 +287,7 @@
                         class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all {{ (request()->is('admin/documents/indeks-rb*') || request()->is('admin/documents/sakip*')) ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                         <div class="flex items-center gap-3">
                             <i class="ph-bold ph-star text-xl"></i>
-                            <span class="text-sm">Reformasi Birokrasi</span>
+                            <span class="text-[13px] font-semibold truncate">Reformasi Birokrasi</span>
                         </div>
                         <i class="ph-bold ph-caret-down text-sm transition-transform duration-200"
                             :class="{ 'rotate-180': open }"></i>
@@ -302,11 +302,11 @@
                         style="display: none;">
 
                         <a href="{{ route('documents.index', 'indeks-rb') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/indeks-rb*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/indeks-rb*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Indeks RB
                         </a>
                         <a href="{{ route('documents.index', 'sakip') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/sakip*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/sakip*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             SAKIP
                         </a>
                     </div>
@@ -321,7 +321,7 @@
                         class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all {{ (request()->is('admin/documents/undang-undang*') || request()->is('admin/documents/peraturan-pemerintah*') || request()->is('admin/documents/permenpanrb*') || request()->is('admin/documents/perda*') || request()->is('admin/documents/perwako*') || request()->is('admin/documents/surat-edaran*')) ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                         <div class="flex items-center gap-3">
                             <i class="ph-bold ph-scales text-xl"></i>
-                            <span class="text-sm">Regulasi</span>
+                            <span class="text-[13px] font-semibold truncate">Regulasi</span>
                         </div>
                         <i class="ph-bold ph-caret-down text-sm transition-transform duration-200"
                             :class="{ 'rotate-180': open }"></i>
@@ -336,27 +336,27 @@
                         style="display: none;">
 
                         <a href="{{ route('documents.index', 'undang-undang') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/undang-undang*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/undang-undang*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Undang-Undang
                         </a>
                         <a href="{{ route('documents.index', 'peraturan-pemerintah') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/peraturan-pemerintah*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/peraturan-pemerintah*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Peraturan Pemerintah (PP)
                         </a>
                         <a href="{{ route('documents.index', 'permenpanrb') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/permenpanrb*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/permenpanrb*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             PermenPANRB
                         </a>
                         <a href="{{ route('documents.index', 'perda') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/perda*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/perda*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Perda
                         </a>
                         <a href="{{ route('documents.index', 'perwako') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/perwako*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/perwako*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Perwako
                         </a>
                         <a href="{{ route('documents.index', 'surat-edaran') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->is('admin/documents/surat-edaran*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->is('admin/documents/surat-edaran*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Surat Edaran
                         </a>
                     </div>
@@ -372,7 +372,7 @@
                         class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all {{ (request()->routeIs('posts.*') || request()->routeIs('announcements.*')) ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                         <div class="flex items-center gap-3">
                             <i class="ph-bold ph-newspaper text-xl"></i>
-                            <span class="text-sm">Berita & Informasi</span>
+                            <span class="text-[13px] font-semibold truncate">Berita & Informasi</span>
                         </div>
                         <i class="ph-bold ph-caret-down text-sm transition-transform duration-200"
                             :class="{ 'rotate-180': open }"></i>
@@ -387,11 +387,11 @@
                         style="display: none;">
 
                         <a href="{{ route('posts.index') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->routeIs('posts.*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->routeIs('posts.*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Berita
                         </a>
                         <a href="{{ route('announcements.index') }}"
-                            class="block px-3 py-2 text-sm rounded-lg transition-colors {{ request()->routeIs('announcements.*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
+                            class="block px-3 py-2 text-[13px] rounded-lg transition-colors truncate {{ request()->routeIs('announcements.*') ? 'bg-brand-50 text-brand-600 font-medium' : 'text-gray-500 hover:text-brand-500 hover:bg-gray-50 font-medium' }}">
                             Pengumuman
                         </a>
                     </div>
@@ -399,26 +399,26 @@
 
                 <!-- <a href="{{ route('statistics.index') }}" class="flex items-center gap-3 px-4 py-3 mt-1 rounded-xl transition-all {{ request()->routeIs('statistics.*') ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                     <i class="ph-bold ph-chart-bar text-xl"></i>
-                    <span class="text-sm">Statistik Utama</span>
+                    <span class="text-[13px] font-semibold truncate">Statistik Utama</span>
                 </a> -->
 
                 <a href="{{ route('agendas.index') }}"
                     class="flex items-center gap-3 px-4 py-3 mt-1 rounded-xl transition-all {{ request()->routeIs('agendas.*') ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                     <i class="ph-bold ph-calendar text-xl"></i>
-                    <span class="text-sm">Agenda & Aktivitas</span>
+                    <span class="text-[13px] font-semibold truncate">Agenda & Aktivitas</span>
                 </a>
 
                 <a href="{{ route('faqs.index') }}"
                     class="flex items-center gap-3 px-4 py-3 mt-1 rounded-xl transition-all {{ request()->routeIs('faqs.*') ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                     <i class="ph-bold ph-question text-xl"></i>
-                    <span class="text-sm">FAQ (Tanya Jawab)</span>
+                    <span class="text-[13px] font-semibold truncate">FAQ (Tanya Jawab)</span>
                 </a>
 
                 <a href="{{ route('feedbacks.index') }}"
                     class="flex items-center justify-between px-4 py-3 mt-1 rounded-xl transition-all {{ request()->routeIs('feedbacks.*') ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                     <div class="flex items-center gap-3">
                         <i class="ph-bold ph-chat-text text-xl"></i>
-                        <span class="text-sm">Kritik, Saran & Pengaduan</span>
+                        <span class="text-[13px] font-semibold truncate">Kritik, Saran & Pengaduan</span>
                     </div>
                     @php
                         $pendingCount = \App\Models\Feedback::where('status', 'pending')->count();
@@ -432,7 +432,7 @@
                     class="flex items-center justify-between px-4 py-3 mt-1 rounded-xl transition-all {{ request()->routeIs('admin.live-chat.*') ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                     <div class="flex items-center gap-3">
                         <i class="ph-bold ph-chat-circle-dots text-xl"></i>
-                        <span class="text-sm">Live Chat Pengguna</span>
+                        <span class="text-[13px] font-semibold truncate">Live Chat Pengguna</span>
                     </div>
                     @php
                         $chatUnreadCount = \App\Models\ChatSession::where('status', 'open')->where('unread_admin', '>', 0)->count();
@@ -447,7 +447,7 @@
                 <a href="{{ route('settings.contact') }}"
                     class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('settings.contact') ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                     <i class="ph-bold ph-address-book text-xl"></i>
-                    <span class="text-sm">Kontak & Lokasi</span>
+                    <span class="text-[13px] font-semibold truncate">Kontak & Lokasi</span>
                 </a>
 
                 <p class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 mt-8">Pengaturan Akun
@@ -456,7 +456,7 @@
                 <a href="{{ route('profile.edit') }}"
                     class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('profile.edit') ? 'bg-brand-50 text-brand-500 font-medium' : 'text-gray-500 font-medium hover:bg-gray-50 hover:text-gray-900' }}">
                     <i class="ph-bold ph-user-circle text-xl"></i>
-                    <span class="text-sm">Profil Akun</span>
+                    <span class="text-[13px] font-semibold truncate">Profil Akun</span>
                 </a>
             </div>
 
@@ -467,14 +467,14 @@
                     <button type="submit"
                         class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 font-bold hover:bg-red-50 transition-all">
                         <i class="ph-bold ph-sign-out text-xl"></i>
-                        <span class="text-sm">Keluar (Logout)</span>
+                        <span class="text-[13px] font-semibold truncate">Keluar (Logout)</span>
                     </button>
                 </form>
             </div>
         </aside>
 
         {{-- MAIN CONTENT AREA --}}
-        <div class="flex-1 lg:ml-56 flex flex-col min-h-screen w-full lg:w-[calc(100%-14rem)] max-w-full overflow-x-hidden">
+        <div class="flex-1 lg:ml-64 flex flex-col min-h-screen w-full lg:w-[calc(100%-16rem)] max-w-full overflow-x-hidden">
 
             {{-- TOPBAR --}}
             <header
