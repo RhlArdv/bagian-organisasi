@@ -19,6 +19,7 @@ Route::get('/', function () {
     $agendas = \App\Models\Agenda::orderBy('date', 'asc')->limit(3)->get();
     $faqs = \App\Models\Faq::active()->get();
     $pegawais = \App\Models\Pegawai::where('is_active', true)->orderBy('order_index', 'asc')->limit(5)->get();
+    $banners = \App\Models\Banner::where('is_active', true)->orderBy('order_index')->get();
     
     // Visitor Stats
     $visitorToday = \App\Models\VisitorStat::getTodayVisitors();
@@ -30,7 +31,7 @@ Route::get('/', function () {
     return view('welcome', compact(
         'latestPosts', 'postCategories', 'announcements', 'statistics',
         'visitorToday', 'visitorMonth', 'visitorYear', 'visitorTotal', 'visitorChartData',
-        'agendas', 'faqs', 'pegawais'
+        'agendas', 'faqs', 'pegawais', 'banners'
     ));
 });
 
