@@ -108,7 +108,11 @@
 
     {{-- ═══ HERO ═══ --}}
     <section id="beranda"
-        class="relative overflow-hidden bg-white min-h-screen flex flex-col justify-center pt-24 lg:pt-20">
+        class="relative overflow-hidden bg-white min-h-screen flex flex-col justify-center pt-24 lg:pt-20"
+        @if(isset($banners) && $banners->count() > 0)
+        x-data="{ currentSlide: 0, slides: {{ $banners->count() }}, init() { if(this.slides > 1) { setInterval(() => { this.currentSlide = (this.currentSlide + 1) % this.slides }, 6000) } } }"
+        @endif
+    >
 
         {{-- Dot Pattern Background --}}
         <div class="absolute inset-0 z-0 opacity-50"
@@ -117,55 +121,109 @@
 
         {{-- Absolute Huge Image (Full Background) --}}
         <div class="absolute inset-0 w-full h-full pointer-events-none z-0">
-            <img src="{{ asset('assets/img/hero2.webp') }}" alt="Bagian Organisasi Sekretariat Daerah Kota Padang"
-                class="w-full h-full object-cover object-bottom"
-                onerror="this.src='https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=900&q=80'">
+            @if(isset($banners) && $banners->count() > 0)
+                @foreach($banners as $index => $banner)
+                <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out"
+                    :class="currentSlide === {{ $index }} ? 'opacity-100' : 'opacity-0'">
+                    <img src="{{ asset('storage/' . $banner->image) }}" alt="{{ $banner->title }}"
+                        class="w-full h-full object-cover object-bottom"
+                        onerror="this.src='{{ asset('assets/img/hero2.webp') }}'">
+                </div>
+                @endforeach
+            @else
+                <img src="{{ asset('assets/img/hero2.webp') }}" alt="Bagian Organisasi Sekretariat Daerah Kota Padang"
+                    class="w-full h-full object-cover object-bottom"
+                    onerror="this.src='https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=900&q=80'">
+            @endif
         </div>
 
         {{-- Main Hero Content --}}
         <div class="flex-1 flex flex-col justify-center">
             <div class="w-full max-w-[90rem] mx-auto px-5 lg:px-12 relative z-10">
-                <div class="w-full lg:w-[55%] relative z-20 mt-4 lg:mt-6">
-                    <div
-                        class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400 text-[#1e293b] text-xs font-black tracking-widest uppercase mb-6 shadow-sm">
-                        <span class="relative flex h-2 w-2">
-                            <span
-                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1e293b] opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#1e293b]"></span>
-                        </span>
-                        Selamat Datang di
+                @if(isset($banners) && $banners->count() > 0)
+                    <div class="grid grid-cols-1 grid-rows-1">
+                        @foreach($banners as $index => $banner)
+                        <div class="col-start-1 row-start-1 w-full lg:w-[55%] relative z-20 mt-4 lg:mt-6 transition-all duration-1000 ease-in-out transform"
+                            :class="currentSlide === {{ $index }} ? 'opacity-100 translate-y-0 z-20' : 'opacity-0 translate-y-4 z-0 pointer-events-none'">
+                            
+                            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400 text-[#1e293b] text-xs font-black tracking-widest uppercase mb-6 shadow-sm">
+                                <span class="relative flex h-2 w-2">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1e293b] opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-[#1e293b]"></span>
+                                </span>
+                                Selamat Datang di
+                            </div>
+
+                            <h1 class="text-5xl sm:text-6xl lg:text-[5rem] font-black text-gray-900 leading-[1] mb-4 tracking-tighter">
+                                {{ $banner->title }}
+                            </h1>
+
+                            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-medium text-gray-400 tracking-wide mb-8 flex items-center gap-4">
+                                <div class="h-px bg-gray-300 w-10 hidden sm:block"></div>
+                                Sekretariat Daerah Kota Padang
+                            </h2>
+
+                            {{-- Tagline --}}
+                            <p class="text-gray-500 text-lg lg:text-xl font-medium leading-relaxed max-w-xl mb-10 border-l-4 border-brand-500 pl-6 py-1">
+                                {{ $banner->subtitle }}
+                            </p>
+
+                            <div class="flex flex-wrap gap-4">
+                                @if($banner->button_link)
+                                <a href="{{ url($banner->button_link) }}" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-brand-500 text-white font-bold text-[15px] rounded-xl hover:bg-brand-600 transition-colors shadow-lg shadow-brand-500/25">
+                                    {{ $banner->button_text ?: 'Selengkapnya' }} <i class="ph ph-arrow-right"></i>
+                                </a>
+                                @endif
+                                <a href="#pelayanan" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-white text-gray-800 font-bold text-[15px] rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                                    Lihat Layanan <i class="ph ph-arrow-right text-gray-400"></i>
+                                </a>
+                            </div>
+                        </div>
+                        @endforeach
                     </div>
+                @else
+                    <div class="w-full lg:w-[55%] relative z-20 mt-4 lg:mt-6">
+                        <div
+                            class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400 text-[#1e293b] text-xs font-black tracking-widest uppercase mb-6 shadow-sm">
+                            <span class="relative flex h-2 w-2">
+                                <span
+                                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1e293b] opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-[#1e293b]"></span>
+                            </span>
+                            Selamat Datang di
+                        </div>
 
-                    <h1
-                        class="text-5xl sm:text-6xl lg:text-[5rem] font-black text-gray-900 leading-[1] mb-4 tracking-tighter">
-                        Bagian Organisasi
-                    </h1>
+                        <h1
+                            class="text-5xl sm:text-6xl lg:text-[5rem] font-black text-gray-900 leading-[1] mb-4 tracking-tighter">
+                            Bagian Organisasi
+                        </h1>
 
-                    <h2
-                        class="text-2xl sm:text-3xl lg:text-4xl font-medium text-gray-400 tracking-wide mb-8 flex items-center gap-4">
-                        <div class="h-px bg-gray-300 w-10 hidden sm:block"></div>
-                        Sekretariat Daerah Kota Padang
-                    </h2>
+                        <h2
+                            class="text-2xl sm:text-3xl lg:text-4xl font-medium text-gray-400 tracking-wide mb-8 flex items-center gap-4">
+                            <div class="h-px bg-gray-300 w-10 hidden sm:block"></div>
+                            Sekretariat Daerah Kota Padang
+                        </h2>
 
-                    {{-- Tagline --}}
-                    <p
-                        class="text-gray-500 text-lg lg:text-xl font-medium leading-relaxed max-w-xl mb-10 border-l-4 border-brand-500 pl-6 py-1">
-                        Mewujudkan tata kelola organisasi yang efektif, efisien, transparan, dan berorientasi pada
-                        pelayanan publik untuk <strong class="text-gray-900 font-black">Kota Padang yang lebih
-                            baik</strong>.
-                    </p>
+                        {{-- Tagline --}}
+                        <p
+                            class="text-gray-500 text-lg lg:text-xl font-medium leading-relaxed max-w-xl mb-10 border-l-4 border-brand-500 pl-6 py-1">
+                            Mewujudkan tata kelola organisasi yang efektif, efisien, transparan, dan berorientasi pada
+                            pelayanan publik untuk <strong class="text-gray-900 font-black">Kota Padang yang lebih
+                                baik</strong>.
+                        </p>
 
-                    <div class="flex flex-wrap gap-4">
-                        <a href="{{ url('/profil') }}"
-                            class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-brand-500 text-white font-bold text-[15px] rounded-xl hover:bg-brand-600 transition-colors shadow-lg shadow-brand-500/25">
-                            Profil Organisasi <i class="ph ph-arrow-right"></i>
-                        </a>
-                        <a href="#pelayanan"
-                            class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-white text-gray-800 font-bold text-[15px] rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                            Lihat Layanan <i class="ph ph-arrow-right text-gray-400"></i>
-                        </a>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="{{ url('/profil') }}"
+                                class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-brand-500 text-white font-bold text-[15px] rounded-xl hover:bg-brand-600 transition-colors shadow-lg shadow-brand-500/25">
+                                Profil Organisasi <i class="ph ph-arrow-right"></i>
+                            </a>
+                            <a href="#pelayanan"
+                                class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-white text-gray-800 font-bold text-[15px] rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                                Lihat Layanan <i class="ph ph-arrow-right text-gray-400"></i>
+                            </a>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
 
             {{-- Statistics Bar (moved closer to text) --}}
