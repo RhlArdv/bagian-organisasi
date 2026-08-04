@@ -1,188 +1,162 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="font-extrabold text-2xl text-gray-900 tracking-tight">
-                Overview
+        <div class="flex items-center gap-4">
+            <h2 class="font-extrabold text-xl sm:text-2xl text-gray-900 tracking-tight">
+                Dashboard Overview
             </h2>
-            <div class="flex items-center gap-2 text-sm font-medium text-gray-500">
-                <i class="ph-bold ph-calendar-blank"></i>
+            <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-full text-[11px] font-bold text-gray-500 shadow-sm">
+                <i class="ph-bold ph-calendar-blank text-brand-500"></i>
                 <span>{{ now()->translatedFormat('l, d F Y') }}</span>
             </div>
         </div>
     </x-slot>
 
-    <!-- Bento Grid Container -->
-    <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12 gap-6 pb-12">
+    <!-- Master Grid -->
+    <div class="max-w-7xl mx-auto pb-12 space-y-6">
         
-        <!-- Welcome Bento (Span 8) -->
-        <div class="lg:col-span-8 group relative overflow-hidden bg-gray-900 rounded-[2.5rem] p-8 lg:p-12 shadow-2xl shadow-gray-900/20">
-            <!-- Animated Background Glows -->
-            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-500/30 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 group-hover:bg-brand-500/40 transition-colors duration-700"></div>
-            <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-500/20 rounded-full blur-[80px] translate-y-1/3 -translate-x-1/3"></div>
-            
-            <div class="relative z-10 flex flex-col justify-between h-full min-h-[160px]">
-                <div>
-                    <h3 class="text-3xl lg:text-4xl font-black text-white tracking-tight mb-3">Selamat datang, {{ Auth::user()->name }}</h3>
-                    <p class="text-gray-300 text-sm lg:text-base max-w-xl leading-relaxed font-medium">
-                        Kelola seluruh konten publikasi, pantau layanan, dan perbarui informasi organisasi melalui satu panel kendali yang terpusat.
+        <!-- Top Row: Welcome & Main Stat -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Welcome Banner -->
+            <div class="lg:col-span-2 relative overflow-hidden bg-white rounded-[2rem] p-8 lg:p-10 border border-gray-100 shadow-[0_2px_20px_rgb(0,0,0,0.02)] group">
+                <div class="absolute inset-0 bg-gradient-to-br from-brand-50/80 via-white to-blue-50/50"></div>
+                <div class="absolute -top-24 -right-24 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl group-hover:bg-brand-500/20 transition-colors duration-700"></div>
+                <div class="absolute bottom-0 right-0 p-6 opacity-5 transform translate-x-1/4 translate-y-1/4 group-hover:scale-105 transition-transform duration-700">
+                    <i class="ph-fill ph-shapes text-[200px] text-brand-900"></i>
+                </div>
+                
+                <div class="relative z-10 flex flex-col h-full justify-center">
+                    <span class="inline-block px-3 py-1 bg-brand-100 text-brand-700 text-[10px] font-extrabold uppercase tracking-widest rounded-full w-fit mb-4">
+                        Control Panel
+                    </span>
+                    <h3 class="text-3xl lg:text-4xl font-black text-gray-900 tracking-tight mb-3">
+                        Selamat datang, <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-blue-600">{{ Auth::user()->name }}</span>
+                    </h3>
+                    <p class="text-gray-500 text-sm max-w-lg leading-relaxed font-medium mb-8">
+                        Kelola seluruh konten publikasi, pantau layanan, dan perbarui informasi organisasi dari satu panel terpusat yang dirancang untuk produktivitas Anda.
                     </p>
+                    
+                    <div class="flex flex-wrap items-center gap-3">
+                        <a href="{{ route('posts.create') }}" class="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-brand-500/30 transition-all active:scale-95">
+                            <i class="ph-bold ph-pencil-simple text-lg"></i>
+                            Tulis Berita
+                        </a>
+                        <a href="{{ route('pegawai.index') }}" class="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 px-5 py-2.5 rounded-xl font-bold text-sm shadow-sm transition-all active:scale-95">
+                            <i class="ph-bold ph-users text-lg"></i>
+                            Kelola Pegawai
+                        </a>
+                    </div>
                 </div>
-                <div class="mt-8 flex flex-wrap items-center gap-4">
-                    <a href="{{ route('posts.create') }}" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-full font-semibold text-sm backdrop-blur-md transition-all border border-white/10">
-                        <i class="ph-bold ph-pencil-simple text-lg"></i>
-                        Tulis Berita
-                    </a>
-                    <a href="{{ route('pegawai.index') }}" class="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-400 text-white px-5 py-2.5 rounded-full font-semibold text-sm shadow-lg shadow-brand-500/30 transition-all border border-brand-400/50">
-                        <i class="ph-bold ph-users text-lg"></i>
-                        Kelola Pegawai
-                    </a>
+            </div>
+
+            <!-- Total Pegawai Highlight -->
+            <div class="bg-gradient-to-b from-gray-900 to-gray-800 rounded-[2rem] p-8 border border-gray-800 shadow-[0_10px_40px_rgb(0,0,0,0.1)] flex flex-col justify-between relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-white/10 transition-colors duration-500"></div>
+                <div class="relative z-10 flex justify-between items-start mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-white/10 text-white flex items-center justify-center backdrop-blur-md border border-white/10">
+                        <i class="ph-fill ph-users-three text-xl"></i>
+                    </div>
+                    <span class="inline-flex items-center gap-1 text-[10px] font-bold text-green-400 bg-green-400/10 border border-green-400/20 px-2.5 py-1 rounded-full">
+                        <i class="ph-bold ph-trend-up"></i> Data Aktif
+                    </span>
+                </div>
+                <div class="relative z-10 mt-auto">
+                    <span class="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1">Total Pegawai</span>
+                    <span class="block text-6xl font-black text-white tracking-tighter">{{ number_format($pegawaiCount) }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Middle Row: 3 Core Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Berita -->
+            <div class="bg-white rounded-[2rem] p-6 sm:p-8 border border-gray-100 shadow-[0_2px_20px_rgb(0,0,0,0.02)] flex items-center gap-6 group hover:border-blue-100 hover:shadow-blue-500/5 transition-all cursor-default">
+                <div class="w-16 h-16 shrink-0 rounded-2xl bg-blue-50 text-blue-500 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                    <i class="ph-fill ph-newspaper text-3xl"></i>
+                </div>
+                <div>
+                    <span class="block text-4xl font-black text-gray-900 tracking-tighter mb-1">{{ number_format($beritaCount) }}</span>
+                    <span class="block text-[11px] font-bold text-gray-400 uppercase tracking-widest leading-tight">Berita<br>Diterbitkan</span>
                 </div>
             </div>
             
-            <!-- Graphic element -->
-            <div class="absolute -bottom-6 -right-6 text-white/5 pointer-events-none transform group-hover:scale-105 transition-transform duration-700">
-                <i class="ph-fill ph-circles-four text-[250px]"></i>
-            </div>
-        </div>
-
-        <!-- Pegawai Stat (Span 4) -->
-        <div class="lg:col-span-4 bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col justify-between relative overflow-hidden group hover:-translate-y-1 transition-all duration-300 cursor-default">
-            <div class="flex justify-between items-start mb-6">
-                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-50 to-brand-100/50 text-brand-600 flex items-center justify-center border border-brand-100/50">
-                    <i class="ph-fill ph-users-three text-2xl"></i>
-                </div>
-                <div class="text-right">
-                    <span class="inline-flex items-center gap-1 text-xs font-bold text-green-600 bg-green-50 px-2.5 py-1 rounded-full">
-                        <i class="ph-bold ph-trend-up"></i> Aktif
-                    </span>
-                </div>
-            </div>
-            <div>
-                <span class="block text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mb-1">Total Pegawai</span>
-                <span class="block text-5xl font-black text-gray-900 tracking-tighter">{{ number_format($pegawaiCount) }}</span>
-            </div>
-            <!-- Decorative circle -->
-            <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-brand-50/50 rounded-full blur-2xl group-hover:bg-brand-100 transition-colors duration-500"></div>
-        </div>
-
-        <!-- Berita & Regulasi (Span 3 x 2) -->
-        <div class="lg:col-span-3 bg-brand-500 rounded-[2.5rem] p-8 text-white shadow-xl shadow-brand-500/20 relative overflow-hidden group hover:-translate-y-1 transition-all duration-300 cursor-default">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-xl -translate-y-1/2 translate-x-1/2"></div>
-            <div class="relative z-10 flex flex-col h-full justify-between min-h-[160px]">
-                <div class="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm text-white flex items-center justify-center mb-6">
-                    <i class="ph-fill ph-newspaper text-xl"></i>
+            <!-- Regulasi -->
+            <div class="bg-white rounded-[2rem] p-6 sm:p-8 border border-gray-100 shadow-[0_2px_20px_rgb(0,0,0,0.02)] flex items-center gap-6 group hover:border-amber-100 hover:shadow-amber-500/5 transition-all cursor-default">
+                <div class="w-16 h-16 shrink-0 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
+                    <i class="ph-fill ph-scales text-3xl"></i>
                 </div>
                 <div>
-                    <span class="block text-[10px] font-extrabold text-brand-100 uppercase tracking-widest mb-1">Berita Diterbitkan</span>
-                    <span class="block text-4xl font-black tracking-tighter">{{ number_format($beritaCount) }}</span>
+                    <span class="block text-4xl font-black text-gray-900 tracking-tighter mb-1">{{ number_format($regulasiCount) }}</span>
+                    <span class="block text-[11px] font-bold text-gray-400 uppercase tracking-widest leading-tight">Regulasi<br>Aktif</span>
                 </div>
             </div>
-        </div>
 
-        <div class="lg:col-span-3 bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group hover:-translate-y-1 transition-all duration-300 cursor-default min-h-[160px]">
-            <div class="flex flex-col h-full justify-between">
-                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center mb-6 border border-blue-100/50">
-                    <i class="ph-fill ph-scales text-xl"></i>
+            <!-- Pengumuman -->
+            <div class="bg-white rounded-[2rem] p-6 sm:p-8 border border-gray-100 shadow-[0_2px_20px_rgb(0,0,0,0.02)] flex items-center gap-6 group hover:border-purple-100 hover:shadow-purple-500/5 transition-all cursor-default">
+                <div class="w-16 h-16 shrink-0 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                    <i class="ph-fill ph-megaphone text-3xl"></i>
                 </div>
                 <div>
-                    <span class="block text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mb-1">Regulasi Aktif</span>
-                    <span class="block text-4xl font-black text-gray-900 tracking-tighter">{{ number_format($regulasiCount) }}</span>
+                    <span class="block text-4xl font-black text-gray-900 tracking-tighter mb-1">{{ number_format($pengumumanCount) }}</span>
+                    <span class="block text-[11px] font-bold text-gray-400 uppercase tracking-widest leading-tight">Pengumuman<br>Publik</span>
                 </div>
             </div>
         </div>
 
-        <!-- Quick Actions Mini Bento (Span 6) -->
-        <div class="lg:col-span-6 bg-white rounded-[2.5rem] p-6 border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] min-h-[160px]">
-            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4 px-2">Aksi Cepat</h4>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <a href="{{ route('announcements.create') }}" class="group flex flex-col items-center justify-center p-4 bg-gray-50 rounded-2xl hover:bg-brand-50 hover:text-brand-600 transition-all text-center h-full">
-                    <div class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-500 group-hover:text-brand-500 group-hover:scale-110 transition-all duration-300 mb-2">
-                        <i class="ph-bold ph-megaphone text-lg"></i>
+        <!-- Bottom Row: Minor Stats & Chart -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Micro stats (Span 1) -->
+            <div class="lg:col-span-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+                <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-center justify-between group cursor-default hover:shadow-md transition-all">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center">
+                            <i class="ph-fill ph-handshake text-lg"></i>
+                        </div>
+                        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Layanan</span>
                     </div>
-                    <span class="text-[11px] font-bold text-gray-600 group-hover:text-brand-600">Pengumuman</span>
-                </a>
-                <a href="{{ route('banners.create') }}" class="group flex flex-col items-center justify-center p-4 bg-gray-50 rounded-2xl hover:bg-purple-50 hover:text-purple-600 transition-all text-center h-full">
-                    <div class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-500 group-hover:text-purple-500 group-hover:scale-110 transition-all duration-300 mb-2">
-                        <i class="ph-bold ph-image text-lg"></i>
+                    <span class="text-xl font-black text-gray-900">{{ number_format($layananCount) }}</span>
+                </div>
+
+                <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-center justify-between group cursor-default hover:shadow-md transition-all">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-500 flex items-center justify-center">
+                            <i class="ph-fill ph-question text-lg"></i>
+                        </div>
+                        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total FAQ</span>
                     </div>
-                    <span class="text-[11px] font-bold text-gray-600 group-hover:text-purple-600">Banner</span>
-                </a>
-                <a href="{{ route('pegawai.create') }}" class="group flex flex-col items-center justify-center p-4 bg-gray-50 rounded-2xl hover:bg-green-50 hover:text-green-600 transition-all text-center h-full">
-                    <div class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-500 group-hover:text-green-500 group-hover:scale-110 transition-all duration-300 mb-2">
-                        <i class="ph-bold ph-user-plus text-lg"></i>
+                    <span class="text-xl font-black text-gray-900">{{ number_format($faqCount) }}</span>
+                </div>
+
+                <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-center justify-between group cursor-default hover:shadow-md transition-all">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-500 flex items-center justify-center">
+                            <i class="ph-fill ph-image text-lg"></i>
+                        </div>
+                        <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Banner</span>
                     </div>
-                    <span class="text-[11px] font-bold text-gray-600 group-hover:text-green-600">Pegawai</span>
-                </a>
-                <a href="{{ route('agendas.create') }}" class="group flex flex-col items-center justify-center p-4 bg-gray-50 rounded-2xl hover:bg-rose-50 hover:text-rose-600 transition-all text-center h-full">
-                    <div class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-500 group-hover:text-rose-500 group-hover:scale-110 transition-all duration-300 mb-2">
-                        <i class="ph-bold ph-calendar-plus text-lg"></i>
+                    <span class="text-xl font-black text-gray-900">{{ number_format($bannerCount) }}</span>
+                </div>
+            </div>
+
+            <!-- Chart (Span 2) -->
+            <div class="lg:col-span-2 bg-white rounded-[2rem] p-6 sm:p-8 border border-gray-100 shadow-[0_2px_20px_rgb(0,0,0,0.02)]">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h3 class="font-black text-gray-900 text-lg">Aktivitas & Publikasi</h3>
+                        <p class="text-xs font-medium text-gray-500 mt-1">Statistik tren 6 bulan terakhir</p>
                     </div>
-                    <span class="text-[11px] font-bold text-gray-600 group-hover:text-rose-600">Agenda</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- Micro Stats (Span 12) -->
-        <div class="lg:col-span-12 grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div class="bg-white rounded-[2rem] p-6 border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] flex items-center gap-4 hover:shadow-lg transition-all duration-300 group cursor-default">
-                <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center border border-purple-100/50 group-hover:scale-110 transition-transform">
-                    <i class="ph-fill ph-speaker-hifi text-xl"></i>
+                    <div class="flex items-center gap-3">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-50 text-gray-600 text-[10px] font-bold border border-gray-100">
+                            <span class="w-2 h-2 rounded-full bg-brand-500"></span> Berita
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-50 text-gray-600 text-[10px] font-bold border border-gray-100">
+                            <span class="w-2 h-2 rounded-full bg-amber-500"></span> Regulasi
+                        </span>
+                    </div>
                 </div>
-                <div>
-                    <span class="block text-2xl font-black text-gray-900 tracking-tighter">{{ number_format($pengumumanCount) }}</span>
-                    <span class="block text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mt-0.5">Pengumuman</span>
+                <div class="relative w-full h-[250px]">
+                    <div id="activityChart"></div>
                 </div>
-            </div>
-
-            <div class="bg-white rounded-[2rem] p-6 border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] flex items-center gap-4 hover:shadow-lg transition-all duration-300 group cursor-default">
-                <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center border border-rose-100/50 group-hover:scale-110 transition-transform">
-                    <i class="ph-fill ph-handshake text-xl"></i>
-                </div>
-                <div>
-                    <span class="block text-2xl font-black text-gray-900 tracking-tighter">{{ number_format($layananCount) }}</span>
-                    <span class="block text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mt-0.5">Layanan Publik</span>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-[2rem] p-6 border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] flex items-center gap-4 hover:shadow-lg transition-all duration-300 group cursor-default">
-                <div class="w-12 h-12 rounded-xl bg-teal-50 text-teal-500 flex items-center justify-center border border-teal-100/50 group-hover:scale-110 transition-transform">
-                    <i class="ph-fill ph-question text-xl"></i>
-                </div>
-                <div>
-                    <span class="block text-2xl font-black text-gray-900 tracking-tighter">{{ number_format($faqCount) }}</span>
-                    <span class="block text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mt-0.5">Total FAQ</span>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-[2rem] p-6 border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.03)] flex items-center gap-4 hover:shadow-lg transition-all duration-300 group cursor-default">
-                <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center border border-amber-100/50 group-hover:scale-110 transition-transform">
-                    <i class="ph-fill ph-image text-xl"></i>
-                </div>
-                <div>
-                    <span class="block text-2xl font-black text-gray-900 tracking-tighter">{{ number_format($bannerCount) }}</span>
-                    <span class="block text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mt-0.5">Banner Aktif</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Chart Bento (Span 12) -->
-        <div class="lg:col-span-12 bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-            <div class="flex items-center justify-between mb-6">
-                <div>
-                    <h3 class="font-black text-gray-900 text-lg">Aktivitas & Publikasi</h3>
-                    <p class="text-xs font-semibold text-gray-400">Statistik tren 6 bulan terakhir</p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-50 text-brand-600 text-[10px] font-bold">
-                        <span class="w-2 h-2 rounded-full bg-brand-500"></span> Berita
-                    </span>
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 text-amber-600 text-[10px] font-bold">
-                        <span class="w-2 h-2 rounded-full bg-amber-500"></span> Regulasi
-                    </span>
-                </div>
-            </div>
-            <div class="relative min-h-[300px]">
-                <div id="activityChart"></div>
             </div>
         </div>
         
@@ -202,7 +176,7 @@
                 }],
                 chart: {
                     type: 'area',
-                    height: 320,
+                    height: 250,
                     toolbar: { show: false },
                     fontFamily: 'inherit',
                     parentHeightOffset: 0,
