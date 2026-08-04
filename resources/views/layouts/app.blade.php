@@ -28,6 +28,16 @@
             width: 100% !important;
             position: relative;
         }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
     </style>
 </head>
 <body class="bg-[#f4f7f6] text-gray-900 antialiased overflow-x-hidden">
@@ -52,7 +62,7 @@
             </div>
 
             {{-- Sidebar Menu --}}
-            <div class="flex-1 overflow-y-auto py-8 px-4 space-y-1">
+            <div class="flex-1 overflow-y-auto py-8 px-4 space-y-1 no-scrollbar">
                 <p class="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Menu Utama</p>
 
                 <a href="{{ route('dashboard') }}"
@@ -451,7 +461,7 @@
             </div>
 
             {{-- Sidebar Footer (Logout) --}}
-            <div class="p-4 pb-24 border-t border-gray-50">
+            <div class="p-4 pb-8 border-t border-gray-50">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
