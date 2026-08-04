@@ -108,7 +108,7 @@
 
     {{-- ═══ HERO ═══ --}}
     <section id="beranda"
-        class="relative overflow-hidden bg-white min-h-screen flex flex-col justify-center pt-24 lg:pt-20"
+        class="relative overflow-hidden bg-white h-screen min-h-[700px] max-h-[1080px] flex flex-col justify-center pt-24 lg:pt-20"
         @if(isset($banners) && $banners->count() > 0)
         x-data="{ currentSlide: 0, slides: {{ $banners->count() }}, init() { if(this.slides > 1) { setInterval(() => { this.currentSlide = (this.currentSlide + 1) % this.slides }, 6000) } } }"
         @endif
@@ -126,13 +126,13 @@
                 <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out"
                     :class="currentSlide === {{ $index }} ? 'opacity-100' : 'opacity-0'">
                     <img src="{{ asset('storage/' . $banner->image) }}" alt="{{ $banner->title }}"
-                        class="w-full h-full object-cover object-bottom"
+                        class="w-full h-full object-cover object-center lg:object-right-bottom"
                         onerror="this.src='{{ asset('assets/img/image.png') }}'">
                 </div>
                 @endforeach
             @else
                 <img src="{{ asset('assets/img/image.png') }}" alt="Bagian Organisasi Sekretariat Daerah Kota Padang"
-                    class="w-full h-full object-cover object-bottom"
+                    class="w-full h-full object-cover object-center lg:object-right-bottom"
                     onerror="this.src='https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=900&q=80'">
             @endif
         </div>
