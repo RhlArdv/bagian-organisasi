@@ -161,6 +161,24 @@ class PublicLayananController extends Controller
     }
 
     /**
+     * Evaluasi Kelembagaan
+     * Displays layanan evaluasi kelembagaan + related documents.
+     */
+    public function evaluasiKelembagaan()
+    {
+        $layanans = Layanan::where('kategori', 'evaluasi-kelembagaan')->latest()->get();
+
+        $docCategories = DocumentCategory::byGroup('kelembagaan')->get();
+        $documents = Document::active()
+            ->whereIn('category_id', $docCategories->pluck('id'))
+            ->latest()
+            ->get()
+            ->groupBy(fn ($doc) => $doc->category->slug);
+
+        return view('public.layanan.evaluasi-kelembagaan', compact('layanans', 'documents', 'docCategories'));
+    }
+
+    /**
      * 6. Standar Pelayanan
      * Displays standar pelayanan items with full details.
      */

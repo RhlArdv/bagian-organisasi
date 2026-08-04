@@ -42,7 +42,7 @@
                         <a href="{{ route('public.kelembagaan') }}"
                             class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Penataan
                             Kelembagaan</a>
-                        <a href="#"
+                        <a href="{{ route('public.evaluasi-kelembagaan') }}"
                             class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Evaluasi
                             Kelembagaan</a>
                         <a href="#"
@@ -228,7 +228,7 @@
                 </button>
                 <div x-show="openKelembagaan" class="pl-4 pt-2 flex flex-col space-y-2.5 text-xs font-bold text-gray-600" style="display: none;">
                     <a href="{{ route('public.kelembagaan') }}" @click="mobileOpen = false" class="hover:text-brand-500">Penataan Kelembagaan</a>
-                    <a href="#" @click="mobileOpen = false" class="hover:text-brand-500">Evaluasi Kelembagaan</a>
+                    <a href="{{ route('public.evaluasi-kelembagaan') }}" @click="mobileOpen = false" class="hover:text-brand-500">Evaluasi Kelembagaan</a>
                     <a href="#" @click="mobileOpen = false" class="hover:text-brand-500">Nomenklatur OPD</a>
                     <a href="#" @click="mobileOpen = false" class="hover:text-brand-500">Peta Jabatan & Produk Hukum</a>
                 </div>
