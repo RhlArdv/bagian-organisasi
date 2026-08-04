@@ -424,7 +424,7 @@
                         $pendingCount = \App\Models\Feedback::where('status', 'pending')->count();
                     @endphp
                     @if($pendingCount > 0)
-                        <span class="px-2 py-0.5 bg-brand-500 text-white text-[11px] font-black rounded-full shadow-sm shadow-brand-500/30">{{ $pendingCount }}</span>
+                        <span class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 text-[10px] font-extrabold text-brand-700 bg-brand-100 rounded-full border border-brand-200">{{ $pendingCount }}</span>
                     @endif
                 </a>
 
@@ -438,7 +438,10 @@
                         $chatUnreadCount = \App\Models\ChatSession::where('status', 'open')->where('unread_admin', '>', 0)->count();
                     @endphp
                     @if($chatUnreadCount > 0)
-                        <span class="px-2 py-0.5 bg-red-500 text-white text-[11px] font-black rounded-full shadow-sm animate-pulse">{{ $chatUnreadCount }}</span>
+                        <span class="relative flex items-center justify-center min-w-[20px] h-5 px-1.5 text-[10px] font-extrabold text-white bg-red-500 rounded-full shadow-sm shadow-red-500/40">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span class="relative">{{ $chatUnreadCount }}</span>
+                        </span>
                     @endif
                 </a>
 
