@@ -108,121 +108,70 @@
 
     {{-- ═══ HERO ═══ --}}
     <section id="beranda"
-        class="relative overflow-hidden bg-white h-screen min-h-[700px] max-h-[1080px] flex flex-col justify-center pt-24 lg:pt-20"
-        @if(isset($banners) && $banners->count() > 0)
-        x-data="{ currentSlide: 0, slides: {{ $banners->count() }}, init() { if(this.slides > 1) { setInterval(() => { this.currentSlide = (this.currentSlide + 1) % this.slides }, 6000) } } }"
-        @endif
-    >
+        class="relative overflow-hidden bg-white h-screen min-h-[700px] max-h-[1080px] flex flex-col justify-center pt-24 lg:pt-20">
 
         {{-- Dot Pattern Background --}}
         <div class="absolute inset-0 z-0 opacity-50"
             style="background-image: radial-gradient(#fcd34d 1.5px, transparent 1.5px); background-size: 36px 36px;">
         </div>
 
-        {{-- Absolute Huge Image (Full Background) --}}
+        {{-- Background Image --}}
         <div class="absolute inset-0 w-full h-full pointer-events-none z-0">
-            @if(isset($banners) && $banners->count() > 0)
-                @foreach($banners as $index => $banner)
-                <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out"
-                    :class="currentSlide === {{ $index }} ? 'opacity-100' : 'opacity-0'">
-                    <img src="{{ asset('storage/' . $banner->image) }}" alt="{{ $banner->title }}"
-                        class="w-full h-full object-cover object-center lg:object-right-bottom"
-                        onerror="this.src='{{ asset('assets/img/image.png') }}'">
-                </div>
-                @endforeach
+            @php
+                $activeBanner = isset($banners) && $banners->count() > 0 ? $banners->first() : null;
+            @endphp
+            
+            @if($activeBanner)
+                <img src="{{ asset('storage/' . $activeBanner->image) }}" alt="{{ $activeBanner->title }}"
+                    class="w-full h-full object-cover object-center lg:object-right-bottom"
+                    onerror="this.src='{{ asset('assets/img/image.png') }}'">
             @else
                 <img src="{{ asset('assets/img/image.png') }}" alt="Bagian Organisasi Sekretariat Daerah Kota Padang"
                     class="w-full h-full object-cover object-center lg:object-right-bottom"
                     onerror="this.src='https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=900&q=80'">
             @endif
+
+            {{-- Gradient overlay to ensure text is always readable --}}
+            <div class="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 md:via-white/50 to-transparent w-full md:w-[75%] lg:w-[60%]"></div>
+            <div class="absolute inset-0 bg-white/30 sm:hidden"></div>
         </div>
 
         {{-- Main Hero Content --}}
         <div class="flex-1 flex flex-col justify-center">
             <div class="w-full max-w-[90rem] mx-auto px-5 lg:px-12 relative z-10">
-                @if(isset($banners) && $banners->count() > 0)
-                    <div class="grid grid-cols-1 grid-rows-1">
-                        @foreach($banners as $index => $banner)
-                        <div class="col-start-1 row-start-1 w-full lg:w-[55%] relative z-20 mt-4 lg:mt-6 transition-all duration-1000 ease-in-out transform"
-                            :class="currentSlide === {{ $index }} ? 'opacity-100 translate-y-0 z-20' : 'opacity-0 translate-y-4 z-0 pointer-events-none'">
-                            
-                            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400 text-[#1e293b] text-xs font-black tracking-widest uppercase mb-6 shadow-sm">
-                                <span class="relative flex h-2 w-2">
-                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1e293b] opacity-75"></span>
-                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-[#1e293b]"></span>
-                                </span>
-                                Selamat Datang di
-                            </div>
-
-                            <h1 class="text-5xl sm:text-6xl lg:text-[5rem] font-black text-slate-900 leading-[1] mb-4 tracking-tighter">
-                                {{ $banner->title }}
-                            </h1>
-
-                            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-medium text-slate-500 tracking-wide mb-8 flex items-center gap-4">
-                                <div class="h-px bg-slate-300 w-10 hidden sm:block"></div>
-                                Sekretariat Daerah Kota Padang
-                            </h2>
-
-                            {{-- Tagline --}}
-                            <p class="text-slate-700 text-lg lg:text-xl font-medium leading-relaxed max-w-xl mb-10 border-l-4 border-slate-900 pl-6 py-1">
-                                {{ $banner->subtitle }}
-                            </p>
-
-                            <div class="flex flex-wrap gap-4">
-                                @if($banner->button_link)
-                                <a href="{{ url($banner->button_link) }}" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-slate-900 text-white font-bold text-[15px] rounded-xl hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/25">
-                                    {{ $banner->button_text ?: 'Selengkapnya' }} <i class="ph ph-arrow-right"></i>
-                                </a>
-                                @endif
-                                <a href="#pelayanan" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-white text-slate-900 font-bold text-[15px] rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                                    Lihat Layanan <i class="ph ph-arrow-right text-slate-400"></i>
-                                </a>
-                            </div>
-                        </div>
-                        @endforeach
+                <div class="w-full lg:w-[55%] mt-4 lg:mt-6">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400 text-[#1e293b] text-xs font-black tracking-widest uppercase mb-6 shadow-sm">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1e293b] opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#1e293b]"></span>
+                        </span>
+                        Selamat Datang di
                     </div>
-                @else
-                    <div class="w-full lg:w-[55%] relative z-20 mt-4 lg:mt-6">
-                        <div
-                            class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400 text-[#1e293b] text-xs font-black tracking-widest uppercase mb-6 shadow-sm">
-                            <span class="relative flex h-2 w-2">
-                                <span
-                                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1e293b] opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-2 w-2 bg-[#1e293b]"></span>
-                            </span>
-                            Selamat Datang di
-                        </div>
 
-                        <h1
-                            class="text-5xl sm:text-6xl lg:text-[5rem] font-black text-slate-900 leading-[1] mb-4 tracking-tighter">
-                            Bagian Organisasi
-                        </h1>
+                    <h1 class="text-5xl sm:text-6xl lg:text-[5rem] font-black text-slate-900 leading-[1] mb-4 tracking-tighter">
+                        {{ $activeBanner ? $activeBanner->title : 'Bagian Organisasi' }}
+                    </h1>
 
-                        <h2
-                            class="text-2xl sm:text-3xl lg:text-4xl font-medium text-slate-500 tracking-wide mb-8 flex items-center gap-4">
-                            <div class="h-px bg-slate-300 w-10 hidden sm:block"></div>
-                            Sekretariat Daerah Kota Padang
-                        </h2>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-medium text-slate-500 tracking-wide mb-8 flex items-center gap-4">
+                        <div class="h-px bg-slate-300 w-10 hidden sm:block"></div>
+                        Sekretariat Daerah Kota Padang
+                    </h2>
 
-                        {{-- Tagline --}}
-                        <p
-                            class="text-slate-700 text-lg lg:text-xl font-medium leading-relaxed max-w-xl mb-10 border-l-4 border-slate-900 pl-6 py-1">
-                            Mewujudkan tata kelola organisasi yang efektif, efisien, transparan, dan berorientasi pada
-                            pelayanan publik untuk <strong class="text-slate-900 font-black">Kota Padang yang lebih
-                                baik</strong>.
-                        </p>
+                    {{-- Tagline --}}
+                    <p class="text-slate-700 text-lg lg:text-xl font-medium leading-relaxed max-w-xl mb-10 border-l-4 border-slate-900 pl-6 py-1">
+                        {{ $activeBanner ? $activeBanner->subtitle : 'Mewujudkan tata kelola organisasi yang efektif, efisien, transparan, dan berorientasi pada pelayanan publik untuk Kota Padang yang lebih baik.' }}
+                    </p>
 
-                        <div class="flex flex-wrap gap-4">
-                            <a href="{{ url('/profil') }}"
-                                class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-slate-900 text-white font-bold text-[15px] rounded-xl hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/25">
-                                Profil Organisasi <i class="ph ph-arrow-right"></i>
-                            </a>
-                            <a href="#pelayanan"
-                                class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-white text-slate-900 font-bold text-[15px] rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                                Lihat Layanan <i class="ph ph-arrow-right text-slate-400"></i>
-                            </a>
-                        </div>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="{{ $activeBanner && $activeBanner->button_link ? url($activeBanner->button_link) : url('/profil') }}" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-slate-900 text-white font-bold text-[15px] rounded-xl hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/25">
+                            {{ $activeBanner && $activeBanner->button_text ? $activeBanner->button_text : 'Profil Organisasi' }} <i class="ph ph-arrow-right"></i>
+                        </a>
+                        <a href="#pelayanan" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-white text-slate-900 font-bold text-[15px] rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                            Lihat Layanan <i class="ph ph-arrow-right text-slate-400"></i>
+                        </a>
                     </div>
+                </div>
+
                 @endif
             </div>
 
@@ -233,30 +182,28 @@
                         @foreach($statistics as $stat)
                         @if($loop->last && $loop->count > 1)
                             {{-- The last statistic is highlighted with solid dark navy bg --}}
-                            <div class="w-full sm:w-full lg:flex-1 rounded-2xl p-5 shadow-lg bg-slate-800 border border-slate-700">
-                                <div class="flex items-center gap-3">
-                                    <div
-                                        class="w-10 h-10 rounded-xl bg-white bg-opacity-10 text-white flex items-center justify-center">
-                                        <i class="ph-duotone {{ $stat->icon }} text-xl"></i>
+                            <div class="w-full sm:w-full lg:flex-1 rounded-3xl px-6 py-4 shadow-xl shadow-slate-900/10 bg-[#2b3a4a]">
+                                <div class="flex items-center gap-4">
+                                    <div class="text-white flex items-center justify-center">
+                                        <i class="ph-duotone {{ $stat->icon }} text-[32px]"></i>
                                     </div>
-                                    <div>
-                                        <p class="text-2xl font-black text-white leading-none">{{ $stat->value }}</p>
-                                        <p class="text-[11px] text-slate-300 font-semibold mt-1">{{ $stat->name }}</p>
+                                    <div class="flex flex-col">
+                                        <p class="text-[26px] font-black text-white leading-[1.1]">{{ $stat->value }}</p>
+                                        <p class="text-[12px] text-slate-300 font-medium mt-0.5">{{ $stat->name }}</p>
                                     </div>
                                 </div>
                             </div>
                         @else
                             {{-- Normal statistic card --}}
                             <div
-                                class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-95 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-md hover:shadow-lg transition-all">
-                                <div class="flex items-center gap-3">
-                                    <div
-                                        class="w-10 h-10 rounded-xl bg-slate-50 text-slate-700 flex items-center justify-center border border-slate-100">
-                                        <i class="ph-duotone {{ $stat->icon }} text-xl"></i>
+                                class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-95 backdrop-blur-sm rounded-3xl px-6 py-4 shadow-lg shadow-slate-900/5 transition-all">
+                                <div class="flex items-center gap-4">
+                                    <div class="text-{{ $stat->color === 'brand' ? 'slate' : $stat->color }}-500 flex items-center justify-center">
+                                        <i class="ph-duotone {{ $stat->icon }} text-[32px]"></i>
                                     </div>
-                                    <div>
-                                        <p class="text-2xl font-black text-slate-900 leading-none">{{ $stat->value }}</p>
-                                        <p class="text-[11px] text-slate-500 font-semibold mt-1">{{ $stat->name }}</p>
+                                    <div class="flex flex-col">
+                                        <p class="text-[26px] font-black text-slate-900 leading-[1.1]">{{ $stat->value }}</p>
+                                        <p class="text-[12px] text-slate-500 font-medium mt-0.5">{{ $stat->name }}</p>
                                     </div>
                                 </div>
                             </div>
