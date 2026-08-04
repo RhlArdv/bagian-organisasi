@@ -130,13 +130,13 @@
                     <div
                         class="bg-white border border-gray-100 shadow-xl shadow-brand-500/5 rounded-2xl py-3 flex flex-col">
                         <a href="{{ route('public.sop') }}"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">SOP
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-blue-600 hover:bg-blue-50 hover:pl-6 transition-all">SOP
                             Pelayanan</a>
-                        <a href="#"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Peta
+                        <a href="{{ route('public.peta-proses-bisnis') }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-blue-600 hover:bg-blue-50 hover:pl-6 transition-all">Peta
                             Proses Bisnis</a>
-                        <a href="#"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Tata
+                        <a href="{{ route('public.tata-naskah-dinas') }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-blue-600 hover:bg-blue-50 hover:pl-6 transition-all">Tata
                             Naskah Dinas</a>
                     </div>
                 </div>
@@ -272,6 +272,19 @@
                     <a href="{{ route('public.forum-konsultasi-publik') }}" @click="mobileOpen = false" class="hover:text-brand-500">Forum Konsultasi Publik</a>
                     <a href="{{ route('public.pengelolaan-pengaduan') }}" @click="mobileOpen = false" class="hover:text-brand-500">Pengelolaan Pengaduan</a>
                     <a href="{{ route('public.dokumen-pelayanan-publik') }}" @click="mobileOpen = false" class="hover:text-brand-500">Dokumen Pelayanan Publik</a>
+                </div>
+            </div>
+
+            {{-- Tata Laksana Mobile --}}
+            <div x-data="{ openTataLaksana: false }" class="border-b border-gray-100 pb-2">
+                <button @click="openTataLaksana = !openTataLaksana" class="w-full flex items-center justify-between py-2 text-sm font-extrabold text-gray-800 hover:text-blue-600">
+                    <span>Tata Laksana</span>
+                    <i class="ph-bold transition-transform" :class="openTataLaksana ? 'ph-caret-up text-blue-600' : 'ph-caret-down'" style="color: #2563eb;"></i>
+                </button>
+                <div x-show="openTataLaksana" class="pl-4 pt-2 flex flex-col space-y-2.5 text-xs font-bold text-gray-600" style="display: none;">
+                    <a href="{{ route('public.sop') }}" @click="mobileOpen = false" class="hover:text-blue-600">SOP Pelayanan</a>
+                    <a href="{{ route('public.peta-proses-bisnis') }}" @click="mobileOpen = false" class="hover:text-blue-600">Peta Proses Bisnis</a>
+                    <a href="{{ route('public.tata-naskah-dinas') }}" @click="mobileOpen = false" class="hover:text-blue-600">Tata Naskah Dinas</a>
                 </div>
             </div>
 
