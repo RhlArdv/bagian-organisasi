@@ -64,11 +64,6 @@
             font-family: 'Caveat', cursive;
         }
 
-        ::selection {
-            background: #f59e0b;
-            color: #fff;
-        }
-
         .hero-pattern {
             background-image: radial-gradient(#fde68a 1px, transparent 1px);
             background-size: 32px 32px;
