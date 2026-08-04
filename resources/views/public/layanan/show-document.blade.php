@@ -9,19 +9,27 @@
         str_contains(strtolower($namaKategori), 'abk')
     );
 
+    $isTataLaksana = $isTataLaksana ?? (
+        in_array($document->category?->slug, ['sop-pelayanan', 'peta-proses-bisnis', 'tata-naskah-dinas']) ||
+        str_contains(strtolower($namaKategori), 'tata laksana') || 
+        str_contains(strtolower($namaKategori), 'sop') || 
+        str_contains(strtolower($namaKategori), 'peta proses') || 
+        str_contains(strtolower($namaKategori), 'tata naskah')
+    );
+
     $theme = [
-        'primary' => $isAnjab ? '#7c3aed' : '#059669',
-        'primaryHover' => $isAnjab ? 'hover:text-purple-700' : 'hover:text-emerald-700',
-        'badgeBg' => $isAnjab ? '#f5f3ff' : '#ecfdf5',
-        'badgeText' => $isAnjab ? '#6b21a8' : '#047857',
-        'badgeBorder' => $isAnjab ? '#ddd6fe' : '#a7f3d0',
-        'iconColor' => $isAnjab ? '#9333ea' : '#059669',
-        'gradient' => $isAnjab ? 'linear-gradient(90deg, #7c3aed 0%, #c084fc 100%)' : 'linear-gradient(90deg, #059669 0%, #34d399 100%)',
-        'descBg' => $isAnjab ? '#f5f3ff' : '#ecfdf5',
-        'descBorder' => $isAnjab ? '#ddd6fe' : '#d1fae5',
-        'itemHoverBorder' => $isAnjab ? 'hover:border-purple-300' : 'hover:border-emerald-200',
-        'subTextColor' => $isAnjab ? '#7c3aed' : '#059669',
-        'descTextColor' => $isAnjab ? '#581c87' : '#064e3b',
+        'primary' => $isAnjab ? '#7c3aed' : ($isTataLaksana ? '#2563eb' : '#059669'),
+        'primaryHover' => $isAnjab ? 'hover:text-purple-700' : ($isTataLaksana ? 'hover:text-blue-700' : 'hover:text-emerald-700'),
+        'badgeBg' => $isAnjab ? '#f5f3ff' : ($isTataLaksana ? '#eff6ff' : '#ecfdf5'),
+        'badgeText' => $isAnjab ? '#6b21a8' : ($isTataLaksana ? '#1e40af' : '#047857'),
+        'badgeBorder' => $isAnjab ? '#ddd6fe' : ($isTataLaksana ? '#bfdbfe' : '#a7f3d0'),
+        'iconColor' => $isAnjab ? '#9333ea' : ($isTataLaksana ? '#2563eb' : '#059669'),
+        'gradient' => $isAnjab ? 'linear-gradient(90deg, #7c3aed 0%, #c084fc 100%)' : ($isTataLaksana ? 'linear-gradient(90deg, #2563eb 0%, #60a5fa 100%)' : 'linear-gradient(90deg, #059669 0%, #34d399 100%)'),
+        'descBg' => $isAnjab ? '#f5f3ff' : ($isTataLaksana ? '#eff6ff' : '#ecfdf5'),
+        'descBorder' => $isAnjab ? '#ddd6fe' : ($isTataLaksana ? '#bfdbfe' : '#d1fae5'),
+        'itemHoverBorder' => $isAnjab ? 'hover:border-purple-300' : ($isTataLaksana ? 'hover:border-blue-300' : 'hover:border-emerald-200'),
+        'subTextColor' => $isAnjab ? '#7c3aed' : ($isTataLaksana ? '#2563eb' : '#059669'),
+        'descTextColor' => $isAnjab ? '#581c87' : ($isTataLaksana ? '#1e3a8a' : '#064e3b'),
     ];
 @endphp
 

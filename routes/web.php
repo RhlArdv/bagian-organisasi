@@ -48,6 +48,8 @@ Route::get('/profil', function () {
 // Halaman Publik — Layanan Unggulan (6 cards dari landing page)
 Route::get('/layanan/reformasi-birokrasi', [PublicLayananController::class, 'reformasiBirokrasi'])->name('public.reformasi-birokrasi');
 Route::get('/layanan/sop', [PublicLayananController::class, 'sop'])->name('public.sop');
+Route::get('/layanan/peta-proses-bisnis', [PublicLayananController::class, 'petaProsesBisnis'])->name('public.peta-proses-bisnis');
+Route::get('/layanan/tata-naskah-dinas', [PublicLayananController::class, 'tataNaskahDinas'])->name('public.tata-naskah-dinas');
 Route::get('/layanan/anjab-abk', [PublicLayananController::class, 'anjabAbk'])->name('public.anjab-abk');
 Route::get('/layanan/pengaduan', [PublicLayananController::class, 'pengaduan'])->name('public.pengaduan');
 Route::post('/layanan/pengaduan', [PublicLayananController::class, 'storePengaduan'])->middleware('throttle:5,1')->name('public.pengaduan.store');

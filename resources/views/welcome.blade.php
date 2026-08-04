@@ -64,7 +64,6 @@
             font-family: 'Caveat', cursive;
         }
 
-
         .hero-pattern {
             background-image: radial-gradient(#fde68a 1px, transparent 1px);
             background-size: 32px 32px;
