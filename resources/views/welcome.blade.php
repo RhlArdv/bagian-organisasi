@@ -123,11 +123,11 @@
             
             @if($activeBanner)
                 <img src="{{ asset('storage/' . $activeBanner->image) }}" alt="{{ $activeBanner->title }}"
-                    class="w-full h-full object-cover object-center lg:object-right-bottom"
+                    class="w-full h-full object-cover object-center"
                     onerror="this.src='{{ asset('assets/img/image.png') }}'">
             @else
                 <img src="{{ asset('assets/img/image.png') }}" alt="Bagian Organisasi Sekretariat Daerah Kota Padang"
-                    class="w-full h-full object-cover object-center lg:object-right-bottom"
+                    class="w-full h-full object-cover object-center"
                     onerror="this.src='https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=900&q=80'">
             @endif
 
