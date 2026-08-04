@@ -112,23 +112,23 @@
         </div>
 
         {{-- Background Image --}}
-        <div class="absolute inset-0 w-full h-full pointer-events-none z-0">
+        <div class="absolute top-0 right-0 w-full lg:w-[90%] h-full pointer-events-none z-0">
             @php
                 $activeBanner = isset($banners) && $banners->count() > 0 ? $banners->first() : null;
             @endphp
             
             @if($activeBanner)
                 <img src="{{ asset('storage/' . $activeBanner->image) }}" alt="{{ $activeBanner->title }}"
-                    class="w-full h-full object-cover object-[75%_bottom] md:object-right-bottom"
+                    class="w-full h-full object-cover object-[75%_center] md:object-right"
                     onerror="this.src='{{ asset('assets/img/hero3.webp') }}'">
             @else
                 <img src="{{ asset('assets/img/hero3.webp') }}" alt="Bagian Organisasi Sekretariat Daerah Kota Padang"
-                    class="w-full h-full object-cover object-[75%_bottom] md:object-right-bottom"
+                    class="w-full h-full object-cover object-[75%_center] md:object-right"
                     onerror="this.src='https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=900&q=80'">
             @endif
 
             {{-- Gradient overlay to ensure text is always readable (White gradient on the left) --}}
-            <div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 md:via-white/70 to-transparent w-full md:w-[80%] lg:w-[65%]"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 md:via-white/70 to-transparent w-full md:w-[85%] lg:w-[70%]"></div>
             <div class="absolute inset-0 bg-white/40 sm:hidden"></div>
         </div>
 
