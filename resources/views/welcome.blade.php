@@ -112,7 +112,8 @@
         </div>
 
         {{-- Background Image --}}
-        <div class="absolute top-0 right-0 w-full lg:w-[90%] h-full pointer-events-none z-0">
+        <div class="absolute top-0 right-0 w-full lg:w-[75%] h-full pointer-events-none z-0" 
+             style="mask-image: linear-gradient(to right, transparent 0%, black 15%); -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%);">
             @php
                 $activeBanner = isset($banners) && $banners->count() > 0 ? $banners->first() : null;
             @endphp
@@ -126,10 +127,6 @@
                     class="w-full h-full object-cover object-[75%_center] md:object-right"
                     onerror="this.src='https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=900&q=80'">
             @endif
-
-            {{-- Gradient overlay to ensure text is always readable (White gradient on the left) --}}
-            <div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 md:via-white/70 to-transparent w-full md:w-[85%] lg:w-[70%]"></div>
-            <div class="absolute inset-0 bg-white/40 sm:hidden"></div>
         </div>
 
         {{-- Main Hero Content --}}
