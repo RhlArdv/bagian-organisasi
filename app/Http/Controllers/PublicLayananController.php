@@ -352,16 +352,9 @@ class PublicLayananController extends Controller
      */
     public function standarPelayanan()
     {
-        $layanans = Layanan::whereIn('kategori', ['standar-pelayanan', 'forum-konsultasi-publik'])->latest()->get()->groupBy('kategori');
+        $layanans = Layanan::where('kategori', 'standar-pelayanan')->latest()->get();
 
-        $docCategories = DocumentCategory::byGroup('pelayanan-publik')->get();
-        $documents = Document::active()
-            ->whereIn('category_id', $docCategories->pluck('id'))
-            ->latest()
-            ->get()
-            ->groupBy(fn ($doc) => $doc->category->slug);
-
-        return view('public.layanan.standar-pelayanan', compact('layanans', 'documents', 'docCategories'));
+        return view('public.layanan.standar-pelayanan', compact('layanans'));
     }
 
     /**

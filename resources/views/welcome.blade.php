@@ -394,33 +394,6 @@
         </div>
     </section>
 
-    {{-- ═══ PROFIL PIMPINAN / PEJABAT ═══ --}}
-    @if(isset($pegawais) && $pegawais->count() > 0)
-    <section class="py-24 bg-white relative border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-5 lg:px-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
-                <div>
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 border border-brand-100 mb-4">
-                        <i class="ph-bold ph-users-three text-brand-600 text-sm"></i>
-                        <span class="text-xs font-bold uppercase tracking-wider text-brand-900">Jajaran Pimpinan & Pejabat</span>
-                    </div>
-                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight leading-tight">
-                        Profil Pejabat
-                    </h2>
-                    <p class="text-gray-500 font-medium max-w-xl leading-relaxed mt-3">
-                        Mengenal lebih dekat sosok jajaran pejabat struktural dan fungsional di Bagian Organisasi Setda Kota Padang. Klik foto untuk melihat detail profil.
-                    </p>
-                </div>
-                <a href="{{ url('/profil') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-slate-900 text-white font-bold text-sm hover:bg-slate-800 transition-all shadow-md shrink-0">
-                    Lihat Struktur Lengkap <i class="ph-bold ph-arrow-right"></i>
-                </a>
-            </div>
-
-            <x-pegawai-cards :pegawais="$pegawais" columns="5" />
-        </div>
-    </section>
-    @endif
-
     {{-- ═══ BERITA TERKINI ═══ --}}
     <section class="py-24 bg-white relative">
         <div class="max-w-7xl mx-auto px-5 lg:px-8">
