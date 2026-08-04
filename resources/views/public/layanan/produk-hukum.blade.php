@@ -39,8 +39,8 @@
     <section class="mb-16">
         <div class="max-w-7xl mx-auto px-5 lg:px-8">
             
-            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8">
-                <h3 class="text-xl font-black flex items-center gap-3" style="color: #047857;">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8 pb-4 border-b border-gray-100">
+                <h3 class="text-xl font-black flex items-center gap-3 shrink-0" style="color: #047857;">
                     <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background-color: #ecfdf5; color: #059669; border: 1px solid #a7f3d0;">
                         <i class="ph-bold ph-file-text text-xl"></i>
                     </div>
@@ -48,18 +48,19 @@
                 </h3>
 
                 {{-- FILTER & SEARCH BAR --}}
-                <form action="{{ route('public.produk-hukum') }}" method="GET" class="flex flex-wrap sm:flex-nowrap items-center gap-3 w-full lg:w-auto">
-                    {{-- Search Input --}}
-                    <div class="relative flex-1 sm:w-64">
+                <form action="{{ route('public.produk-hukum') }}" method="GET" class="flex flex-wrap sm:flex-nowrap items-center gap-3 sm:gap-3.5">
+                    {{-- Search Input (Flexbox Wrapper - Anti-Bocor Ikon) --}}
+                    <div class="flex items-center bg-white rounded-xl shadow-sm px-3.5 py-2 w-full sm:w-64 shrink-0" style="border: 1px solid #cbd5e1;">
+                        <i class="ph-bold ph-magnifying-glass text-gray-400 text-sm mr-2.5 shrink-0"></i>
                         <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari judul / nomor regulasi..." 
-                               class="w-full pl-10 pr-4 py-2.5 rounded-xl text-xs font-bold bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 shadow-sm transition-all text-gray-800">
-                        <i class="ph-bold ph-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                               class="w-full bg-transparent border-0 p-0 text-xs font-bold text-gray-800 focus:outline-none focus:ring-0 placeholder-gray-400" style="outline: none; border: none; background: transparent; width: 100%;">
                     </div>
 
-                    {{-- Select Tahun --}}
-                    <div class="relative w-40 shrink-0">
+                    {{-- Select Tahun (Flexbox Wrapper - Anti-Bocor Ikon) --}}
+                    <div class="flex items-center rounded-xl shadow-sm px-3.5 py-2 w-44 shrink-0 cursor-pointer" style="background-color: #ecfdf5; border: 1px solid #6ee7b7;">
+                        <i class="ph-bold ph-calendar-blank text-sm mr-2 shrink-0 pointer-events-none" style="color: #059669;"></i>
                         <select name="year" onchange="this.form.submit()" 
-                                class="w-full pl-9 pr-8 py-2.5 rounded-xl text-xs font-black shadow-sm appearance-none cursor-pointer transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500/30" style="color: #047857; background-color: #ecfdf5; border: 1px solid #a7f3d0;">
+                                class="w-full bg-transparent border-0 p-0 text-xs font-black focus:outline-none focus:ring-0 appearance-none cursor-pointer pr-3" style="color: #047857; outline: none; border: none; background: transparent; width: 100%;">
                             <option value="all">Semua Tahun</option>
                             @if(isset($years) && $years->count() > 0)
                                 @foreach($years as $yr)
@@ -67,19 +68,18 @@
                                 @endforeach
                             @endif
                         </select>
-                        <i class="ph-bold ph-calendar-blank absolute left-3 top-1/2 -translate-y-1/2 text-emerald-600 text-sm pointer-events-none"></i>
-                        <i class="ph-bold ph-caret-down absolute right-3 top-1/2 -translate-y-1/2 text-emerald-600 text-xs pointer-events-none"></i>
+                        <i class="ph-bold ph-caret-down text-xs ml-1 shrink-0 pointer-events-none" style="color: #059669;"></i>
                     </div>
 
-                    {{-- Tombol Filter --}}
-                    <button type="submit" class="px-5 py-2.5 rounded-xl text-xs font-black shadow-sm transition-all hover:opacity-90 shrink-0 flex items-center gap-1.5" style="background-color: #059669; color: #ffffff;">
-                        <i class="ph-bold ph-funnel-simple text-sm"></i>
-                        <span>Filter</span>
+                    {{-- Tombol Cari --}}
+                    <button type="submit" class="px-5 py-2 rounded-xl text-xs font-black shadow-sm transition-all hover:opacity-90 flex items-center justify-center gap-1.5 shrink-0" style="background-color: #059669; color: #ffffff;">
+                        <i class="ph-bold ph-magnifying-glass text-xs"></i>
+                        <span>Cari</span>
                     </button>
 
                     @if(request()->filled('search') || (request()->filled('year') && request('year') != 'all'))
-                        <a href="{{ route('public.produk-hukum') }}" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors shrink-0 flex items-center gap-1" title="Reset Filter">
-                            <i class="ph-bold ph-arrow-counter-clockwise"></i>
+                        <a href="{{ route('public.produk-hukum') }}" class="px-4 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-200 transition-colors flex items-center justify-center gap-1 shrink-0" title="Reset Filter">
+                            <i class="ph-bold ph-arrow-counter-clockwise text-xs"></i>
                             <span>Reset</span>
                         </a>
                     @endif

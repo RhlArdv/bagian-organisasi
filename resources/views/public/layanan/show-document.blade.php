@@ -1,11 +1,36 @@
 <x-public-layout :title="$document->title . ' — ' . $namaKategori" :metaDescription="Str::limit($document->description ?: 'Detail dokumen ' . $document->title, 150)">
 
+@php
+    $isAnjab = $isAnjab ?? (
+        in_array($document->category?->slug, ['informasi-anjab', 'informasi-abk', 'pedoman-anjab-abk', 'formulir-permohonan']) ||
+        str_contains(strtolower($document->category?->slug ?? ''), 'anjab') || 
+        str_contains(strtolower($document->category?->slug ?? ''), 'abk') ||
+        str_contains(strtolower($namaKategori), 'anjab') || 
+        str_contains(strtolower($namaKategori), 'abk')
+    );
+
+    $theme = [
+        'primary' => $isAnjab ? '#7c3aed' : '#059669',
+        'primaryHover' => $isAnjab ? 'hover:text-purple-700' : 'hover:text-emerald-700',
+        'badgeBg' => $isAnjab ? '#f5f3ff' : '#ecfdf5',
+        'badgeText' => $isAnjab ? '#6b21a8' : '#047857',
+        'badgeBorder' => $isAnjab ? '#ddd6fe' : '#a7f3d0',
+        'iconColor' => $isAnjab ? '#9333ea' : '#059669',
+        'gradient' => $isAnjab ? 'linear-gradient(90deg, #7c3aed 0%, #c084fc 100%)' : 'linear-gradient(90deg, #059669 0%, #34d399 100%)',
+        'descBg' => $isAnjab ? '#f5f3ff' : '#ecfdf5',
+        'descBorder' => $isAnjab ? '#ddd6fe' : '#d1fae5',
+        'itemHoverBorder' => $isAnjab ? 'hover:border-purple-300' : 'hover:border-emerald-200',
+        'subTextColor' => $isAnjab ? '#7c3aed' : '#059669',
+        'descTextColor' => $isAnjab ? '#581c87' : '#064e3b',
+    ];
+@endphp
+
     <div class="max-w-7xl mx-auto px-5 lg:px-8 pt-6 pb-24">
         {{-- BREADCRUMB --}}
         <nav class="flex items-center gap-2 text-xs font-semibold text-gray-500 mb-8 overflow-x-auto whitespace-nowrap py-1">
-            <a href="/" class="hover:text-emerald-700 transition-colors">Beranda</a>
+            <a href="/" class="{{ $theme['primaryHover'] }} transition-colors">Beranda</a>
             <i class="ph-bold ph-caret-right text-[10px] text-gray-400"></i>
-            <a href="{{ $backRoute }}" class="hover:text-emerald-700 transition-colors">{{ $namaKategori }}</a>
+            <a href="{{ $backRoute }}" class="{{ $theme['primaryHover'] }} transition-colors">{{ $namaKategori }}</a>
             <i class="ph-bold ph-caret-right text-[10px] text-gray-400"></i>
             <span class="text-gray-600 truncate max-w-xs font-bold">{{ $document->title }}</span>
         </nav>
@@ -17,12 +42,12 @@
                 
                 {{-- HEADER DOKUMEN CARD --}}
                 <div class="p-8 lg:p-10 rounded-[2.5rem] relative overflow-hidden" style="background-color: #ffffff; border: 2px solid #cbd5e1; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.08);">
-                    {{-- Top Green Accent --}}
-                    <div class="absolute top-0 left-0 right-0 h-2" style="background: linear-gradient(90deg, #059669 0%, #34d399 100%);"></div>
+                    {{-- Top Accent --}}
+                    <div class="absolute top-0 left-0 right-0 h-2" style="background: {{ $theme['gradient'] }};"></div>
                     
                     <div class="flex flex-wrap items-center gap-3 mb-6 pt-2">
-                        <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-black tracking-wide" style="background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0;">
-                            <i class="ph-fill ph-file-pdf text-emerald-600"></i> {{ $namaKategori }}
+                        <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-black tracking-wide" style="background-color: {{ $theme['badgeBg'] }}; color: {{ $theme['badgeText'] }}; border: 1px solid {{ $theme['badgeBorder'] }};">
+                            <i class="ph-fill ph-file-pdf" style="color: {{ $theme['iconColor'] }};"></i> {{ $namaKategori }}
                         </span>
                         @if($document->year)
                             <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-gray-100 text-gray-700 border border-gray-200">
@@ -38,7 +63,7 @@
                     {{-- TABEL RINCIAN ATRIBUT DATABASE --}}
                     <div class="mt-6 pt-6 rounded-2xl p-6" style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
                         <h3 class="text-xs font-extrabold uppercase tracking-widest text-gray-500 mb-4 flex items-center gap-2">
-                            <i class="ph-bold ph-info text-emerald-600 text-sm"></i> Rincian Informasi Dokumen
+                            <i class="ph-bold ph-info text-sm" style="color: {{ $theme['iconColor'] }};"></i> Rincian Informasi Dokumen
                         </h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                             <div class="p-3 bg-white rounded-xl border border-gray-200/80 shadow-sm">
@@ -73,9 +98,9 @@
                     {{-- KETERANGAN / DESKRIPSI --}}
                     <div class="mt-8 pt-6 border-t border-gray-200">
                         <h3 class="text-base font-black mb-3 text-gray-900 flex items-center gap-2">
-                            <i class="ph-bold ph-text-align-left text-emerald-600"></i> Keterangan / Deskripsi Dokumen
+                            <i class="ph-bold ph-text-align-left" style="color: {{ $theme['iconColor'] }};"></i> Keterangan / Deskripsi Dokumen
                         </h3>
-                        <div class="text-sm lg:text-base text-gray-700 leading-relaxed whitespace-pre-line bg-emerald-50/30 p-5 rounded-2xl border border-emerald-100 font-medium">
+                        <div class="text-sm lg:text-base text-gray-700 leading-relaxed whitespace-pre-line p-5 rounded-2xl font-medium" style="background-color: {{ $theme['descBg'] }}; border: 1px solid {{ $theme['descBorder'] }};">
                             {{ $document->description ?: '-' }}
                         </div>
                     </div>
@@ -86,13 +111,13 @@
                     <div class="p-8 rounded-[2.5rem] relative overflow-hidden" style="background-color: #ffffff; border: 2px solid #cbd5e1; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.08);">
                         <div class="flex items-center justify-between gap-4 mb-6">
                             <h3 class="text-lg font-black text-gray-900 flex items-center gap-2.5">
-                                <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg" style="background-color: #ecfdf5; color: #059669; border: 1px solid #a7f3d0;">
+                                <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg" style="background-color: {{ $theme['badgeBg'] }}; color: {{ $theme['iconColor'] }}; border: 1px solid {{ $theme['badgeBorder'] }};">
                                     <i class="ph-bold ph-eye"></i>
                                 </div>
                                 Pratinjau Dokumen PDF
                             </h3>
                             <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank" download
-                               class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-black text-xs shadow-md hover:opacity-90 transition-all duration-300" style="background-color: #059669; color: #ffffff;">
+                               class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-black text-xs shadow-md hover:opacity-90 transition-all duration-300" style="background-color: {{ $theme['primary'] }}; color: #ffffff;">
                                 <i class="ph-bold ph-download-simple text-sm"></i>
                                 <span>Unduh Berkas</span>
                             </a>
@@ -101,7 +126,7 @@
                             <iframe src="{{ asset('storage/' . $document->file_path) }}#toolbar=0" class="w-full h-full border-0" title="Pratinjau PDF {{ $document->title }}">
                                 <p class="p-6 text-center text-sm font-medium text-gray-600">
                                     Browser Anda tidak mendukung pratinjau langsung PDF. 
-                                    <a href="{{ asset('storage/' . $document->file_path) }}" class="text-emerald-600 font-bold underline" download>Klik di sini untuk mengunduh dokumen</a>.
+                                    <a href="{{ asset('storage/' . $document->file_path) }}" class="font-bold underline" style="color: {{ $theme['primary'] }};" download>Klik di sini untuk mengunduh dokumen</a>.
                                 </p>
                             </iframe>
                         </div>
@@ -116,7 +141,7 @@
                 {{-- TOMBOL AKSI CEPAT UNDUH --}}
                 <div class="p-7 rounded-[2rem] relative overflow-hidden" style="background-color: #ffffff; border: 2px solid #cbd5e1; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.08);">
                     <div class="text-center mb-6">
-                        <div class="w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center text-3xl shadow-sm" style="background-color: #ecfdf5; color: #059669; border: 1px solid #a7f3d0;">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center text-3xl shadow-sm" style="background-color: {{ $theme['badgeBg'] }}; color: {{ $theme['iconColor'] }}; border: 1px solid {{ $theme['badgeBorder'] }};">
                             <i class="ph-bold ph-file-arrow-down"></i>
                         </div>
                         <h4 class="text-lg font-black text-gray-900 mb-1">Unduh Dokumen Asli</h4>
@@ -125,7 +150,7 @@
 
                     @if($document->file_path)
                         <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank" download
-                           class="w-full py-4 px-6 rounded-2xl font-black text-sm text-center shadow-lg hover:opacity-95 transition-all duration-300 flex items-center justify-center gap-3" style="background-color: #059669; color: #ffffff;">
+                           class="w-full py-4 px-6 rounded-2xl font-black text-sm text-center shadow-lg hover:opacity-95 transition-all duration-300 flex items-center justify-center gap-3" style="background-color: {{ $theme['primary'] }}; color: #ffffff;">
                             <i class="ph-bold ph-download-simple text-xl"></i>
                             <span>Unduh Sekarang</span>
                         </a>
@@ -140,19 +165,19 @@
                 @if($relatedDocuments && $relatedDocuments->count() > 0)
                     <div class="p-7 rounded-[2rem] relative overflow-hidden" style="background-color: #ffffff; border: 2px solid #cbd5e1; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.08);">
                         <h3 class="text-base font-black mb-5 pb-3 flex items-center gap-2.5" style="border-bottom: 1px solid #e2e8f0; color: #0f172a;">
-                            <i class="ph-bold ph-stack text-emerald-600 text-lg"></i>
+                            <i class="ph-bold ph-stack text-lg" style="color: {{ $theme['iconColor'] }};"></i>
                             <span>Dokumen {{ $namaKategori }} Lainnya</span>
                         </h3>
 
                         <div class="space-y-4">
                             @foreach($relatedDocuments as $relDoc)
-                                <a href="{{ route('public.dokumen.show', $relDoc->id) }}" class="group block p-3.5 rounded-2xl transition-all duration-200 border border-transparent hover:border-emerald-200 hover:shadow-md" style="background-color: #f8fafc;">
+                                <a href="{{ route('public.dokumen.show', $relDoc->id) }}" class="group block p-3.5 rounded-2xl transition-all duration-200 border border-transparent {{ $theme['itemHoverBorder'] }} hover:shadow-md" style="background-color: #f8fafc;">
                                     <div class="flex items-start gap-3">
-                                        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 font-bold text-base mt-0.5" style="background-color: #ecfdf5; color: #059669; border: 1px solid #a7f3d0;">
+                                        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 font-bold text-base mt-0.5" style="background-color: {{ $theme['badgeBg'] }}; color: {{ $theme['iconColor'] }}; border: 1px solid {{ $theme['badgeBorder'] }};">
                                             <i class="ph-bold ph-file-text"></i>
                                         </div>
                                         <div class="flex-1 min-w-0">
-                                            <h4 class="text-xs font-bold text-gray-900 group-hover:text-emerald-700 transition-colors line-clamp-2 leading-snug mb-1">
+                                            <h4 class="text-xs font-bold text-gray-900 {{ $theme['primaryHover'] }} transition-colors line-clamp-2 leading-snug mb-1">
                                                 {{ $relDoc->title }}
                                             </h4>
                                             <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider block">
@@ -165,7 +190,7 @@
                         </div>
 
                         <div class="mt-6 pt-4 border-t border-gray-100 text-center">
-                            <a href="{{ $backRoute }}" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 inline-flex items-center gap-1 transition-colors">
+                            <a href="{{ $backRoute }}" class="text-xs font-bold {{ $theme['primaryHover'] }} inline-flex items-center gap-1 transition-colors" style="color: {{ $theme['primary'] }};">
                                 <span>Lihat Semua Daftar {{ $namaKategori }}</span>
                                 <i class="ph-bold ph-arrow-right text-xs"></i>
                             </a>
@@ -174,21 +199,21 @@
                 @endif
 
                 {{-- BANTUAN & INFORMASI --}}
-                <div class="p-7 rounded-[2rem] relative overflow-hidden" style="background-color: #ecfdf5; border: 2px solid #a7f3d0;">
+                <div class="p-7 rounded-[2rem] relative overflow-hidden" style="background-color: {{ $theme['badgeBg'] }}; border: 2px solid {{ $theme['badgeBorder'] }};">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 rounded-2xl bg-white text-emerald-600 flex items-center justify-center font-bold text-2xl shadow-sm border border-emerald-200">
+                        <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center font-bold text-2xl shadow-sm" style="color: {{ $theme['iconColor'] }}; border: 1px solid {{ $theme['badgeBorder'] }};">
                             <i class="ph-bold ph-question"></i>
                         </div>
                         <div>
-                            <h4 class="text-base font-black" style="color: #047857;">Perlu Bantuan?</h4>
-                            <span class="text-xs font-semibold text-emerald-700">Hubungi Bagian Organisasi</span>
+                            <h4 class="text-base font-black" style="color: {{ $theme['badgeText'] }};">Perlu Bantuan?</h4>
+                            <span class="text-xs font-semibold" style="color: {{ $theme['subTextColor'] }};">Hubungi Bagian Organisasi</span>
                         </div>
                     </div>
-                    <p class="text-xs font-medium text-emerald-900 mb-5 leading-relaxed">
+                    <p class="text-xs font-medium mb-5 leading-relaxed" style="color: {{ $theme['descTextColor'] }};">
                         Jika Anda memerlukan klarifikasi teknis atau memiliki pertanyaan mengenai regulasi dan dokumen di atas, silakan hubungi kami atau gunakan kanal layanan pengaduan.
                     </p>
                     <a href="{{ route('public.pengaduan') }}" 
-                       class="w-full block text-center py-3 px-4 rounded-xl font-bold text-xs shadow-md transition-all duration-300 hover:opacity-95" style="background-color: #059669; color: #ffffff;">
+                       class="w-full block text-center py-3 px-4 rounded-xl font-bold text-xs shadow-md transition-all duration-300 hover:opacity-95" style="background-color: {{ $theme['primary'] }}; color: #ffffff;">
                         <i class="ph-bold ph-chat-text mr-1"></i> Layanan Konsultasi / Pengaduan
                     </a>
                 </div>

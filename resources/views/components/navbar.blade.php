@@ -61,22 +61,26 @@
             {{-- Dropdown Anjab & ABK --}}
             <div class="relative group py-2">
                 <button
-                    class="text-[12px] xl:text-[13px] font-bold text-gray-500 group-hover:text-brand-500 transition-colors uppercase tracking-wide flex items-center gap-1 whitespace-nowrap">
+                    class="text-[12px] xl:text-[13px] font-bold text-gray-500 group-hover:text-purple-600 transition-colors uppercase tracking-wide flex items-center gap-1 whitespace-nowrap">
                     Anjab & ABK <i
-                        class="ph-bold ph-caret-down text-brand-500 transition-transform duration-300 group-hover:rotate-180"></i>
+                        class="ph-bold ph-caret-down text-purple-600 transition-transform duration-300 group-hover:rotate-180" style="color: #9333ea;"></i>
                 </button>
                 <div
                     class="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-56 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0">
                     <div
-                        class="bg-white border border-gray-100 shadow-xl shadow-brand-500/5 rounded-2xl py-3 flex flex-col">
-                        <a href="{{ route('public.anjab-abk') }}"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Informasi
+                        class="bg-white border border-purple-100 shadow-xl shadow-purple-500/10 rounded-2xl py-3 flex flex-col" style="border: 1px solid #e9d5ff;">
+                        <a href="{{ route('public.anjab-abk', ['tab' => 'informasi-anjab']) }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-purple-600 hover:bg-purple-50 hover:pl-6 transition-all">Informasi
                             Anjab</a>
-                        <a href="#"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Informasi
+                        <a href="{{ route('public.anjab-abk', ['tab' => 'informasi-abk']) }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-purple-600 hover:bg-purple-50 hover:pl-6 transition-all">Informasi
                             ABK</a>
-                        <a href="#"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Pedoman</a>
+                        <a href="{{ route('public.anjab-abk', ['tab' => 'pedoman-anjab-abk']) }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-purple-600 hover:bg-purple-50 hover:pl-6 transition-all">Pedoman
+                            Anjab & ABK</a>
+                        <a href="{{ route('public.anjab-abk', ['tab' => 'formulir-permohonan']) }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-purple-600 hover:bg-purple-50 hover:pl-6 transition-all">Formulir
+                            Permohonan</a>
                     </div>
                 </div>
             </div>
@@ -237,13 +241,15 @@
 
             {{-- Anjab & ABK Mobile --}}
             <div x-data="{ openAnjab: false }" class="border-b border-gray-100 pb-2">
-                <button @click="openAnjab = !openAnjab" class="w-full flex items-center justify-between py-2 text-sm font-extrabold text-gray-800 hover:text-brand-500">
+                <button @click="openAnjab = !openAnjab" class="w-full flex items-center justify-between py-2 text-sm font-extrabold text-gray-800 hover:text-purple-600">
                     <span>Anjab & ABK</span>
-                    <i class="ph-bold transition-transform" :class="openAnjab ? 'ph-caret-up text-brand-500' : 'ph-caret-down'"></i>
+                    <i class="ph-bold transition-transform" :class="openAnjab ? 'ph-caret-up text-purple-600' : 'ph-caret-down'" style="color: #9333ea;"></i>
                 </button>
                 <div x-show="openAnjab" class="pl-4 pt-2 flex flex-col space-y-2.5 text-xs font-bold text-gray-600" style="display: none;">
-                    <a href="{{ route('public.anjab-abk') }}" @click="mobileOpen = false" class="hover:text-brand-500">Informasi Anjab & ABK</a>
-                    <a href="#" @click="mobileOpen = false" class="hover:text-brand-500">Pedoman Analisis</a>
+                    <a href="{{ route('public.anjab-abk', ['tab' => 'informasi-anjab']) }}" @click="mobileOpen = false" class="hover:text-purple-600">Informasi Anjab</a>
+                    <a href="{{ route('public.anjab-abk', ['tab' => 'informasi-abk']) }}" @click="mobileOpen = false" class="hover:text-purple-600">Informasi ABK</a>
+                    <a href="{{ route('public.anjab-abk', ['tab' => 'pedoman-anjab-abk']) }}" @click="mobileOpen = false" class="hover:text-purple-600">Pedoman Anjab & ABK</a>
+                    <a href="{{ route('public.anjab-abk', ['tab' => 'formulir-permohonan']) }}" @click="mobileOpen = false" class="hover:text-purple-600">Formulir Permohonan</a>
                 </div>
             </div>
 

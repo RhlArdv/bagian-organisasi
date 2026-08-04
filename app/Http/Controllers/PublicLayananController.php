@@ -64,24 +64,48 @@ class PublicLayananController extends Controller
 
     /**
      * 3. Anjab & ABK
-     * Displays documents grouped by 4 sub-categories under 'anjab_abk'.
+     * Displays documents grouped by sub-categories under 'anjab_abk' with search and year filter support.
      */
-    public function anjabAbk()
+    public function anjabAbk(Request $request)
     {
-        $categories = DocumentCategory::byGroup('anjab_abk')->get();
+        $slugs = ['informasi-anjab', 'informasi-abk', 'pedoman-anjab-abk', 'pedoman', 'formulir-permohonan'];
+        $categories = DocumentCategory::where('group', 'anjab_abk')
+            ->orWhereIn('slug', $slugs)
+            ->orderBy('order_index')
+            ->get()
+            ->unique('slug');
+
+        $years = Document::active()
+            ->whereIn('category_id', $categories->pluck('id'))
+            ->whereNotNull('year')
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year');
 
         $groupedDocuments = [];
         foreach ($categories as $category) {
+            $query = Document::active()->where('category_id', $category->id);
+
+            if ($request->filled('year') && $request->year != 'all') {
+                $query->where('year', $request->year);
+            }
+
+            if ($request->filled('search')) {
+                $search = $request->search;
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                      ->orWhere('document_number', 'like', "%{$search}%")
+                      ->orWhere('description', 'like', "%{$search}%");
+                });
+            }
+
             $groupedDocuments[$category->slug] = [
                 'name' => $category->name,
-                'documents' => Document::active()
-                    ->where('category_id', $category->id)
-                    ->latest()
-                    ->get(),
+                'documents' => $query->latest()->get(),
             ];
         }
 
-        return view('public.layanan.anjab-abk', compact('groupedDocuments', 'categories'));
+        return view('public.layanan.anjab-abk', compact('groupedDocuments', 'categories', 'years'));
     }
 
     /**
@@ -269,13 +293,16 @@ class PublicLayananController extends Controller
             ->get();
 
         $namaKategori = $document->category->name ?? 'Dokumen';
-        $backRoute = match($document->category?->slug) {
-            'peta-jabatan' => route('public.peta-jabatan'),
-            'produk-hukum' => route('public.produk-hukum'),
+        $slug = $document->category?->slug ?? '';
+        $backRoute = match(true) {
+            $slug === 'peta-jabatan' => route('public.peta-jabatan'),
+            $slug === 'produk-hukum' => route('public.produk-hukum'),
+            in_array($slug, ['informasi-anjab', 'informasi-abk', 'pedoman-anjab-abk', 'formulir-permohonan']) || str_contains($slug, 'anjab') || str_contains($slug, 'abk') => route('public.anjab-abk', ['tab' => $slug ?: 'informasi-anjab']),
             default => url('/'),
         };
+        $isAnjab = in_array($slug, ['informasi-anjab', 'informasi-abk', 'pedoman-anjab-abk', 'formulir-permohonan']) || str_contains($slug, 'anjab') || str_contains($slug, 'abk') || str_contains(strtolower($namaKategori), 'anjab') || str_contains(strtolower($namaKategori), 'abk');
 
-        return view('public.layanan.show-document', compact('document', 'relatedDocuments', 'namaKategori', 'backRoute'));
+        return view('public.layanan.show-document', compact('document', 'relatedDocuments', 'namaKategori', 'backRoute', 'isAnjab'));
     }
 
     /**
