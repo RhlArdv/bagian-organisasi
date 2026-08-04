@@ -281,47 +281,77 @@
             </div>
         </section>
         
-        {{-- KONTAK & LOKASI --}}
+        {{-- KONTAK & LOKASI (Connected to Database) --}}
+        @php
+            $dbPhone = \App\Models\SiteSetting::getValue('phone', '(0751) 123456');
+            $dbEmail = \App\Models\SiteSetting::getValue('email', 'bag.organisasi@padang.go.id');
+            $dbAddress = \App\Models\SiteSetting::getValue('address', 'Jl. Jenderal Sudirman No. 1, Padang, Sumatera Barat 25129');
+            $dbHours = \App\Models\SiteSetting::getValue('working_hours', "Senin - Jumat\n08.00 - 16.00 WIB");
+            
+            $dbInstagram = \App\Models\SiteSetting::getValue('instagram');
+            $dbFacebook = \App\Models\SiteSetting::getValue('facebook');
+            $dbTwitter = \App\Models\SiteSetting::getValue('twitter');
+            $dbYoutube = \App\Models\SiteSetting::getValue('youtube');
+
+            $defaultMapUrl = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2683976643275!2d100.35692807531795!3d-0.9512986353524716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b948c7c72e11%3A0x6771787fa612c99f!2sSekretariat%20Daerah%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1785310213215!5m2!1sid!2sid';
+            $rawMap = \App\Models\SiteSetting::getValue('google_maps_embed');
+            if ($rawMap && preg_match('/src=["\']([^"\']+)["\']/', $rawMap, $matches)) {
+                $dbMap = $matches[1];
+            } elseif ($rawMap) {
+                $dbMap = $rawMap;
+            } else {
+                $dbMap = $defaultMapUrl;
+            }
+        @endphp
         <section>
             <div class="max-w-7xl mx-auto px-5 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
                     
                     {{-- Left: Kontak --}}
-                    <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-[0_4px_25px_rgb(0,0,0,0.03)]">
-                        <h2 class="text-xl font-black text-[#1a202c] mb-8">Kontak Kami</h2>
-                        <div class="space-y-5">
-                            <div class="flex items-start gap-4">
-                                <i class="ph-bold ph-phone-call text-brand-400 text-xl mt-0.5"></i>
-                                <div>
-                                    <p class="text-[13px] text-gray-700 font-medium">(0751) 123456</p>
+                    <div class="bg-white rounded-[2rem] p-8 lg:p-10 shadow-[0_4px_25px_rgb(0,0,0,0.03)] flex flex-col justify-between">
+                        <div>
+                            <h2 class="text-xl font-black text-[#1a202c] mb-8">Kontak Kami</h2>
+                            <div class="space-y-5">
+                                <div class="flex items-start gap-4">
+                                    <i class="ph-bold ph-phone-call text-brand-500 text-xl mt-0.5"></i>
+                                    <div>
+                                        <p class="text-[13px] text-gray-700 font-medium">{{ $dbPhone }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <i class="ph-bold ph-envelope-simple text-brand-400 text-xl mt-0.5"></i>
-                                <div>
-                                    <p class="text-[13px] text-gray-700 font-medium">bag.organisasi@padang.go.id</p>
+                                <div class="flex items-start gap-4">
+                                    <i class="ph-bold ph-envelope-simple text-brand-500 text-xl mt-0.5"></i>
+                                    <div>
+                                        <p class="text-[13px] text-gray-700 font-medium">{{ $dbEmail }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <i class="ph-bold ph-map-pin text-brand-400 text-xl mt-0.5"></i>
-                                <div>
-                                    <p class="text-[13px] text-gray-700 font-medium leading-relaxed">Jl. Jenderal Sudirman No. 1<br>Padang, Sumatera Barat 25129</p>
+                                <div class="flex items-start gap-4">
+                                    <i class="ph-bold ph-map-pin text-brand-500 text-xl mt-0.5"></i>
+                                    <div>
+                                        <p class="text-[13px] text-gray-700 font-medium leading-relaxed">{!! nl2br(e($dbAddress)) !!}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <i class="ph-bold ph-clock text-brand-400 text-xl mt-0.5"></i>
-                                <div>
-                                    <p class="text-[13px] text-[#1a202c] font-bold mb-0.5">Senin - Jumat</p>
-                                    <p class="text-[13px] text-gray-500 font-medium">08.00 - 16.00 WIB</p>
+                                <div class="flex items-start gap-4">
+                                    <i class="ph-bold ph-clock text-brand-500 text-xl mt-0.5"></i>
+                                    <div>
+                                        <p class="text-[13px] text-gray-700 font-medium leading-relaxed">{!! nl2br(e($dbHours)) !!}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="flex items-center gap-3 mt-8 pt-6">
-                            <a href="#" class="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-brand-400 hover:text-white hover:border-brand-400 transition-colors shadow-sm"><i class="ph-bold ph-instagram-logo"></i></a>
-                            <a href="#" class="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-brand-400 hover:text-white hover:border-brand-400 transition-colors shadow-sm"><i class="ph-bold ph-facebook-logo"></i></a>
-                            <a href="#" class="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-brand-400 hover:text-white hover:border-brand-400 transition-colors shadow-sm"><i class="ph-bold ph-twitter-logo"></i></a>
-                            <a href="#" class="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-600 flex items-center justify-center hover:bg-brand-400 hover:text-white hover:border-brand-400 transition-colors shadow-sm"><i class="ph-bold ph-youtube-logo"></i></a>
+                        <div class="flex items-center gap-3 mt-8 pt-6 border-t border-gray-100">
+                            @if($dbInstagram)
+                            <a href="{{ $dbInstagram }}" target="_blank" class="w-10 h-10 rounded-full bg-pink-50 border border-pink-100 text-pink-600 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all shadow-sm"><i class="ph-bold ph-instagram-logo text-lg"></i></a>
+                            @endif
+                            @if($dbFacebook)
+                            <a href="{{ $dbFacebook }}" target="_blank" class="w-10 h-10 rounded-full bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all shadow-sm"><i class="ph-bold ph-facebook-logo text-lg"></i></a>
+                            @endif
+                            @if($dbTwitter)
+                            <a href="{{ $dbTwitter }}" target="_blank" class="w-10 h-10 rounded-full bg-sky-50 border border-sky-100 text-sky-500 flex items-center justify-center hover:bg-sky-500 hover:text-white transition-all shadow-sm"><i class="ph-bold ph-twitter-logo text-lg"></i></a>
+                            @endif
+                            @if($dbYoutube)
+                            <a href="{{ $dbYoutube }}" target="_blank" class="w-10 h-10 rounded-full bg-red-50 border border-red-100 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all shadow-sm"><i class="ph-bold ph-youtube-logo text-lg"></i></a>
+                            @endif
                         </div>
                     </div>
 
@@ -330,7 +360,7 @@
                         <h2 class="text-xl font-black text-[#1a202c] mb-6">Lokasi Kami</h2>
                         <div class="flex-1 bg-gray-100 rounded-2xl overflow-hidden relative border border-gray-100 min-h-[300px]">
                             <iframe 
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2683976643275!2d100.35692807531795!3d-0.9512986353524716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b948c7c72e11%3A0x6771787fa612c99f!2sSekretariat%20Daerah%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1785310213215!5m2!1sid!2sid" 
+                                src="{{ $dbMap }}" 
                                 class="w-full h-full absolute inset-0" 
                                 style="border:0;" 
                                 allowfullscreen="" 
