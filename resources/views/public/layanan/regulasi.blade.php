@@ -1,0 +1,116 @@
+<x-public-layout :title="'Regulasi'" :metaDescription="'Dokumen Regulasi dan Peraturan Perundang-undangan Kota Padang'">
+
+    {{-- PAGE HEADER --}}
+    <section class="pb-4 mb-8 border-b border-gray-200/60 max-w-7xl mx-auto px-5 lg:px-8">
+        <h1 class="text-[28px] lg:text-3xl font-black text-[#1a202c] tracking-tight mb-2">Regulasi</h1>
+        <nav class="flex items-center gap-2 text-[12px] font-medium text-gray-500">
+            <a href="/" class="hover:text-brand-400 transition-colors text-[#1a202c]">Beranda</a>
+            <i class="ph-bold ph-caret-right text-[10px] text-gray-400"></i>
+            <span class="text-gray-500">Regulasi</span>
+        </nav>
+    </section>
+
+    {{-- HERO CARD --}}
+    <section class="mb-10">
+        <div class="max-w-7xl mx-auto px-5 lg:px-8">
+            <div class="relative bg-white rounded-[2.5rem] p-10 lg:p-14 shadow-[0_4px_25px_rgb(0,0,0,0.03)] border border-gray-100 overflow-hidden">
+                {{-- Decorative --}}
+                <div class="absolute -top-10 -right-10 w-64 h-64 bg-amber-50 rounded-full opacity-50 pointer-events-none"></div>
+                <div class="absolute bottom-0 right-0 opacity-[0.04] pointer-events-none">
+                    <i class="ph-fill ph-scales text-[16rem]"></i>
+                </div>
+
+                <div class="relative z-10 flex flex-col lg:flex-row items-start lg:items-center gap-6">
+                    <div class="w-20 h-20 bg-amber-50 text-amber-500 rounded-3xl flex items-center justify-center shrink-0">
+                        <i class="ph-bold ph-scales text-4xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-2xl lg:text-3xl font-black text-[#1a202c] mb-3 tracking-tight">Dokumen Regulasi</h2>
+                        <p class="text-gray-600 font-medium leading-relaxed max-w-2xl">
+                            Kumpulan peraturan perundang-undangan mulai dari Undang-Undang, Peraturan Pemerintah, Peraturan Daerah, hingga Peraturan Walikota dan Surat Edaran.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- TABBED CATEGORIES --}}
+    <section class="mb-10" x-data="{ activeTab: new URLSearchParams(location.search).get('tab') || '{{ $categories->first()?->slug ?? '' }}' }">
+        <div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+            {{-- Tab Buttons --}}
+            @if($categories->count() > 0)
+                <div class="flex flex-wrap gap-2 mb-8">
+                    @foreach($categories as $cat)
+                        <button @click="activeTab = '{{ $cat->slug }}'"
+                                :class="activeTab === '{{ $cat->slug }}' ? 'bg-amber-600 text-white shadow-lg shadow-amber-500/20' : 'bg-white text-gray-600 border border-gray-200 hover:border-amber-300 hover:text-amber-600'"
+                                class="px-5 py-2.5 text-sm font-bold rounded-full transition-all duration-200">
+                            {{ $cat->name }}
+                            @if(isset($groupedDocuments[$cat->slug]))
+                                <span class="ml-1.5 text-xs opacity-70">({{ $groupedDocuments[$cat->slug]['documents']->count() }})</span>
+                            @endif
+                        </button>
+                    @endforeach
+                </div>
+
+                {{-- Tab Content --}}
+                @foreach($groupedDocuments as $slug => $group)
+                    <div x-show="activeTab === '{{ $slug }}'"
+                         x-cloak
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0 translate-y-2"
+                         x-transition:enter-end="opacity-100 translate-y-0">
+
+                        @if($group['documents']->count() > 0)
+                            <div class="space-y-3">
+                                @foreach($group['documents'] as $doc)
+                                    <a href="{{ asset('storage/' . $doc->file_path) }}" target="_blank"
+                                       class="group flex items-center gap-4 lg:gap-6 bg-white p-5 lg:p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-amber-200 transition-all duration-300">
+                                        <div class="w-12 h-12 lg:w-14 lg:h-14 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                                            <i class="ph-fill ph-file-pdf text-2xl"></i>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <h4 class="text-sm lg:text-base font-bold text-[#1a202c] group-hover:text-amber-600 transition-colors truncate">{{ $doc->title }}</h4>
+                                            <div class="flex items-center gap-3 mt-1 flex-wrap">
+                                                @if($doc->document_number)
+                                                    <span class="text-xs text-gray-400 font-medium"><i class="ph ph-hash"></i> {{ $doc->document_number }}</span>
+                                                @endif
+                                                @if($doc->year)
+                                                    <span class="text-xs text-gray-400 font-medium"><i class="ph ph-calendar-blank"></i> {{ $doc->year }}</span>
+                                                @endif
+                                                @if($doc->file_size)
+                                                    <span class="text-xs text-gray-400 font-medium">{{ number_format($doc->file_size / 1024 / 1024, 1) }} MB</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="w-10 h-10 rounded-full bg-gray-50 text-gray-400 group-hover:bg-amber-500 group-hover:text-white flex items-center justify-center transition-colors shrink-0">
+                                            <i class="ph-bold ph-download-simple"></i>
+                                        </div>
+                                    </a>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="bg-white rounded-[2rem] p-12 text-center shadow-[0_4px_25px_rgb(0,0,0,0.03)] border border-gray-100">
+                                <div class="w-20 h-20 mx-auto bg-amber-50 rounded-full flex items-center justify-center mb-6">
+                                    <i class="ph-duotone ph-folder-open text-4xl text-amber-200"></i>
+                                </div>
+                                <h4 class="text-lg font-bold text-gray-300 mb-2">Belum Ada Dokumen</h4>
+                                <p class="text-sm text-gray-400 font-medium">Dokumen regulasi {{ $group['name'] }} belum tersedia.</p>
+                            </div>
+                        @endif
+                    </div>
+                @endforeach
+            @else
+                <div class="bg-white rounded-[2.5rem] p-16 text-center shadow-[0_4px_25px_rgb(0,0,0,0.03)] border border-gray-100">
+                    <div class="w-24 h-24 mx-auto bg-amber-50 rounded-full flex items-center justify-center mb-6">
+                        <i class="ph-duotone ph-scales text-5xl text-amber-200"></i>
+                    </div>
+                    <h4 class="text-xl font-black text-gray-300 mb-3">Kategori Belum Tersedia</h4>
+                    <p class="text-sm text-gray-400 font-medium max-w-md mx-auto">Kategori Regulasi akan ditampilkan setelah dikonfigurasi.</p>
+                </div>
+            @endif
+        </div>
+    </section>
+
+</x-public-layout>

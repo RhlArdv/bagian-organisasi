@@ -36,7 +36,10 @@
                                 <div class="flex items-center gap-4">
                                     <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-100 border border-gray-200 shrink-0">
                                         @if($item->foto)
-                                            <img src="{{ Storage::url($item->foto) }}" alt="{{ $item->nama }}" class="w-full h-full object-cover">
+                                            @php
+                                                $imgUrl = \Illuminate\Support\Str::startsWith($item->foto, ['http', '/']) ? $item->foto : Storage::url($item->foto);
+                                            @endphp
+                                            <img src="{{ $imgUrl }}" alt="{{ $item->nama }}" class="w-full h-full object-cover">
                                         @else
                                             <div class="w-full h-full flex items-center justify-center text-gray-400">
                                                 <i class="ph-bold ph-user text-xl"></i>

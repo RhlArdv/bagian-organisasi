@@ -15,9 +15,11 @@ Route::get('/', function () {
         ->get();
     $postCategories = \App\Models\PostCategory::orderBy('name')->get();
     $announcements = \App\Models\Announcement::active()->limit(5)->get();
-    $statistics = \App\Models\Statistic::orderBy('order')->get();
+    $metrics = \App\Models\PerformanceMetric::getLatestAll();
     $agendas = \App\Models\Agenda::orderBy('date', 'asc')->limit(3)->get();
     $faqs = \App\Models\Faq::active()->get();
+    $pegawais = \App\Models\Pegawai::where('is_active', true)->orderBy('order_index', 'asc')->limit(5)->get();
+    $banners = \App\Models\Banner::where('is_active', true)->orderBy('order_index')->get();
     
     // Visitor Stats
     $visitorToday = \App\Models\VisitorStat::getTodayVisitors();
@@ -27,25 +29,45 @@ Route::get('/', function () {
     $visitorChartData = \App\Models\VisitorStat::getChartData();
 
     return view('welcome', compact(
-        'latestPosts', 'postCategories', 'announcements', 'statistics',
+        'latestPosts', 'postCategories', 'announcements', 'metrics',
         'visitorToday', 'visitorMonth', 'visitorYear', 'visitorTotal', 'visitorChartData',
-        'agendas', 'faqs'
+        'agendas', 'faqs', 'pegawais', 'banners'
     ));
 });
 
 Route::get('/profil', function () {
-    return view('profil');
+    $pages = \App\Models\Page::all()->keyBy('slug');
+    $kepala = \App\Models\Pegawai::where('level', 'kepala')->where('is_active', true)->first()
+              ?: \App\Models\Pegawai::where('is_active', true)->first();
+    $pegawais = \App\Models\Pegawai::where('is_active', true)->orderBy('order_index', 'asc')->get();
+    $settings = \App\Models\SiteSetting::pluck('value', 'key_name')->toArray();
+
+    return view('profil', compact('pages', 'kepala', 'pegawais', 'settings'));
 });
 
 // Halaman Publik — Layanan Unggulan (6 cards dari landing page)
 Route::get('/layanan/reformasi-birokrasi', [PublicLayananController::class, 'reformasiBirokrasi'])->name('public.reformasi-birokrasi');
 Route::get('/layanan/sop', [PublicLayananController::class, 'sop'])->name('public.sop');
+Route::get('/layanan/peta-proses-bisnis', [PublicLayananController::class, 'petaProsesBisnis'])->name('public.peta-proses-bisnis');
+Route::get('/layanan/tata-naskah-dinas', [PublicLayananController::class, 'tataNaskahDinas'])->name('public.tata-naskah-dinas');
 Route::get('/layanan/anjab-abk', [PublicLayananController::class, 'anjabAbk'])->name('public.anjab-abk');
 Route::get('/layanan/pengaduan', [PublicLayananController::class, 'pengaduan'])->name('public.pengaduan');
 Route::post('/layanan/pengaduan', [PublicLayananController::class, 'storePengaduan'])->middleware('throttle:5,1')->name('public.pengaduan.store');
 Route::post('/layanan/kritik-saran', [PublicLayananController::class, 'storeKritikSaran'])->middleware('throttle:5,1')->name('public.kritik-saran.store');
 Route::get('/layanan/kelembagaan', [PublicLayananController::class, 'kelembagaan'])->name('public.kelembagaan');
+Route::get('/layanan/evaluasi-kelembagaan', [PublicLayananController::class, 'evaluasiKelembagaan'])->name('public.evaluasi-kelembagaan');
+Route::get('/layanan/nomenklatur-opd', [PublicLayananController::class, 'nomenklaturOpd'])->name('public.nomenklatur-opd');
+Route::get('/layanan/peta-jabatan', [PublicLayananController::class, 'petaJabatan'])->name('public.peta-jabatan');
+Route::get('/layanan/produk-hukum', [PublicLayananController::class, 'produkHukum'])->name('public.produk-hukum');
+Route::get('/layanan/detail/{id}', [PublicLayananController::class, 'show'])->name('public.layanan.show');
+Route::get('/dokumen/detail/{id}', [PublicLayananController::class, 'showDocument'])->name('public.dokumen.show');
 Route::get('/layanan/standar-pelayanan', [PublicLayananController::class, 'standarPelayanan'])->name('public.standar-pelayanan');
+Route::get('/layanan/regulasi', [PublicLayananController::class, 'regulasi'])->name('public.regulasi');
+Route::get('/layanan/maklumat-pelayanan', [PublicLayananController::class, 'maklumatPelayanan'])->name('public.maklumat-pelayanan');
+Route::get('/layanan/skm', [PublicLayananController::class, 'skm'])->name('public.skm');
+Route::get('/layanan/forum-konsultasi-publik', [PublicLayananController::class, 'forumKonsultasiPublik'])->name('public.forum-konsultasi-publik');
+Route::get('/layanan/pengelolaan-pengaduan', [PublicLayananController::class, 'pengelolaanPengaduan'])->name('public.pengelolaan-pengaduan');
+Route::get('/layanan/dokumen-pelayanan-publik', [PublicLayananController::class, 'dokumenPelayananPublik'])->name('public.dokumen-pelayanan-publik');
 
 // Halaman Publik — Berita
 Route::get('/berita', [PublicBeritaController::class, 'index'])->name('public.berita.index');
@@ -72,10 +94,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('admin/metrics', \App\Http\Controllers\Admin\PerformanceMetricController::class);
     Route::resource('admin/statistics', \App\Http\Controllers\Admin\StatisticController::class);
     Route::resource('admin/agendas', \App\Http\Controllers\Admin\AgendaController::class);
-    
-    // Kelembagaan (Layanan)
-    Route::get('/layanan', [App\Http\Controllers\PublicLayananController::class, 'index'])->name('public.layanan.index');
-    Route::get('/layanan/{id}', [App\Http\Controllers\PublicLayananController::class, 'show'])->name('public.layanan.show');
     
     // Public Agenda Routes
     Route::get('/agenda', [App\Http\Controllers\PublicAgendaController::class, 'index'])->name('public.agendas.index');

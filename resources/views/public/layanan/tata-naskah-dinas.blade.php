@@ -1,14 +1,14 @@
-<x-public-layout :title="'SOP Pelayanan — Tata Laksana'" :metaDescription="'Dokumen Standar Operasional Prosedur (SOP) pelaksanaan tugas dan fungsi pelayanan publik Bagian Organisasi Sekretariat Daerah Kota Padang'">
+<x-public-layout :title="'Tata Naskah Dinas — Tata Laksana'" :metaDescription="'Dokumen Pedoman Tata Naskah Dinas dan penyusunan tata persuratan di lingkungan Bagian Organisasi Sekretariat Daerah Kota Padang'">
 
     {{-- PAGE HEADER --}}
     <section class="pb-4 mb-8 border-b border-gray-200/60 max-w-7xl mx-auto px-5 lg:px-8">
-        <h1 class="text-[28px] lg:text-3xl font-black text-[#1a202c] tracking-tight mb-2">SOP Pelayanan</h1>
+        <h1 class="text-[28px] lg:text-3xl font-black text-[#1a202c] tracking-tight mb-2">Tata Naskah Dinas</h1>
         <nav class="flex items-center gap-2 text-[12px] font-medium text-gray-500">
             <a href="/" class="hover:text-blue-600 transition-colors text-[#1a202c]">Beranda</a>
             <i class="ph-bold ph-caret-right text-[10px] text-gray-400"></i>
             <span class="text-gray-500">Tata Laksana</span>
             <i class="ph-bold ph-caret-right text-[10px] text-gray-400"></i>
-            <span class="text-blue-600 font-bold">SOP Pelayanan</span>
+            <span class="text-blue-600 font-bold">Tata Naskah Dinas</span>
         </nav>
     </section>
 
@@ -18,16 +18,16 @@
             <div class="relative bg-white rounded-[2.5rem] p-10 lg:p-14 shadow-[0_4px_25px_rgb(0,0,0,0.03)] border overflow-hidden" style="border: 1px solid #bfdbfe;">
                 <div class="absolute -top-10 -right-10 w-64 h-64 rounded-full opacity-50 pointer-events-none" style="background-color: #eff6ff;"></div>
                 <div class="absolute bottom-0 right-0 opacity-[0.04] pointer-events-none">
-                    <i class="ph-fill ph-flow-arrow text-[16rem]" style="color: #2563eb;"></i>
+                    <i class="ph-fill ph-stamp text-[16rem]" style="color: #2563eb;"></i>
                 </div>
                 <div class="relative z-10 flex flex-col lg:flex-row items-start lg:items-center gap-6">
                     <div class="w-20 h-20 rounded-3xl flex items-center justify-center shrink-0" style="background-color: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe;">
-                        <i class="ph-bold ph-flow-arrow text-4xl"></i>
+                        <i class="ph-bold ph-stamp text-4xl"></i>
                     </div>
                     <div class="flex-1">
-                        <h2 class="text-2xl lg:text-3xl font-black mb-3 tracking-tight" style="color: #1e40af;">Standar Operasional Prosedur (SOP)</h2>
+                        <h2 class="text-2xl lg:text-3xl font-black mb-3 tracking-tight" style="color: #1e40af;">Pedoman Tata Naskah Dinas</h2>
                         <p class="text-gray-700 font-medium leading-relaxed max-w-2xl">
-                            Pedoman baku pelaksanaan alur dan tahapan kerja aparatur secara sistematis guna menjamin kepastian, efektivitas, serta akuntabilitas penyelenggaraan tugas di lingkungan Bagian Organisasi Pemerintah Kota Padang.
+                            Panduan baku pengelolaan komunikasi tulis, tata bahasa persuratan dinas, tata letak, serta pembakuan bentuk dan kewenangan penandatanganan dokumen resmi di lingkungan Pemerintah Kota Padang.
                         </p>
                     </div>
                 </div>
@@ -42,17 +42,17 @@
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8 pb-4 border-b border-gray-100">
                 <h3 class="text-xl font-black flex items-center gap-3 shrink-0" style="color: #1e40af;">
                     <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style="background-color: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe;">
-                        <i class="ph-bold ph-files text-xl"></i>
+                        <i class="ph-bold ph-folder-simple text-xl"></i>
                     </div>
-                    <span>Daftar Dokumen SOP Pelayanan</span>
+                    <span>Daftar Dokumen Tata Naskah Dinas</span>
                 </h3>
 
                 {{-- FILTER & SEARCH BAR --}}
-                <form action="{{ route('public.sop') }}" method="GET" class="flex flex-wrap sm:flex-nowrap items-center gap-3 sm:gap-3.5">
+                <form action="{{ route('public.tata-naskah-dinas') }}" method="GET" class="flex flex-wrap sm:flex-nowrap items-center gap-3 sm:gap-3.5">
                     {{-- Search Input (Flexbox Wrapper) --}}
                     <div class="flex items-center bg-white rounded-xl shadow-sm px-3.5 py-2 w-full sm:w-64 shrink-0" style="border: 1px solid #cbd5e1;">
                         <i class="ph-bold ph-magnifying-glass text-gray-400 text-sm mr-2.5 shrink-0"></i>
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari judul / nomor SOP..." 
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari judul / nomor dokumen..." 
                                class="w-full bg-transparent border-0 p-0 text-xs font-bold text-gray-800 focus:outline-none focus:ring-0 placeholder-gray-400" style="outline: none; border: none; background: transparent; width: 100%;">
                     </div>
 
@@ -78,7 +78,7 @@
                     </button>
 
                     @if(request()->filled('search') || (request()->filled('year') && request('year') != 'all'))
-                        <a href="{{ route('public.sop') }}" class="px-4 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-200 transition-colors flex items-center justify-center gap-1 shrink-0" title="Reset Filter">
+                        <a href="{{ route('public.tata-naskah-dinas') }}" class="px-4 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-200 transition-colors flex items-center justify-center gap-1 shrink-0" title="Reset Filter">
                             <i class="ph-bold ph-arrow-counter-clockwise text-xs"></i>
                             <span>Reset</span>
                         </a>
@@ -101,7 +101,7 @@
                                     </div>
                                     <div class="flex flex-col items-end gap-1">
                                         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black tracking-wide shadow-sm" style="background-color: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe;">
-                                            <i class="ph-fill ph-check-circle text-blue-600"></i> SOP Pelayanan
+                                            <i class="ph-fill ph-check-circle text-blue-600"></i> Tata Naskah Dinas
                                         </span>
                                         @if($doc->year)
                                             <span class="text-[11px] font-extrabold text-gray-400">Tahun {{ $doc->year }}</span>
@@ -145,13 +145,13 @@
                     </div>
                     @if(request()->filled('search') || (request()->filled('year') && request('year') != 'all'))
                         <h4 class="text-xl font-black text-gray-700 mb-2">Tidak Ada Dokumen Ditemukan</h4>
-                        <p class="text-sm text-gray-500 font-medium max-w-md mx-auto mb-6">Tidak ada dokumen SOP Pelayanan yang sesuai dengan kata kunci pencarian atau filter tahun yang dipilih.</p>
-                        <a href="{{ route('public.sop') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs shadow-md transition-all duration-300 hover:opacity-90" style="background-color: #2563eb; color: #ffffff;">
+                        <p class="text-sm text-gray-500 font-medium max-w-md mx-auto mb-6">Tidak ada dokumen Tata Naskah Dinas yang sesuai dengan kata kunci pencarian atau filter tahun yang dipilih.</p>
+                        <a href="{{ route('public.tata-naskah-dinas') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs shadow-md transition-all duration-300 hover:opacity-90" style="background-color: #2563eb; color: #ffffff;">
                             <i class="ph-bold ph-arrow-counter-clockwise"></i> Reset Filter
                         </a>
                     @else
-                        <h4 class="text-xl font-black text-gray-700 mb-2">Belum Ada Dokumen SOP Pelayanan</h4>
-                        <p class="text-sm text-gray-500 font-medium max-w-md mx-auto">Dokumen SOP Pelayanan untuk kategori ini akan segera diperbarui oleh administrator.</p>
+                        <h4 class="text-xl font-black text-gray-700 mb-2">Belum Ada Dokumen Tata Naskah Dinas</h4>
+                        <p class="text-sm text-gray-500 font-medium max-w-md mx-auto">Dokumen Tata Naskah Dinas untuk kategori ini akan segera diperbarui oleh administrator.</p>
                     @endif
                 </div>
             @endif

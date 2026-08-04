@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
         rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" integrity="sha384-/rJKQnzOkEo+daG0jMjU1IwwY9unxt1NBw3Ef2fmOJ3PW/TfAg2KXVoWwMZQZtw9" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -40,8 +40,13 @@
         </script>
     @endif
 
-    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1" integrity="sha384-cPFV+/abYd3INVFHPmSKpBmcnH+Q+bTZW7dv/EiuShUNPkHyFmRF8PsL7Ibfvunk" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js" integrity="sha384-IntiqSJhM3wcHA/7O7MOj9GM6+qIPnjxugImfm81JveaSWrT7m3K0CfsWwOscMCu" crossorigin="anonymous"></script>
+    {{-- Phosphor Icons (jsDelivr Fast CDN) --}}
+    <script src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/index.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
     <style>
         html, body {
@@ -57,11 +62,6 @@
 
         .font-script {
             font-family: 'Caveat', cursive;
-        }
-
-        ::selection {
-            background: #f59e0b;
-            color: #fff;
         }
 
         .hero-pattern {
@@ -103,24 +103,35 @@
 
     {{-- ═══ HERO ═══ --}}
     <section id="beranda"
-        class="relative overflow-hidden bg-white min-h-screen flex flex-col justify-center pt-36 lg:pt-32">
+        class="relative overflow-hidden bg-white h-screen min-h-[700px] max-h-[1080px] flex flex-col justify-center pt-24 lg:pt-20">
 
         {{-- Dot Pattern Background --}}
         <div class="absolute inset-0 z-0 opacity-50"
             style="background-image: radial-gradient(#fcd34d 1.5px, transparent 1.5px); background-size: 36px 36px;">
         </div>
 
-        {{-- Absolute Huge Image (Full Background) --}}
-        <div class="absolute inset-0 w-full h-full pointer-events-none z-0">
-            <img src="{{ asset('assets/img/hero2.webp') }}" alt="Bagian Organisasi Sekretariat Daerah Kota Padang"
-                class="w-full h-full object-cover object-bottom"
-                onerror="this.src='https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=900&q=80'">
+        {{-- Background Image --}}
+        <div class="absolute top-0 right-0 w-full lg:w-[75%] h-full pointer-events-none z-0" 
+             style="mask-image: linear-gradient(to right, transparent 0%, black 15%); -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%);">
+            @php
+                $activeBanner = isset($banners) && $banners->count() > 0 ? $banners->first() : null;
+            @endphp
+            
+            @if($activeBanner)
+                <img src="{{ asset('storage/' . $activeBanner->image) }}" alt="{{ $activeBanner->title }}"
+                    class="w-full h-full object-cover object-[75%_center] md:object-right"
+                    onerror="this.src='{{ asset('assets/img/hero3.webp') }}'">
+            @else
+                <img src="{{ asset('assets/img/hero3.webp') }}" alt="Bagian Organisasi Sekretariat Daerah Kota Padang"
+                    class="w-full h-full object-cover object-[75%_center] md:object-right"
+                    onerror="this.src='https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=900&q=80'">
+            @endif
         </div>
 
         {{-- Main Hero Content --}}
         <div class="flex-1 flex flex-col justify-center">
             <div class="w-full max-w-[90rem] mx-auto px-5 lg:px-12 relative z-10">
-                <div class="w-full lg:w-[55%] relative z-20">
+                <div class="w-full lg:w-[55%] relative z-20 mt-4 lg:mt-6">
                     <div
                         class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400 text-[#1e293b] text-xs font-black tracking-widest uppercase mb-6 shadow-sm">
                         <span class="relative flex h-2 w-2">
@@ -151,7 +162,7 @@
                     </p>
 
                     <div class="flex flex-wrap gap-4">
-                        <a href="#profil"
+                        <a href="{{ url('/profil') }}"
                             class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-brand-500 text-white font-bold text-[15px] rounded-xl hover:bg-brand-600 transition-colors shadow-lg shadow-brand-500/25">
                             Profil Organisasi <i class="ph ph-arrow-right"></i>
                         </a>
@@ -167,38 +178,44 @@
             <div class="relative z-20 w-full mt-12 lg:mt-20">
                 <div class="max-w-[90rem] mx-auto px-5 lg:px-12 pb-8">
                     <div class="flex flex-wrap lg:flex-nowrap gap-4">
-                        @foreach($statistics as $stat)
-                        @if($loop->last && $loop->count > 1)
-                            {{-- The last statistic is highlighted with solid brand bg --}}
-                            <div class="w-full sm:w-full lg:flex-1 rounded-2xl p-5 shadow-lg bg-brand-500">
-                                <div class="flex items-center gap-3">
-                                    <div
-                                        class="w-10 h-10 rounded-xl bg-white bg-opacity-20 text-white flex items-center justify-center">
-                                        <i class="ph-duotone {{ $stat->icon }} text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-2xl font-black text-white leading-none">{{ $stat->value }}</p>
-                                        <p class="text-[11px] text-brand-100 font-semibold mt-1">{{ $stat->name }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        @else
-                            {{-- Normal statistic card --}}
-                            <div
-                                class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                                <div class="flex items-center gap-3">
-                                    <div
-                                        class="w-10 h-10 rounded-xl bg-{{ $stat->color }}-50 text-{{ $stat->color }}-500 flex items-center justify-center">
-                                        <i class="ph-duotone {{ $stat->icon }} text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-2xl font-black text-gray-900 leading-none">{{ $stat->value }}</p>
-                                        <p class="text-[11px] text-gray-500 font-semibold mt-1">{{ $stat->name }}</p>
+                        @foreach($metrics as $type => $metric)
+                            @php
+                                $config = $metricConfig[$type] ?? ['icon' => 'ph-chart-bar', 'color' => 'slate', 'label' => str_replace('_', ' ', $type)];
+                                // Format number to remove trailing .00 if integer
+                                $formattedValue = rtrim(rtrim(number_format($metric->score, 2, ',', '.'), '0'), ',');
+                            @endphp
+                            @if($loop->last && $loop->count > 1)
+                                {{-- The last statistic is highlighted with solid brand bg --}}
+                                <div class="w-full sm:w-full lg:flex-1 rounded-2xl p-5 shadow-lg bg-brand-500">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-10 h-10 rounded-xl bg-white bg-opacity-20 text-white flex items-center justify-center">
+                                            <i class="ph-duotone {{ $config['icon'] }} text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-2xl font-black text-white leading-none">{{ $formattedValue }}</p>
+                                            <p class="text-[11px] text-brand-100 font-semibold mt-1">{{ $config['label'] }}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endif
-                    @endforeach
+                            @else
+                                {{-- Normal statistic card --}}
+                                <div
+                                    class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-10 h-10 rounded-xl bg-{{ $config['color'] }}-50 text-{{ $config['color'] }}-500 flex items-center justify-center">
+                                            <i class="ph-duotone {{ $config['icon'] }} text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-2xl font-black text-gray-900 leading-none">{{ $formattedValue }}</p>
+                                            <p class="text-[11px] text-gray-500 font-semibold mt-1">{{ $config['label'] }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
@@ -823,8 +840,15 @@
         </div>
 
         {{-- Massive Edge-to-Edge Map Background --}}
+        @php
+            $defaultMap = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2683976643275!2d100.35692807531795!3d-0.9512986353524716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b948c7c72e11%3A0x6771787fa612c99f!2sSekretariat%20Daerah%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1785310213215!5m2!1sid!2sid';
+            $mapEmbed = \App\Models\SiteSetting::getValue('google_maps_embed') ?: $defaultMap;
+            
+            // Extract a search link for the button if possible, else default
+            $mapSearchLink = 'https://www.google.com/maps/search/Sekretariat+Daerah+Kota+Padang';
+        @endphp
         <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2683976643275!2d100.35692807531795!3d-0.9512986353524716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b948c7c72e11%3A0x6771787fa612c99f!2sSekretariat%20Daerah%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1785310213215!5m2!1sid!2sid"
+            src="{{ $mapEmbed }}"
             class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 mix-blend-luminosity pointer-events-none"
             style="border:0;" allowfullscreen="" loading="lazy"></iframe>
 
@@ -857,7 +881,7 @@
                         style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     <div class="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[2rem] pointer-events-none">
                     </div>
-                    <a href="https://www.google.com/maps/search/Sekretariat+Daerah+Kota+Padang" target="_blank"
+                    <a href="{{ $mapSearchLink }}" target="_blank"
                         class="absolute bottom-4 left-4 right-4 bg-gray-900/90 backdrop-blur-md border border-white/10 text-white px-5 py-3 rounded-xl text-xs font-bold hover:bg-brand-500 transition-colors flex items-center justify-between group/btn">
                         <span>Lihat di Google Maps</span>
                         <i
@@ -1073,7 +1097,7 @@
     </script>
     
     {{-- AOS Scroll Animations --}}
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" integrity="sha384-wziAfh6b/qT+3LrqebF9WeK4+J5sehS6FA10J1t3a866kJ/fvU5UwofWnQyzLtwu" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Dynamically add data-aos to section containers to avoid hardcoding everywhere

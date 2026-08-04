@@ -9,8 +9,12 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800,900" rel="stylesheet" />
     
-    {{-- Phosphor Icons --}}
-    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1" integrity="sha384-cPFV+/abYd3INVFHPmSKpBmcnH+Q+bTZW7dv/EiuShUNPkHyFmRF8PsL7Ibfvunk" crossorigin="anonymous"></script>
+    {{-- Phosphor Icons (jsDelivr Fast CDN) --}}
+    <script src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/index.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/duotone/style.css">
 
     {{-- Tailwind & Vite --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -50,19 +54,25 @@
                     
                     {{-- Left Text Box --}}
                     <div class="flex-1">
-                        <h2 class="text-[22px] lg:text-3xl font-black text-[#1a202c] mb-3">Sambutan Kepala Bagian Organisasi</h2>
+                        <h2 class="text-[22px] lg:text-3xl font-black text-[#1a202c] mb-3">
+                            {{ isset($pages['sambutan']) && $pages['sambutan']->title ? $pages['sambutan']->title : 'Sambutan Kepala Bagian Organisasi' }}
+                        </h2>
                         <div class="w-16 h-[3px] bg-brand-400 mb-6"></div>
                         
                         <div class="text-gray-600 font-medium text-[14px] leading-relaxed space-y-4 mb-8">
-                            <p class="font-bold text-[#1a202c]">Assalamu'alaikum Wr. Wb.</p>
-                            <p>Selamat datang di website resmi Bagian Organisasi Sekretariat Daerah Kota Padang. Website ini kami hadirkan sebagai wujud komitmen dalam memberikan informasi yang transparan, layanan yang prima, serta kemudahan akses bagi seluruh masyarakat dan perangkat daerah.</p>
-                            <p>Kami berharap website ini dapat menjadi sarana komunikasi yang efektif serta mendukung terwujudnya pelayanan yang profesional, akuntabel, dan terpercaya.</p>
-                            <p>Wassalamu'alaikum Wr. Wb.</p>
+                            @if(isset($pages['sambutan']) && $pages['sambutan']->content)
+                                {!! $pages['sambutan']->content !!}
+                            @else
+                                <p class="font-bold text-[#1a202c]">Assalamu'alaikum Wr. Wb.</p>
+                                <p>Selamat datang di website resmi Bagian Organisasi Sekretariat Daerah Kota Padang. Website ini kami hadirkan sebagai wujud komitmen dalam memberikan informasi yang transparan, layanan yang prima, serta kemudahan akses bagi seluruh masyarakat dan perangkat daerah.</p>
+                                <p>Kami berharap website ini dapat menjadi sarana komunikasi yang efektif serta mendukung terwujudnya pelayanan yang profesional, akuntabel, dan terpercaya.</p>
+                                <p>Wassalamu'alaikum Wr. Wb.</p>
+                            @endif
                         </div>
 
                         <div>
-                            <h3 class="text-[17px] font-black text-[#1a202c]">Ir. Yudi Indra, M.M.</h3>
-                            <p class="text-[13px] font-bold text-brand-400 mt-0.5">Kepala Bagian Organisasi</p>
+                            <h3 class="text-[17px] font-black text-[#1a202c]">{{ isset($kepala) && $kepala ? $kepala->nama : 'Ir. Yudi Indra, M.M.' }}</h3>
+                            <p class="text-[13px] font-bold text-brand-400 mt-0.5">{{ isset($kepala) && $kepala ? $kepala->jabatan : 'Kepala Bagian Organisasi' }}</p>
                         </div>
                     </div>
 
@@ -70,7 +80,12 @@
                     <div class="relative w-full lg:w-[42%] px-2 lg:px-6">
                         <div class="absolute inset-0 bg-[#fdf2d9] rounded-[2rem] transform translate-x-4 translate-y-4 lg:translate-x-6 lg:translate-y-6 z-0"></div>
                         <div class="relative z-10 w-full aspect-[4/3] rounded-[2rem] overflow-hidden bg-[#f0f2f5]">
-                            <img src="/assets/img/staff/kepala_pejabat_khaki_1785375439464.png" alt="Kepala Bagian Organisasi" class="w-full h-full object-cover object-top">
+                            @php
+                                $kepalaFoto = (isset($kepala) && $kepala && $kepala->foto) 
+                                    ? (\Illuminate\Support\Str::startsWith($kepala->foto, ['http', '/']) ? $kepala->foto : \Illuminate\Support\Facades\Storage::url($kepala->foto))
+                                    : '/assets/img/staff/kepala_pejabat_khaki_1785375439464.png';
+                            @endphp
+                            <img src="{{ $kepalaFoto }}" alt="{{ isset($kepala) && $kepala ? $kepala->nama : 'Kepala Bagian Organisasi' }}" class="w-full h-full object-cover object-top">
                         </div>
                     </div>
 
@@ -89,9 +104,13 @@
                             <i class="ph-bold ph-eye text-[26px]"></i>
                         </div>
                         <h3 class="text-2xl font-black text-[#1a202c] mb-4">Visi</h3>
-                        <p class="text-[13.5px] text-gray-600 font-medium leading-relaxed">
-                            Terwujudnya pelayanan umum yang profesional, efektif, efisien dan berkelanjutan dalam mendukung tata kelola pemerintahan yang baik di Kota Padang.
-                        </p>
+                        <div class="text-[13.5px] text-gray-600 font-medium leading-relaxed space-y-2">
+                            @if(isset($pages['visi']) && $pages['visi']->content)
+                                {!! $pages['visi']->content !!}
+                            @else
+                                <p>Terwujudnya pelayanan umum yang profesional, efektif, efisien dan berkelanjutan dalam mendukung tata kelola pemerintahan yang baik di Kota Padang.</p>
+                            @endif
+                        </div>
                     </div>
 
                     {{-- Misi --}}
@@ -100,24 +119,30 @@
                             <i class="ph-bold ph-target text-[26px]"></i>
                         </div>
                         <h3 class="text-2xl font-black text-[#1a202c] mb-4">Misi</h3>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
-                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
-                                Meningkatkan kualitas pelayanan umum yang cepat, tepat dan transparan.
-                            </li>
-                            <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
-                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
-                                Mengoptimalkan pengelolaan aset, rumah tangga dan dokumentasi.
-                            </li>
-                            <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
-                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
-                                Mewujudkan tata kelola administrasi yang akuntabel dan inovatif.
-                            </li>
-                            <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
-                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
-                                Mendukung pelaksanaan tugas pemerintahan daerah secara efektif dan efisien.
-                            </li>
-                        </ul>
+                        @if(isset($pages['misi']) && $pages['misi']->content)
+                            <div class="space-y-3">
+                                {!! str_replace('<p>', '<div class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed"><span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span><div>', str_replace('</p>', '</div></div>', $pages['misi']->content)) !!}
+                            </div>
+                        @else
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
+                                    Meningkatkan kualitas pelayanan umum yang cepat, tepat dan transparan.
+                                </li>
+                                <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
+                                    Mengoptimalkan pengelolaan aset, rumah tangga dan dokumentasi.
+                                </li>
+                                <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
+                                    Mewujudkan tata kelola administrasi yang akuntabel dan inovatif.
+                                </li>
+                                <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
+                                    Mendukung pelaksanaan tugas pemerintahan daerah secara efektif dan efisien.
+                                </li>
+                            </ul>
+                        @endif
                     </div>
 
                     {{-- Tujuan --}}
@@ -126,24 +151,30 @@
                             <i class="ph-bold ph-flag-banner text-[26px]"></i>
                         </div>
                         <h3 class="text-2xl font-black text-[#1a202c] mb-4">Tujuan</h3>
-                        <ul class="space-y-3">
-                            <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
-                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
-                                Memberikan pelayanan umum yang prima bagi seluruh perangkat daerah.
-                            </li>
-                            <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
-                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
-                                Menyediakan sarana dan prasarana kerja yang memadai.
-                            </li>
-                            <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
-                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
-                                Mendukung kelancaran administrasi dan operasional Pemerintah Kota Padang.
-                            </li>
-                            <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
-                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
-                                Mewujudkan lingkungan kerja yang tertib, aman dan nyaman.
-                            </li>
-                        </ul>
+                        @if(isset($pages['tujuan']) && $pages['tujuan']->content)
+                            <div class="space-y-3">
+                                {!! str_replace('<p>', '<div class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed"><span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span><div>', str_replace('</p>', '</div></div>', $pages['tujuan']->content)) !!}
+                            </div>
+                        @else
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
+                                    Memberikan pelayanan umum yang prima bagi seluruh perangkat daerah.
+                                </li>
+                                <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
+                                    Menyediakan sarana dan prasarana kerja yang memadai.
+                                </li>
+                                <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
+                                    Mendukung kelancaran administrasi dan operasional Pemerintah Kota Padang.
+                                </li>
+                                <li class="flex items-start gap-3 text-[13.5px] text-gray-600 font-medium leading-relaxed">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 shrink-0"></span>
+                                    Mewujudkan lingkungan kerja yang tertib, aman dan nyaman.
+                                </li>
+                            </ul>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -158,30 +189,47 @@
                             <i class="ph-bold ph-briefcase text-brand-400 text-3xl"></i>
                             <h2 class="text-[26px] font-black text-[#1a202c]">Tupoksi</h2>
                         </div>
-                        <p class="text-gray-600 font-medium text-[13.5px] leading-relaxed mb-6">
-                            Bagian Organisasi Sekretariat Daerah Kota Padang mempunyai tugas melaksanakan penyiapan bahan perumusan kebijakan daerah, pengkoordinasian perumusan kebijakan daerah, pengkoordinasian pelaksanaan tugas perangkat daerah, pemantauan dan evaluasi pelaksanaan kebijakan daerah di bidang organisasi.
-                        </p>
-                        <a href="#" class="inline-flex items-center gap-2 px-6 py-2.5 bg-white border border-brand-200 text-brand-400 font-bold rounded-full hover:bg-brand-50 transition-colors text-[13px]">
+                        <div class="text-gray-600 font-medium text-[13.5px] leading-relaxed mb-6 space-y-2">
+                            @if(isset($pages['tugas-fungsi']) && $pages['tugas-fungsi']->content)
+                                {!! $pages['tugas-fungsi']->content !!}
+                            @else
+                                <p>Bagian Organisasi Sekretariat Daerah Kota Padang mempunyai tugas melaksanakan penyiapan bahan perumusan kebijakan daerah, pengkoordinasian perumusan kebijakan daerah, pengkoordinasian pelaksanaan tugas perangkat daerah, pemantauan dan evaluasi pelaksanaan kebijakan daerah di bidang organisasi.</p>
+                            @endif
+                        </div>
+                        <a href="#profil-pegawai" class="inline-flex items-center gap-2 px-6 py-2.5 bg-white border border-brand-200 text-brand-400 font-bold rounded-full hover:bg-brand-50 transition-colors text-[13px]">
                             Selengkapnya <i class="ph-bold ph-arrow-right"></i>
                         </a>
                     </div>
                     <div class="w-full lg:w-[60%] space-y-3 lg:mt-2">
-                        <div class="flex items-center gap-5 bg-[#fffaf3] p-4 lg:p-5 rounded-2xl border border-[#ffe8c7]">
-                            <span class="text-brand-400 font-bold text-[15px] w-8 text-center shrink-0">01</span>
-                            <p class="text-[13px] font-bold text-[#1a202c]">Melaksanakan urusan ketatausahaan, kearsipan, dan kerumahtanggaan.</p>
-                        </div>
-                        <div class="flex items-center gap-5 bg-[#fffaf3] p-4 lg:p-5 rounded-2xl border border-[#ffe8c7]">
-                            <span class="text-brand-400 font-bold text-[15px] w-8 text-center shrink-0">02</span>
-                            <p class="text-[13px] font-bold text-[#1a202c]">Mengelola administrasi aset dan perlengkapan daerah.</p>
-                        </div>
-                        <div class="flex items-center gap-5 bg-[#fffaf3] p-4 lg:p-5 rounded-2xl border border-[#ffe8c7]">
-                            <span class="text-brand-400 font-bold text-[15px] w-8 text-center shrink-0">03</span>
-                            <p class="text-[13px] font-bold text-[#1a202c]">Menyelenggarakan dokumentasi dan publikasi kegiatan pimpinan daerah.</p>
-                        </div>
-                        <div class="flex items-center gap-5 bg-[#fffaf3] p-4 lg:p-5 rounded-2xl border border-[#ffe8c7]">
-                            <span class="text-brand-400 font-bold text-[15px] w-8 text-center shrink-0">04</span>
-                            <p class="text-[13px] font-bold text-[#1a202c]">Memberikan pelayanan administratif kepada perangkat daerah dan masyarakat.</p>
-                        </div>
+                        @if(isset($pages['fungsi']) && $pages['fungsi']->content)
+                            @php
+                                preg_match_all('/<p>(.*?)<\/p>/is', $pages['fungsi']->content, $matches);
+                                $fungsiItems = !empty($matches[1]) ? $matches[1] : [$pages['fungsi']->content];
+                            @endphp
+                            @foreach($fungsiItems as $index => $item)
+                                <div class="flex items-center gap-5 bg-[#fffaf3] p-4 lg:p-5 rounded-2xl border border-[#ffe8c7]">
+                                    <span class="text-brand-400 font-bold text-[15px] w-8 text-center shrink-0">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                                    <div class="text-[13px] font-bold text-[#1a202c]">{!! $item !!}</div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="flex items-center gap-5 bg-[#fffaf3] p-4 lg:p-5 rounded-2xl border border-[#ffe8c7]">
+                                <span class="text-brand-400 font-bold text-[15px] w-8 text-center shrink-0">01</span>
+                                <p class="text-[13px] font-bold text-[#1a202c]">Melaksanakan urusan ketatausahaan, kearsipan, dan kerumahtanggaan.</p>
+                            </div>
+                            <div class="flex items-center gap-5 bg-[#fffaf3] p-4 lg:p-5 rounded-2xl border border-[#ffe8c7]">
+                                <span class="text-brand-400 font-bold text-[15px] w-8 text-center shrink-0">02</span>
+                                <p class="text-[13px] font-bold text-[#1a202c]">Mengelola administrasi aset dan perlengkapan daerah.</p>
+                            </div>
+                            <div class="flex items-center gap-5 bg-[#fffaf3] p-4 lg:p-5 rounded-2xl border border-[#ffe8c7]">
+                                <span class="text-brand-400 font-bold text-[15px] w-8 text-center shrink-0">03</span>
+                                <p class="text-[13px] font-bold text-[#1a202c]">Menyelenggarakan dokumentasi dan publikasi kegiatan pimpinan daerah.</p>
+                            </div>
+                            <div class="flex items-center gap-5 bg-[#fffaf3] p-4 lg:p-5 rounded-2xl border border-[#ffe8c7]">
+                                <span class="text-brand-400 font-bold text-[15px] w-8 text-center shrink-0">04</span>
+                                <p class="text-[13px] font-bold text-[#1a202c]">Memberikan pelayanan administratif kepada perangkat daerah dan masyarakat.</p>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -196,50 +244,33 @@
                     </div>
                     <div class="pt-1 text-center md:text-left">
                         <h3 class="text-xl font-black text-brand-500 mb-2">Maklumat Pelayanan</h3>
-                        <p class="text-[#1a202c] font-medium text-[13.5px] leading-relaxed max-w-4xl opacity-80">
-                            Dengan ini kami menyatakan sanggup menyelenggarakan pelayanan sesuai standar pelayanan yang telah ditetapkan, memberikan pelayanan dengan sepenuh hati, transparan, cepat, tepat, dan akuntabel serta bersedia menerima sanksi sesuai peraturan perundang-undangan.
-                        </p>
+                        <div class="text-[#1a202c] font-medium text-[13.5px] leading-relaxed max-w-4xl opacity-80 space-y-2">
+                            @if(isset($pages['maklumat-pelayanan']) && $pages['maklumat-pelayanan']->content)
+                                {!! $pages['maklumat-pelayanan']->content !!}
+                            @else
+                                <p>Dengan ini kami menyatakan sanggup menyelenggarakan pelayanan sesuai standar pelayanan yang telah ditetapkan, memberikan pelayanan dengan sepenuh hati, transparan, cepat, tepat, dan akuntabel serta bersedia menerima sanksi sesuai peraturan perundang-undangan.</p>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         {{-- PROFIL PEGAWAI --}}
-        <section class="mb-14">
+        <section id="profil-pegawai" class="mb-14">
             <div class="max-w-7xl mx-auto px-5 lg:px-8">
                 <div class="flex items-center justify-between mb-8">
                     <div class="flex items-center gap-3">
                         <i class="ph-bold ph-users-three text-brand-400 text-3xl"></i>
                         <h2 class="text-[26px] font-black text-[#1a202c]">Profil Pegawai</h2>
                     </div>
-                    <a href="#" class="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full border border-brand-200 text-brand-500 font-bold text-[13px] hover:bg-brand-50 transition-colors bg-white">
-                        Lihat Semua Pegawai <i class="ph-bold ph-arrow-right"></i>
-                    </a>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5">
-                    @php
-                        $staffs = [
-                            ['name' => 'Ir. Yudi Indra, M.M.', 'role' => 'Kepala Bagian Organisasi', 'img' => '/assets/img/staff/kepala_pejabat_khaki_1785375439464.png'],
-                            ['name' => 'Dra. Rina Novita', 'role' => 'Kasubbag Tata Usaha', 'img' => '/assets/img/staff/rina_rawita_1785375153231.png'],
-                            ['name' => 'Hendra Putra, S.Kom.', 'role' => 'Kasubbag Rumah Tangga', 'img' => '/assets/img/staff/hendra_putra_1785375385658.png'],
-                            ['name' => 'Yeni Martina, S.E.', 'role' => 'Kasubbag Perlengkapan', 'img' => '/assets/img/staff/yeni_martina_1785375402271.png'],
-                            ['name' => 'Feri Andika, A.Md.', 'role' => 'Pengadministrasi Umum', 'img' => '/assets/img/staff/feri_andika_1785375418991.png'],
-                        ];
-                    @endphp
-
-                    @foreach($staffs as $staff)
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-[0_4px_25px_rgb(0,0,0,0.03)] flex flex-col h-full">
-                        <div class="bg-[#e4e7ec] aspect-[4/5] w-full">
-                            <img src="{{ $staff['img'] }}" alt="{{ $staff['name'] }}" class="w-full h-full object-cover object-top">
-                        </div>
-                        <div class="p-4 text-center bg-white flex-1 flex flex-col justify-center">
-                            <h4 class="font-bold text-[#1a202c] text-[13px] mb-0.5 line-clamp-1" title="{{ $staff['name'] }}">{{ $staff['name'] }}</h4>
-                            <p class="text-[11px] text-gray-500 font-medium line-clamp-2">{{ $staff['role'] }}</p>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
+                @if(isset($pegawais) && $pegawais->count() > 0)
+                    <x-pegawai-cards :pegawais="$pegawais" columns="5" />
+                @else
+                    <div class="text-center py-12 text-gray-400 font-medium">Belum ada data pegawai yang dipublikasikan.</div>
+                @endif
 
                 <div class="flex justify-center gap-1.5 mt-8">
                     <span class="w-6 h-1.5 rounded-full bg-brand-400"></span>
