@@ -168,38 +168,44 @@
             <div class="relative z-20 w-full mt-12 lg:mt-20">
                 <div class="max-w-[90rem] mx-auto px-5 lg:px-12 pb-8">
                     <div class="flex flex-wrap lg:flex-nowrap gap-4">
-                        @foreach($statistics as $stat)
-                        @if($loop->last && $loop->count > 1)
-                            {{-- The last statistic is highlighted with solid brand bg --}}
-                            <div class="w-full sm:w-full lg:flex-1 rounded-2xl p-5 shadow-lg bg-brand-500">
-                                <div class="flex items-center gap-3">
-                                    <div
-                                        class="w-10 h-10 rounded-xl bg-white bg-opacity-20 text-white flex items-center justify-center">
-                                        <i class="ph-duotone {{ $stat->icon }} text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-2xl font-black text-white leading-none">{{ $stat->value }}</p>
-                                        <p class="text-[11px] text-brand-100 font-semibold mt-1">{{ $stat->name }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        @else
-                            {{-- Normal statistic card --}}
-                            <div
-                                class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                                <div class="flex items-center gap-3">
-                                    <div
-                                        class="w-10 h-10 rounded-xl bg-{{ $stat->color }}-50 text-{{ $stat->color }}-500 flex items-center justify-center">
-                                        <i class="ph-duotone {{ $stat->icon }} text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-2xl font-black text-gray-900 leading-none">{{ $stat->value }}</p>
-                                        <p class="text-[11px] text-gray-500 font-semibold mt-1">{{ $stat->name }}</p>
+                        @foreach($metrics as $type => $metric)
+                            @php
+                                $config = $metricConfig[$type] ?? ['icon' => 'ph-chart-bar', 'color' => 'slate', 'label' => str_replace('_', ' ', $type)];
+                                // Format number to remove trailing .00 if integer
+                                $formattedValue = rtrim(rtrim(number_format($metric->score, 2, ',', '.'), '0'), ',');
+                            @endphp
+                            @if($loop->last && $loop->count > 1)
+                                {{-- The last statistic is highlighted with solid brand bg --}}
+                                <div class="w-full sm:w-full lg:flex-1 rounded-2xl p-5 shadow-lg bg-brand-500">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-10 h-10 rounded-xl bg-white bg-opacity-20 text-white flex items-center justify-center">
+                                            <i class="ph-duotone {{ $config['icon'] }} text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-2xl font-black text-white leading-none">{{ $formattedValue }}</p>
+                                            <p class="text-[11px] text-brand-100 font-semibold mt-1">{{ $config['label'] }}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endif
-                    @endforeach
+                            @else
+                                {{-- Normal statistic card --}}
+                                <div
+                                    class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-10 h-10 rounded-xl bg-{{ $config['color'] }}-50 text-{{ $config['color'] }}-500 flex items-center justify-center">
+                                            <i class="ph-duotone {{ $config['icon'] }} text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-2xl font-black text-gray-900 leading-none">{{ $formattedValue }}</p>
+                                            <p class="text-[11px] text-gray-500 font-semibold mt-1">{{ $config['label'] }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
