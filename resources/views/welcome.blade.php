@@ -855,8 +855,15 @@
         </div>
 
         {{-- Massive Edge-to-Edge Map Background --}}
+        @php
+            $defaultMap = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2683976643275!2d100.35692807531795!3d-0.9512986353524716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b948c7c72e11%3A0x6771787fa612c99f!2sSekretariat%20Daerah%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1785310213215!5m2!1sid!2sid';
+            $mapEmbed = \App\Models\SiteSetting::getValue('google_maps_embed') ?: $defaultMap;
+            
+            // Extract a search link for the button if possible, else default
+            $mapSearchLink = 'https://www.google.com/maps/search/Sekretariat+Daerah+Kota+Padang';
+        @endphp
         <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2683976643275!2d100.35692807531795!3d-0.9512986353524716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b948c7c72e11%3A0x6771787fa612c99f!2sSekretariat%20Daerah%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1785310213215!5m2!1sid!2sid"
+            src="{{ $mapEmbed }}"
             class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 mix-blend-luminosity pointer-events-none"
             style="border:0;" allowfullscreen="" loading="lazy"></iframe>
 
@@ -884,12 +891,12 @@
                 <div
                     class="w-full max-w-md mx-auto lg:mx-0 h-[220px] bg-gray-800 rounded-[2rem] overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.4)] border border-white/10 group relative mt-4">
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2683976643275!2d100.35692807531795!3d-0.9512986353524716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b948c7c72e11%3A0x6771787fa612c99f!2sSekretariat%20Daerah%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1785310213215!5m2!1sid!2sid"
+                        src="{{ $mapEmbed }}"
                         class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                         style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     <div class="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[2rem] pointer-events-none">
                     </div>
-                    <a href="https://www.google.com/maps/search/Sekretariat+Daerah+Kota+Padang" target="_blank"
+                    <a href="{{ $mapSearchLink }}" target="_blank"
                         class="absolute bottom-4 left-4 right-4 bg-gray-900/90 backdrop-blur-md border border-white/10 text-white px-5 py-3 rounded-xl text-xs font-bold hover:bg-brand-500 transition-colors flex items-center justify-between group/btn">
                         <span>Lihat di Google Maps</span>
                         <i
