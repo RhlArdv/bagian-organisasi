@@ -47,22 +47,73 @@ class PublicLayananController extends Controller
      * 2. SOP (Standar Operasional Prosedur)
      * Displays all SOP documents from the 'sop-pelayanan' category.
      */
-    public function sop()
+    public function sop(Request $request)
     {
-        $categories = DocumentCategory::byGroup('tata-laksana')->get();
+        $kategori = DocumentCategory::where('slug', 'sop-pelayanan')->first();
+        $years = $kategori ? Document::active()->where('category_id', $kategori->id)->whereNotNull('year')->distinct()->orderBy('year', 'desc')->pluck('year') : collect();
+        $query = $kategori ? Document::active()->where('category_id', $kategori->id) : null;
 
-        $groupedDocuments = [];
-        foreach ($categories as $category) {
-            $groupedDocuments[$category->slug] = [
-                'name' => $category->name,
-                'documents' => Document::active()
-                    ->where('category_id', $category->id)
-                    ->latest()
-                    ->get(),
-            ];
+        if ($query && $request->filled('year') && $request->year != 'all') {
+            $query->where('year', $request->year);
         }
+        if ($query && $request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('document_number', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+        $documents = $query ? $query->latest()->get() : collect();
+        return view('public.layanan.sop', compact('documents', 'kategori', 'years'));
+    }
 
-        return view('public.layanan.sop', compact('groupedDocuments', 'categories'));
+    /**
+     * Peta Proses Bisnis (Tata Laksana)
+     */
+    public function petaProsesBisnis(Request $request)
+    {
+        $kategori = DocumentCategory::where('slug', 'peta-proses-bisnis')->first();
+        $years = $kategori ? Document::active()->where('category_id', $kategori->id)->whereNotNull('year')->distinct()->orderBy('year', 'desc')->pluck('year') : collect();
+        $query = $kategori ? Document::active()->where('category_id', $kategori->id) : null;
+
+        if ($query && $request->filled('year') && $request->year != 'all') {
+            $query->where('year', $request->year);
+        }
+        if ($query && $request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('document_number', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+        $documents = $query ? $query->latest()->get() : collect();
+        return view('public.layanan.peta-proses-bisnis', compact('documents', 'kategori', 'years'));
+    }
+
+    /**
+     * Tata Naskah Dinas (Tata Laksana)
+     */
+    public function tataNaskahDinas(Request $request)
+    {
+        $kategori = DocumentCategory::where('slug', 'tata-naskah-dinas')->first();
+        $years = $kategori ? Document::active()->where('category_id', $kategori->id)->whereNotNull('year')->distinct()->orderBy('year', 'desc')->pluck('year') : collect();
+        $query = $kategori ? Document::active()->where('category_id', $kategori->id) : null;
+
+        if ($query && $request->filled('year') && $request->year != 'all') {
+            $query->where('year', $request->year);
+        }
+        if ($query && $request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('document_number', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+        $documents = $query ? $query->latest()->get() : collect();
+        return view('public.layanan.tata-naskah-dinas', compact('documents', 'kategori', 'years'));
     }
 
     /**
@@ -304,12 +355,16 @@ class PublicLayananController extends Controller
             $slug === 'skm' => route('public.skm'),
             $slug === 'pengelolaan-pengaduan' => route('public.pengelolaan-pengaduan'),
             $slug === 'dokumen-pelayanan-publik' => route('public.dokumen-pelayanan-publik'),
+            $slug === 'sop-pelayanan' => route('public.sop'),
+            $slug === 'peta-proses-bisnis' => route('public.peta-proses-bisnis'),
+            $slug === 'tata-naskah-dinas' => route('public.tata-naskah-dinas'),
             in_array($slug, ['informasi-anjab', 'informasi-abk', 'pedoman-anjab-abk', 'formulir-permohonan']) || str_contains($slug, 'anjab') || str_contains($slug, 'abk') => route('public.anjab-abk', ['tab' => $slug ?: 'informasi-anjab']),
             default => url('/'),
         };
         $isAnjab = in_array($slug, ['informasi-anjab', 'informasi-abk', 'pedoman-anjab-abk', 'formulir-permohonan']) || str_contains($slug, 'anjab') || str_contains($slug, 'abk') || str_contains(strtolower($namaKategori), 'anjab') || str_contains(strtolower($namaKategori), 'abk');
+        $isTataLaksana = in_array($slug, ['sop-pelayanan', 'peta-proses-bisnis', 'tata-naskah-dinas']) || str_contains(strtolower($namaKategori), 'tata laksana') || str_contains(strtolower($namaKategori), 'sop') || str_contains(strtolower($namaKategori), 'peta proses') || str_contains(strtolower($namaKategori), 'tata naskah');
 
-        return view('public.layanan.show-document', compact('document', 'relatedDocuments', 'namaKategori', 'backRoute', 'isAnjab'));
+        return view('public.layanan.show-document', compact('document', 'relatedDocuments', 'namaKategori', 'backRoute', 'isAnjab', 'isTataLaksana'));
     }
 
     /**
