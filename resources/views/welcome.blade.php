@@ -171,8 +171,6 @@
                         </a>
                     </div>
                 </div>
-
-                @endif
             </div>
 
             {{-- Statistics Bar (moved closer to text) --}}
