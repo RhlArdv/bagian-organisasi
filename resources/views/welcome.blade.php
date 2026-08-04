@@ -125,7 +125,7 @@
         {{-- Main Hero Content --}}
         <div class="flex-1 flex flex-col justify-center">
             <div class="w-full max-w-[90rem] mx-auto px-5 lg:px-12 relative z-10">
-                <div class="w-full lg:w-[55%] relative z-20 mt-16 lg:mt-24">
+                <div class="w-full lg:w-[55%] relative z-20 mt-4 lg:mt-6">
                     <div
                         class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400 text-[#1e293b] text-xs font-black tracking-widest uppercase mb-6 shadow-sm">
                         <span class="relative flex h-2 w-2">

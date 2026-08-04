@@ -489,7 +489,7 @@
                         class="lg:hidden w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 text-gray-600 hover:bg-brand-50 hover:text-brand-500 transition-colors">
                         <i class="ph-bold ph-list text-xl"></i>
                     </button>
-                    <div class="overflow-hidden truncate max-w-[200px] sm:max-w-md md:max-w-none">
+                    <div class="overflow-hidden max-w-[200px] sm:max-w-md md:max-w-none">
                         @isset($header)
                             {{ $header }}
                         @endisset
