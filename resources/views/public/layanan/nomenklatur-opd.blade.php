@@ -1,14 +1,14 @@
-<x-public-layout :title="'Evaluasi Kelembagaan'" :metaDescription="'Layanan evaluasi kelembagaan perangkat daerah Kota Padang — penilaian kematangan organisasi, efektivitas struktur, dan analisis evaluasi OPD'">
+<x-public-layout :title="'Nomenklatur OPD & Unit Kerja'" :metaDescription="'Standar layanan nomenklatur Perangkat Daerah dan unit kerja pada Bagian Organisasi Setda Kota Padang'">
 
     {{-- PAGE HEADER --}}
     <section class="pb-4 mb-8 border-b border-gray-200/60 max-w-7xl mx-auto px-5 lg:px-8">
-        <h1 class="text-[28px] lg:text-3xl font-black tracking-tight mb-2" style="color: #047857;">Evaluasi Kelembagaan</h1>
+        <h1 class="text-[28px] lg:text-3xl font-black tracking-tight mb-2" style="color: #047857;">Nomenklatur OPD & Unit Kerja</h1>
         <nav class="flex items-center gap-2 text-[12px] font-medium text-gray-500">
             <a href="/" class="hover:text-emerald-700 transition-colors text-[#1a202c]">Beranda</a>
             <i class="ph-bold ph-caret-right text-[10px] text-gray-400"></i>
-            <a href="{{ route('public.kelembagaan') }}" class="hover:text-emerald-700 transition-colors text-gray-500">Kelembagaan</a>
+            <span class="text-gray-500">Kelembagaan</span>
             <i class="ph-bold ph-caret-right text-[10px] text-gray-400"></i>
-            <span class="text-gray-500">Evaluasi Kelembagaan</span>
+            <span class="text-gray-500">Nomenklatur OPD</span>
         </nav>
     </section>
 
@@ -18,16 +18,16 @@
             <div class="relative bg-white rounded-[2.5rem] p-10 lg:p-14 shadow-[0_4px_25px_rgb(0,0,0,0.03)] border border-gray-100 overflow-hidden" style="border: 1px solid #cbd5e1;">
                 <div class="absolute -top-10 -right-10 w-64 h-64 bg-emerald-50 rounded-full opacity-50 pointer-events-none"></div>
                 <div class="absolute bottom-0 right-0 opacity-[0.04] pointer-events-none">
-                    <i class="ph-fill ph-chart-line-up text-[16rem]" style="color: #059669;"></i>
+                    <i class="ph-fill ph-tree-structure text-[16rem]" style="color: #059669;"></i>
                 </div>
                 <div class="relative z-10 flex flex-col lg:flex-row items-start lg:items-center gap-6">
                     <div class="w-20 h-20 rounded-3xl flex items-center justify-center shrink-0" style="background-color: #ecfdf5; color: #059669; border: 1px solid #a7f3d0;">
-                        <i class="ph-bold ph-chart-line-up text-4xl"></i>
+                        <i class="ph-bold ph-tree-structure text-4xl"></i>
                     </div>
                     <div class="flex-1">
-                        <h2 class="text-2xl lg:text-3xl font-black mb-3 tracking-tight" style="color: #047857;">Layanan Evaluasi Kelembagaan</h2>
+                        <h2 class="text-2xl lg:text-3xl font-black mb-3 tracking-tight" style="color: #047857;">Layanan Nomenklatur OPD</h2>
                         <p class="text-gray-700 font-medium leading-relaxed max-w-2xl">
-                            Pelayanan evaluasi kematangan organisasi, analisis beban kerja kelembagaan, dan pengukuran efektivitas pelaksanaan struktur perangkat daerah guna menciptakan tata kelola pemerintahan yang tepat fungsi dan tepat ukuran.
+                            Pelayanan penataan, penyesuaian, dan pembaharuan nomenklatur Perangkat Daerah serta Unit Kerja di lingkungan Pemerintah Kota Padang berlandaskan pedoman regulasi dan Kamus Nomenklatur Nasional.
                         </p>
                     </div>
                 </div>
@@ -35,14 +35,14 @@
         </div>
     </section>
 
-    {{-- DAFTAR LAYANAN EVALUASI KELEMBAGAAN --}}
+    {{-- LAYANAN NOMENKLATUR OPD SECTION --}}
     <section class="mb-16">
         <div class="max-w-7xl mx-auto px-5 lg:px-8">
             <h3 class="text-xl font-black mb-6 flex items-center gap-3" style="color: #047857;">
                 <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background-color: #ecfdf5; color: #059669; border: 1px solid #a7f3d0;">
-                    <i class="ph-bold ph-clipboard-text text-xl"></i>
+                    <i class="ph-bold ph-tree-structure text-xl"></i>
                 </div>
-                Layanan Evaluasi yang Tersedia
+                Standar Pelayanan Nomenklatur OPD & Unit Kerja
             </h3>
 
             @if($layanans->count() > 0)
@@ -56,10 +56,10 @@
                                 {{-- Icon & Tag --}}
                                 <div class="flex items-center justify-between gap-4 mb-6 pt-2 relative z-10">
                                     <div class="w-14 h-14 rounded-2xl flex items-center justify-center font-bold text-2xl shadow-sm" style="background-color: #ecfdf5; border: 1px solid #a7f3d0; color: #059669;">
-                                        <i class="ph-bold ph-clipboard-text"></i>
+                                        <i class="ph-bold ph-tree-structure"></i>
                                     </div>
                                     <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-black tracking-wide shadow-sm" style="background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0;">
-                                        <i class="ph-fill ph-check-circle text-emerald-600"></i> Evaluasi
+                                        <i class="ph-fill ph-check-circle text-emerald-600"></i> Nomenklatur
                                     </span>
                                 </div>
 
@@ -88,10 +88,10 @@
             @else
                 <div class="bg-white rounded-[2.5rem] p-16 text-center shadow-sm border border-gray-200" style="border: 1px solid #cbd5e1;">
                     <div class="w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-6" style="background-color: #ecfdf5; border: 1px solid #a7f3d0;">
-                        <i class="ph-duotone ph-chart-line-up text-5xl" style="color: #059669;"></i>
+                        <i class="ph-duotone ph-tree-structure text-5xl" style="color: #059669;"></i>
                     </div>
-                    <h4 class="text-xl font-black text-gray-700 mb-2">Belum Ada Layanan Evaluasi</h4>
-                    <p class="text-sm text-gray-500 font-medium max-w-md mx-auto">Data layanan evaluasi kelembagaan akan ditampilkan sesuai database setelah diisi oleh admin.</p>
+                    <h4 class="text-xl font-black text-gray-700 mb-2">Belum Ada Layanan Nomenklatur OPD</h4>
+                    <p class="text-sm text-gray-500 font-medium max-w-md mx-auto">Data layanan akan ditampilkan sesuai database setelah diisi oleh admin.</p>
                 </div>
             @endif
         </div>

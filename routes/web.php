@@ -53,6 +53,11 @@ Route::post('/layanan/pengaduan', [PublicLayananController::class, 'storePengadu
 Route::post('/layanan/kritik-saran', [PublicLayananController::class, 'storeKritikSaran'])->middleware('throttle:5,1')->name('public.kritik-saran.store');
 Route::get('/layanan/kelembagaan', [PublicLayananController::class, 'kelembagaan'])->name('public.kelembagaan');
 Route::get('/layanan/evaluasi-kelembagaan', [PublicLayananController::class, 'evaluasiKelembagaan'])->name('public.evaluasi-kelembagaan');
+Route::get('/layanan/nomenklatur-opd', [PublicLayananController::class, 'nomenklaturOpd'])->name('public.nomenklatur-opd');
+Route::get('/layanan/peta-jabatan', [PublicLayananController::class, 'petaJabatan'])->name('public.peta-jabatan');
+Route::get('/layanan/produk-hukum', [PublicLayananController::class, 'produkHukum'])->name('public.produk-hukum');
+Route::get('/layanan/detail/{id}', [PublicLayananController::class, 'show'])->name('public.layanan.show');
+Route::get('/dokumen/detail/{id}', [PublicLayananController::class, 'showDocument'])->name('public.dokumen.show');
 Route::get('/layanan/standar-pelayanan', [PublicLayananController::class, 'standarPelayanan'])->name('public.standar-pelayanan');
 
 // Halaman Publik — Berita
@@ -80,10 +85,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('admin/metrics', \App\Http\Controllers\Admin\PerformanceMetricController::class);
     Route::resource('admin/statistics', \App\Http\Controllers\Admin\StatisticController::class);
     Route::resource('admin/agendas', \App\Http\Controllers\Admin\AgendaController::class);
-    
-    // Kelembagaan (Layanan)
-    Route::get('/layanan', [App\Http\Controllers\PublicLayananController::class, 'index'])->name('public.layanan.index');
-    Route::get('/layanan/{id}', [App\Http\Controllers\PublicLayananController::class, 'show'])->name('public.layanan.show');
     
     // Public Agenda Routes
     Route::get('/agenda', [App\Http\Controllers\PublicAgendaController::class, 'index'])->name('public.agendas.index');

@@ -179,6 +179,139 @@ class PublicLayananController extends Controller
     }
 
     /**
+     * Nomenklatur OPD
+     * Displays layanan nomenklatur opd + related documents.
+     */
+    public function nomenklaturOpd()
+    {
+        $layanans = Layanan::where('kategori', 'nomenklatur-opd')->latest()->get();
+
+        $docCategories = DocumentCategory::byGroup('kelembagaan')->get();
+        $documents = Document::active()
+            ->whereIn('category_id', $docCategories->pluck('id'))
+            ->latest()
+            ->get()
+            ->groupBy(fn ($doc) => $doc->category->slug);
+
+        return view('public.layanan.nomenklatur-opd', compact('layanans', 'documents', 'docCategories'));
+    }
+
+    /**
+     * Peta Jabatan
+     */
+    public function petaJabatan(Request $request)
+    {
+        $kategori = DocumentCategory::where('slug', 'peta-jabatan')->first();
+        
+        $years = $kategori ? Document::active()->where('category_id', $kategori->id)->whereNotNull('year')->distinct()->orderBy('year', 'desc')->pluck('year') : collect();
+
+        $query = $kategori ? Document::active()->where('category_id', $kategori->id) : null;
+
+        if ($query && $request->filled('year') && $request->year != 'all') {
+            $query->where('year', $request->year);
+        }
+
+        if ($query && $request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('document_number', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        $documents = $query ? $query->latest()->get() : collect();
+
+        return view('public.layanan.peta-jabatan', compact('documents', 'kategori', 'years'));
+    }
+
+    /**
+     * Produk Hukum
+     */
+    public function produkHukum(Request $request)
+    {
+        $kategori = DocumentCategory::where('slug', 'produk-hukum')->first();
+        
+        $years = $kategori ? Document::active()->where('category_id', $kategori->id)->whereNotNull('year')->distinct()->orderBy('year', 'desc')->pluck('year') : collect();
+
+        $query = $kategori ? Document::active()->where('category_id', $kategori->id) : null;
+
+        if ($query && $request->filled('year') && $request->year != 'all') {
+            $query->where('year', $request->year);
+        }
+
+        if ($query && $request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('document_number', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        $documents = $query ? $query->latest()->get() : collect();
+
+        return view('public.layanan.produk-hukum', compact('documents', 'kategori', 'years'));
+    }
+
+    /**
+     * Display the specified document detail page.
+     */
+    public function showDocument($id)
+    {
+        $document = Document::with(['category', 'uploader'])->findOrFail($id);
+
+        $relatedDocuments = Document::active()
+            ->where('category_id', $document->category_id)
+            ->where('id', '!=', $document->id)
+            ->latest()
+            ->limit(5)
+            ->get();
+
+        $namaKategori = $document->category->name ?? 'Dokumen';
+        $backRoute = match($document->category?->slug) {
+            'peta-jabatan' => route('public.peta-jabatan'),
+            'produk-hukum' => route('public.produk-hukum'),
+            default => url('/'),
+        };
+
+        return view('public.layanan.show-document', compact('document', 'relatedDocuments', 'namaKategori', 'backRoute'));
+    }
+
+    /**
+     * Display the specified layanan detail page.
+     */
+    public function show($id)
+    {
+        $layanan = Layanan::findOrFail($id);
+
+        $relatedLayanans = Layanan::where('kategori', $layanan->kategori)
+            ->where('id', '!=', $layanan->id)
+            ->latest()
+            ->limit(5)
+            ->get();
+
+        $categories = [
+            'penataan-kelembagaan' => 'Penataan Kelembagaan',
+            'evaluasi-kelembagaan' => 'Evaluasi Kelembagaan',
+            'nomenklatur-opd' => 'Nomenklatur OPD',
+            'standar-pelayanan' => 'Standar Pelayanan',
+            'forum-konsultasi-publik' => 'Forum Konsultasi Publik',
+        ];
+
+        $namaKategori = $categories[$layanan->kategori] ?? 'Layanan Bagian Organisasi';
+        $backRoute = match($layanan->kategori) {
+            'penataan-kelembagaan' => route('public.kelembagaan'),
+            'evaluasi-kelembagaan' => route('public.evaluasi-kelembagaan'),
+            'nomenklatur-opd' => route('public.nomenklatur-opd'),
+            'standar-pelayanan' => route('public.standar-pelayanan'),
+            default => url('/'),
+        };
+
+        return view('public.layanan.show', compact('layanan', 'relatedLayanans', 'namaKategori', 'backRoute'));
+    }
+
+    /**
      * 6. Standar Pelayanan
      * Displays standar pelayanan items with full details.
      */

@@ -65,15 +65,15 @@ class SecurityHeaders
         // Content-Security-Policy
         // Allows: self, Alpine.js CDN, Phosphor Icons CDN, Google Fonts,
         // data: URIs for inline images (maps embeds etc.), blob: for file previews.
-        // Blocks: inline event handlers via script-src 'unsafe-inline' is sadly
+        // Blocks: inline event handlers via script-src 'unsafe-inline' and 'unsafe-eval' are sadly
         // required by Alpine.js, but object-src/frame-src are locked down.
         $csp = implode('; ', [
             "default-src 'self'",
-            "script-src 'self' cdn.jsdelivr.net 'unsafe-inline'",
+            "script-src 'self' cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval'",
             "style-src 'self' fonts.googleapis.com cdn.jsdelivr.net 'unsafe-inline'",
             "font-src 'self' fonts.gstatic.com cdn.jsdelivr.net data:",
             "img-src 'self' data: blob: images.unsplash.com *.padang.go.id",
-            "connect-src 'self'",
+            "connect-src 'self' cdn.jsdelivr.net",
             "frame-src 'self'",
             "frame-ancestors 'self'",  // replaces X-Frame-Options
             "object-src 'none'",

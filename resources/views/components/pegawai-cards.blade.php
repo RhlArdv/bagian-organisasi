@@ -24,8 +24,8 @@
                 
                 $levelBadge = match($staff->level) {
                     'kepala' => 'KEPALA BAGIAN',
-                    'kasubag' => 'KASUBAG / KATIM',
-                    'staff' => 'STAF BINA ILMIAH',
+                    'kasubag' => 'KASUBAG',
+                    'staff' => 'STAF',
                     default => strtoupper($staff->level ?? 'STAF')
                 };
             @endphp
