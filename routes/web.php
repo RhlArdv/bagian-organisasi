@@ -60,6 +60,11 @@ Route::get('/layanan/detail/{id}', [PublicLayananController::class, 'show'])->na
 Route::get('/dokumen/detail/{id}', [PublicLayananController::class, 'showDocument'])->name('public.dokumen.show');
 Route::get('/layanan/standar-pelayanan', [PublicLayananController::class, 'standarPelayanan'])->name('public.standar-pelayanan');
 Route::get('/layanan/regulasi', [PublicLayananController::class, 'regulasi'])->name('public.regulasi');
+Route::get('/layanan/maklumat-pelayanan', [PublicLayananController::class, 'maklumatPelayanan'])->name('public.maklumat-pelayanan');
+Route::get('/layanan/skm', [PublicLayananController::class, 'skm'])->name('public.skm');
+Route::get('/layanan/forum-konsultasi-publik', [PublicLayananController::class, 'forumKonsultasiPublik'])->name('public.forum-konsultasi-publik');
+Route::get('/layanan/pengelolaan-pengaduan', [PublicLayananController::class, 'pengelolaanPengaduan'])->name('public.pengelolaan-pengaduan');
+Route::get('/layanan/dokumen-pelayanan-publik', [PublicLayananController::class, 'dokumenPelayananPublik'])->name('public.dokumen-pelayanan-publik');
 
 // Halaman Publik — Berita
 Route::get('/berita', [PublicBeritaController::class, 'index'])->name('public.berita.index');
@@ -128,5 +133,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('admin/live-chat/{session}', [\App\Http\Controllers\Admin\LiveChatController::class, 'destroy'])->name('admin.live-chat.destroy');
 });
 
-require __DIR__.'/auth.php';
 require __DIR__.'/auth.php';

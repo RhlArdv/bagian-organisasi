@@ -300,6 +300,10 @@ class PublicLayananController extends Controller
         $backRoute = match(true) {
             $slug === 'peta-jabatan' => route('public.peta-jabatan'),
             $slug === 'produk-hukum' => route('public.produk-hukum'),
+            $slug === 'maklumat-pelayanan' => route('public.maklumat-pelayanan'),
+            $slug === 'skm' => route('public.skm'),
+            $slug === 'pengelolaan-pengaduan' => route('public.pengelolaan-pengaduan'),
+            $slug === 'dokumen-pelayanan-publik' => route('public.dokumen-pelayanan-publik'),
             in_array($slug, ['informasi-anjab', 'informasi-abk', 'pedoman-anjab-abk', 'formulir-permohonan']) || str_contains($slug, 'anjab') || str_contains($slug, 'abk') => route('public.anjab-abk', ['tab' => $slug ?: 'informasi-anjab']),
             default => url('/'),
         };
@@ -335,6 +339,7 @@ class PublicLayananController extends Controller
             'evaluasi-kelembagaan' => route('public.evaluasi-kelembagaan'),
             'nomenklatur-opd' => route('public.nomenklatur-opd'),
             'standar-pelayanan' => route('public.standar-pelayanan'),
+            'forum-konsultasi-publik' => route('public.forum-konsultasi-publik'),
             default => url('/'),
         };
 
@@ -357,6 +362,111 @@ class PublicLayananController extends Controller
             ->groupBy(fn ($doc) => $doc->category->slug);
 
         return view('public.layanan.standar-pelayanan', compact('layanans', 'documents', 'docCategories'));
+    }
+
+    /**
+     * Maklumat Pelayanan (Documents)
+     */
+    public function maklumatPelayanan(Request $request)
+    {
+        $kategori = DocumentCategory::where('slug', 'maklumat-pelayanan')->first();
+        $years = $kategori ? Document::active()->where('category_id', $kategori->id)->whereNotNull('year')->distinct()->orderBy('year', 'desc')->pluck('year') : collect();
+        $query = $kategori ? Document::active()->where('category_id', $kategori->id) : null;
+
+        if ($query && $request->filled('year') && $request->year != 'all') {
+            $query->where('year', $request->year);
+        }
+        if ($query && $request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('document_number', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+        $documents = $query ? $query->latest()->get() : collect();
+        return view('public.layanan.maklumat-pelayanan', compact('documents', 'kategori', 'years'));
+    }
+
+    /**
+     * Survei Kepuasan Masyarakat / SKM (Documents & Survey link)
+     */
+    public function skm(Request $request)
+    {
+        $kategori = DocumentCategory::where('slug', 'skm')->first();
+        $years = $kategori ? Document::active()->where('category_id', $kategori->id)->whereNotNull('year')->distinct()->orderBy('year', 'desc')->pluck('year') : collect();
+        $query = $kategori ? Document::active()->where('category_id', $kategori->id) : null;
+
+        if ($query && $request->filled('year') && $request->year != 'all') {
+            $query->where('year', $request->year);
+        }
+        if ($query && $request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('document_number', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+        $documents = $query ? $query->latest()->get() : collect();
+        return view('public.layanan.skm', compact('documents', 'kategori', 'years'));
+    }
+
+    /**
+     * Forum Konsultasi Publik (Layanan model)
+     */
+    public function forumKonsultasiPublik()
+    {
+        $layanans = Layanan::where('kategori', 'forum-konsultasi-publik')->latest()->get();
+        return view('public.layanan.forum-konsultasi-publik', compact('layanans'));
+    }
+
+    /**
+     * Pengelolaan Pengaduan (Documents)
+     */
+    public function pengelolaanPengaduan(Request $request)
+    {
+        $kategori = DocumentCategory::where('slug', 'pengelolaan-pengaduan')->first();
+        $years = $kategori ? Document::active()->where('category_id', $kategori->id)->whereNotNull('year')->distinct()->orderBy('year', 'desc')->pluck('year') : collect();
+        $query = $kategori ? Document::active()->where('category_id', $kategori->id) : null;
+
+        if ($query && $request->filled('year') && $request->year != 'all') {
+            $query->where('year', $request->year);
+        }
+        if ($query && $request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('document_number', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+        $documents = $query ? $query->latest()->get() : collect();
+        return view('public.layanan.pengelolaan-pengaduan', compact('documents', 'kategori', 'years'));
+    }
+
+    /**
+     * Dokumen Pelayanan Publik (Documents)
+     */
+    public function dokumenPelayananPublik(Request $request)
+    {
+        $kategori = DocumentCategory::where('slug', 'dokumen-pelayanan-publik')->first();
+        $years = $kategori ? Document::active()->where('category_id', $kategori->id)->whereNotNull('year')->distinct()->orderBy('year', 'desc')->pluck('year') : collect();
+        $query = $kategori ? Document::active()->where('category_id', $kategori->id) : null;
+
+        if ($query && $request->filled('year') && $request->year != 'all') {
+            $query->where('year', $request->year);
+        }
+        if ($query && $request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('document_number', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+        $documents = $query ? $query->latest()->get() : collect();
+        return view('public.layanan.dokumen-pelayanan-publik', compact('documents', 'kategori', 'years'));
     }
 
     /**
