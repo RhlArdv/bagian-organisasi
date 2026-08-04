@@ -64,10 +64,6 @@
             font-family: 'Caveat', cursive;
         }
 
-        ::selection {
-            background: #f59e0b;
-            color: #fff;
-        }
 
         .hero-pattern {
             background-image: radial-gradient(#fde68a 1px, transparent 1px);
@@ -108,66 +104,61 @@
 
     {{-- ═══ HERO ═══ --}}
     <section id="beranda"
-        class="relative overflow-hidden bg-white h-screen min-h-[700px] max-h-[1080px] flex flex-col justify-center pt-24 lg:pt-20">
+        class="relative overflow-hidden bg-white min-h-screen flex flex-col justify-center pt-24 lg:pt-20">
 
         {{-- Dot Pattern Background --}}
         <div class="absolute inset-0 z-0 opacity-50"
             style="background-image: radial-gradient(#fcd34d 1.5px, transparent 1.5px); background-size: 36px 36px;">
         </div>
 
-        {{-- Background Image --}}
+        {{-- Absolute Huge Image (Full Background) --}}
         <div class="absolute inset-0 w-full h-full pointer-events-none z-0">
-            @php
-                $activeBanner = isset($banners) && $banners->count() > 0 ? $banners->first() : null;
-            @endphp
-            
-            @if($activeBanner)
-                <img src="{{ asset('storage/' . $activeBanner->image) }}" alt="{{ $activeBanner->title }}"
-                    class="w-full h-full object-cover object-center"
-                    onerror="this.src='{{ asset('assets/img/hero3.webp') }}'">
-            @else
-                <img src="{{ asset('assets/img/hero3.webp') }}" alt="Bagian Organisasi Sekretariat Daerah Kota Padang"
-                    class="w-full h-full object-cover object-center"
-                    onerror="this.src='https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=900&q=80'">
-            @endif
-
-            {{-- Gradient overlay to ensure text is always readable --}}
-            <div class="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 md:via-white/50 to-transparent w-full md:w-[75%] lg:w-[60%]"></div>
-            <div class="absolute inset-0 bg-white/30 sm:hidden"></div>
+            <img src="{{ asset('assets/img/hero3.webp') }}" alt="Bagian Organisasi Sekretariat Daerah Kota Padang"
+                class="w-full h-full object-cover object-bottom"
+                onerror="this.src='https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=900&q=80'">
         </div>
 
         {{-- Main Hero Content --}}
         <div class="flex-1 flex flex-col justify-center">
             <div class="w-full max-w-[90rem] mx-auto px-5 lg:px-12 relative z-10">
-                <div class="w-full lg:w-[55%] mt-4 lg:mt-6">
-                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400 text-[#1e293b] text-xs font-black tracking-widest uppercase mb-6 shadow-sm">
+                <div class="w-full lg:w-[55%] relative z-20 mt-4 lg:mt-6">
+                    <div
+                        class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-400 text-[#1e293b] text-xs font-black tracking-widest uppercase mb-6 shadow-sm">
                         <span class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1e293b] opacity-75"></span>
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1e293b] opacity-75"></span>
                             <span class="relative inline-flex rounded-full h-2 w-2 bg-[#1e293b]"></span>
                         </span>
                         Selamat Datang di
                     </div>
 
-                    <h1 class="text-5xl sm:text-6xl lg:text-[5rem] font-black text-slate-900 leading-[1] mb-4 tracking-tighter">
-                        {{ $activeBanner ? $activeBanner->title : 'Bagian Organisasi' }}
+                    <h1
+                        class="text-5xl sm:text-6xl lg:text-[5rem] font-black text-gray-900 leading-[1] mb-4 tracking-tighter">
+                        Bagian Organisasi
                     </h1>
 
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-medium text-slate-500 tracking-wide mb-8 flex items-center gap-4">
-                        <div class="h-px bg-slate-300 w-10 hidden sm:block"></div>
+                    <h2
+                        class="text-2xl sm:text-3xl lg:text-4xl font-medium text-gray-400 tracking-wide mb-8 flex items-center gap-4">
+                        <div class="h-px bg-gray-300 w-10 hidden sm:block"></div>
                         Sekretariat Daerah Kota Padang
                     </h2>
 
                     {{-- Tagline --}}
-                    <p class="text-slate-700 text-lg lg:text-xl font-medium leading-relaxed max-w-xl mb-10 border-l-4 border-slate-900 pl-6 py-1">
-                        {{ $activeBanner ? $activeBanner->subtitle : 'Mewujudkan tata kelola organisasi yang efektif, efisien, transparan, dan berorientasi pada pelayanan publik untuk Kota Padang yang lebih baik.' }}
+                    <p
+                        class="text-gray-500 text-lg lg:text-xl font-medium leading-relaxed max-w-xl mb-10 border-l-4 border-brand-500 pl-6 py-1">
+                        Mewujudkan tata kelola organisasi yang efektif, efisien, transparan, dan berorientasi pada
+                        pelayanan publik untuk <strong class="text-gray-900 font-black">Kota Padang yang lebih
+                            baik</strong>.
                     </p>
 
                     <div class="flex flex-wrap gap-4">
-                        <a href="{{ $activeBanner && $activeBanner->button_link ? url($activeBanner->button_link) : url('/profil') }}" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-slate-900 text-white font-bold text-[15px] rounded-xl hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/25">
-                            {{ $activeBanner && $activeBanner->button_text ? $activeBanner->button_text : 'Profil Organisasi' }} <i class="ph ph-arrow-right"></i>
+                        <a href="{{ url('/profil') }}"
+                            class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-brand-500 text-white font-bold text-[15px] rounded-xl hover:bg-brand-600 transition-colors shadow-lg shadow-brand-500/25">
+                            Profil Organisasi <i class="ph ph-arrow-right"></i>
                         </a>
-                        <a href="#pelayanan" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-white text-slate-900 font-bold text-[15px] rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                            Lihat Layanan <i class="ph ph-arrow-right text-slate-400"></i>
+                        <a href="#pelayanan"
+                            class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-white text-gray-800 font-bold text-[15px] rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                            Lihat Layanan <i class="ph ph-arrow-right text-gray-400"></i>
                         </a>
                     </div>
                 </div>
@@ -177,42 +168,38 @@
             <div class="relative z-20 w-full mt-12 lg:mt-20">
                 <div class="max-w-[90rem] mx-auto px-5 lg:px-12 pb-8">
                     <div class="flex flex-wrap lg:flex-nowrap gap-4">
-                        @foreach($metrics as $type => $metric)
-                        @php
-                            $config = $metricConfig[$type] ?? ['icon' => 'ph-chart-bar', 'color' => 'slate', 'label' => str_replace('_', ' ', $type)];
-                            // Format number to remove trailing .00 if integer
-                            $formattedValue = rtrim(rtrim(number_format($metric->score, 2, ',', '.'), '0'), ',');
-                        @endphp
+                        @foreach($statistics as $stat)
                         @if($loop->last && $loop->count > 1)
-                            {{-- The last statistic is highlighted with solid dark navy bg --}}
-                            <div class="w-full sm:w-full lg:flex-1 rounded-3xl px-6 py-4 shadow-xl shadow-slate-900/10 bg-[#2b3a4a]">
-                                <div class="flex items-center gap-4">
-                                    <div class="text-white flex items-center justify-center">
-                                        <i class="ph-duotone {{ $config['icon'] }} text-[32px]"></i>
+                            {{-- The last statistic is highlighted with solid brand bg --}}
+                            <div class="w-full sm:w-full lg:flex-1 rounded-2xl p-5 shadow-lg bg-brand-500">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-white bg-opacity-20 text-white flex items-center justify-center">
+                                        <i class="ph-duotone {{ $stat->icon }} text-xl"></i>
                                     </div>
-                                    <div class="flex flex-col">
-                                        <p class="text-[26px] font-black text-white leading-[1.1]">{{ $formattedValue }}</p>
-                                        <p class="text-[12px] text-slate-300 font-medium mt-0.5">{{ $config['label'] }}</p>
+                                    <div>
+                                        <p class="text-2xl font-black text-white leading-none">{{ $stat->value }}</p>
+                                        <p class="text-[11px] text-brand-100 font-semibold mt-1">{{ $stat->name }}</p>
                                     </div>
                                 </div>
                             </div>
                         @else
                             {{-- Normal statistic card --}}
                             <div
-                                class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-95 backdrop-blur-sm rounded-3xl px-6 py-4 shadow-lg shadow-slate-900/5 transition-all">
-                                <div class="flex items-center gap-4">
-                                    <div class="text-{{ $config['color'] === 'brand' ? 'slate' : $config['color'] }}-500 flex items-center justify-center">
-                                        <i class="ph-duotone {{ $config['icon'] }} text-[32px]"></i>
+                                class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-{{ $stat->color }}-50 text-{{ $stat->color }}-500 flex items-center justify-center">
+                                        <i class="ph-duotone {{ $stat->icon }} text-xl"></i>
                                     </div>
-                                    <div class="flex flex-col">
-                                        <p class="text-[26px] font-black text-slate-900 leading-[1.1]">{{ $formattedValue }}</p>
-                                        <p class="text-[12px] text-slate-500 font-medium mt-0.5">{{ $config['label'] }}</p>
+                                    <div>
+                                        <p class="text-2xl font-black text-gray-900 leading-none">{{ $stat->value }}</p>
+                                        <p class="text-[11px] text-gray-500 font-semibold mt-1">{{ $stat->name }}</p>
                                     </div>
                                 </div>
                             </div>
                         @endif
-                        @endforeach
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -837,15 +824,8 @@
         </div>
 
         {{-- Massive Edge-to-Edge Map Background --}}
-        @php
-            $defaultMap = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2683976643275!2d100.35692807531795!3d-0.9512986353524716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b948c7c72e11%3A0x6771787fa612c99f!2sSekretariat%20Daerah%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1785310213215!5m2!1sid!2sid';
-            $mapEmbed = \App\Models\SiteSetting::getValue('google_maps_embed') ?: $defaultMap;
-            
-            // Extract a search link for the button if possible, else default
-            $mapSearchLink = 'https://www.google.com/maps/search/Sekretariat+Daerah+Kota+Padang';
-        @endphp
         <iframe
-            src="{{ $mapEmbed }}"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2683976643275!2d100.35692807531795!3d-0.9512986353524716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b948c7c72e11%3A0x6771787fa612c99f!2sSekretariat%20Daerah%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1785310213215!5m2!1sid!2sid"
             class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 mix-blend-luminosity pointer-events-none"
             style="border:0;" allowfullscreen="" loading="lazy"></iframe>
 
@@ -873,12 +853,12 @@
                 <div
                     class="w-full max-w-md mx-auto lg:mx-0 h-[220px] bg-gray-800 rounded-[2rem] overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.4)] border border-white/10 group relative mt-4">
                     <iframe
-                        src="{{ $mapEmbed }}"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2683976643275!2d100.35692807531795!3d-0.9512986353524716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b948c7c72e11%3A0x6771787fa612c99f!2sSekretariat%20Daerah%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1785310213215!5m2!1sid!2sid"
                         class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                         style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     <div class="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[2rem] pointer-events-none">
                     </div>
-                    <a href="{{ $mapSearchLink }}" target="_blank"
+                    <a href="https://www.google.com/maps/search/Sekretariat+Daerah+Kota+Padang" target="_blank"
                         class="absolute bottom-4 left-4 right-4 bg-gray-900/90 backdrop-blur-md border border-white/10 text-white px-5 py-3 rounded-xl text-xs font-bold hover:bg-brand-500 transition-colors flex items-center justify-between group/btn">
                         <span>Lihat di Google Maps</span>
                         <i
