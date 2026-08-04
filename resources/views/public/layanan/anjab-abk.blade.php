@@ -2,9 +2,9 @@
 
     {{-- PAGE HEADER --}}
     <section class="pb-4 mb-8 border-b border-gray-200/60 max-w-7xl mx-auto px-5 lg:px-8">
-        <h1 class="text-[28px] lg:text-3xl font-black text-[#1a202c] tracking-tight mb-2">Anjab & ABK</h1>
+        <h1 class="text-[28px] lg:text-3xl font-black tracking-tight mb-2" style="color: #6b21a8;">Anjab & ABK</h1>
         <nav class="flex items-center gap-2 text-[12px] font-medium text-gray-500">
-            <a href="/" class="hover:text-brand-400 transition-colors text-[#1a202c]">Beranda</a>
+            <a href="/" class="hover:text-purple-700 transition-colors text-[#1a202c]">Beranda</a>
             <i class="ph-bold ph-caret-right text-[10px] text-gray-400"></i>
             <span class="text-gray-500">Anjab & ABK</span>
         </nav>
@@ -13,19 +13,19 @@
     {{-- HERO CARD --}}
     <section class="mb-10">
         <div class="max-w-7xl mx-auto px-5 lg:px-8">
-            <div class="relative bg-white rounded-[2.5rem] p-10 lg:p-14 shadow-[0_4px_25px_rgb(0,0,0,0.03)] border border-gray-100 overflow-hidden">
-                <div class="absolute -top-10 -right-10 w-64 h-64 bg-purple-50 rounded-full opacity-50 pointer-events-none"></div>
-                <div class="absolute bottom-0 right-0 opacity-[0.04] pointer-events-none">
-                    <i class="ph-fill ph-users-three text-[16rem]"></i>
+            <div class="relative bg-white rounded-[2.5rem] p-10 lg:p-14 shadow-[0_4px_25px_rgb(0,0,0,0.03)] border border-gray-100 overflow-hidden" style="border: 1px solid #cbd5e1;">
+                <div class="absolute -top-10 -right-10 w-64 h-64 bg-purple-50 rounded-full opacity-60 pointer-events-none"></div>
+                <div class="absolute bottom-0 right-0 opacity-[0.05] pointer-events-none">
+                    <i class="ph-fill ph-users-three text-[16rem]" style="color: #9333ea;"></i>
                 </div>
                 <div class="relative z-10 flex flex-col lg:flex-row items-start lg:items-center gap-6">
-                    <div class="w-20 h-20 bg-purple-50 text-purple-500 rounded-3xl flex items-center justify-center shrink-0">
+                    <div class="w-20 h-20 rounded-3xl flex items-center justify-center shrink-0" style="background-color: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe;">
                         <i class="ph-bold ph-users text-4xl"></i>
                     </div>
                     <div class="flex-1">
-                        <h2 class="text-2xl lg:text-3xl font-black text-[#1a202c] mb-3 tracking-tight">Analisis Jabatan & Beban Kerja</h2>
-                        <p class="text-gray-600 font-medium leading-relaxed max-w-2xl">
-                            Pemetaan formasi dan beban kerja pegawai untuk memastikan distribusi tugas yang optimal di seluruh perangkat daerah Kota Padang.
+                        <h2 class="text-2xl lg:text-3xl font-black mb-3 tracking-tight" style="color: #581c87;">Analisis Jabatan & Beban Kerja</h2>
+                        <p class="text-gray-700 font-medium leading-relaxed max-w-2xl">
+                            Pemetaan formasi dan beban kerja pegawai untuk memastikan distribusi tugas yang optimal di seluruh perangkat daerah Pemerintah Kota Padang.
                         </p>
                     </div>
                 </div>
@@ -33,80 +33,168 @@
         </div>
     </section>
 
-    {{-- TABBED CATEGORIES --}}
-    <section class="mb-10" x-data="{ activeTab: new URLSearchParams(location.search).get('tab') || '{{ $categories->first()?->slug ?? '' }}' }">
+    {{-- TABBED CATEGORIES & CARDS --}}
+    <section class="mb-16" x-data="{ 
+        activeTab: '{{ request('tab', $categories->first()?->slug ?? 'informasi-anjab') }}',
+        changeTab(slug) {
+            this.activeTab = slug;
+            const url = new URL(window.location);
+            url.searchParams.set('tab', slug);
+            window.history.replaceState({}, '', url);
+        }
+    }">
         <div class="max-w-7xl mx-auto px-5 lg:px-8">
 
-            {{-- Tab Buttons --}}
+            {{-- TOMBOL TABS KATEGORI --}}
             @if($categories->count() > 0)
-                <div class="flex flex-wrap gap-2 mb-8">
+                <div class="flex flex-wrap items-center gap-3 mb-8">
                     @foreach($categories as $cat)
-                        <button @click="activeTab = '{{ $cat->slug }}'"
-                                :class="activeTab === '{{ $cat->slug }}' ? 'bg-purple-600 text-white shadow-lg shadow-purple-500/20' : 'bg-white text-gray-600 border border-gray-200 hover:border-purple-300 hover:text-purple-600'"
-                                class="px-5 py-2.5 text-sm font-bold rounded-full transition-all duration-200">
-                            {{ $cat->name }}
+                        <button type="button" 
+                                @click="changeTab('{{ $cat->slug }}')"
+                                :style="activeTab === '{{ $cat->slug }}' ? 'background-color: #7c3aed; color: #ffffff; border: 2px solid #7c3aed;' : 'background-color: #ffffff; color: #475569; border: 2px solid #cbd5e1;'"
+                                class="px-6 py-3 text-xs lg:text-sm font-black rounded-2xl transition-all duration-200 shadow-sm hover:opacity-95 flex items-center gap-2 cursor-pointer">
+                            <i class="ph-bold ph-folder-simple text-base"></i>
+                            <span>{{ $cat->name }}</span>
                             @if(isset($groupedDocuments[$cat->slug]))
-                                <span class="ml-1.5 text-xs opacity-70">({{ $groupedDocuments[$cat->slug]['documents']->count() }})</span>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-black ml-1" 
+                                      :style="activeTab === '{{ $cat->slug }}' ? 'background-color: rgba(255,255,255,0.25); color: #ffffff;' : 'background-color: #f5f3ff; color: #6b21a8; border: 1px solid #ddd6fe;'">
+                                    {{ $groupedDocuments[$cat->slug]['documents']->count() }}
+                                </span>
                             @endif
                         </button>
                     @endforeach
                 </div>
 
-                {{-- Tab Content --}}
+                {{-- BAR FILTER TAHUN & PENCARIAN --}}
+                <div class="bg-white px-6 py-4 rounded-2xl border border-gray-200 shadow-sm mb-8 flex flex-col lg:flex-row lg:items-center justify-between gap-4" style="border: 1px solid #cbd5e1;">
+                    <div class="flex items-center gap-2 text-sm font-black text-gray-700">
+                        <i class="ph-bold ph-funnel text-base" style="color: #9333ea;"></i>
+                        <span>Filter Dokumen</span>
+                    </div>
+
+                    <form action="{{ route('public.anjab-abk') }}" method="GET" class="flex flex-wrap sm:flex-nowrap items-center gap-3.5">
+                        <input type="hidden" name="tab" :value="activeTab">
+                        
+                        {{-- Search Input (Flexbox Wrapper - Anti-Bocor Ikon) --}}
+                        <div class="flex items-center bg-white rounded-xl shadow-sm px-3.5 py-2 w-full sm:w-64 shrink-0" style="border: 1px solid #cbd5e1;">
+                            <i class="ph-bold ph-magnifying-glass text-gray-400 text-sm mr-2.5 shrink-0"></i>
+                            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari judul / nomor dokumen..." 
+                                   class="w-full bg-transparent border-0 p-0 text-xs font-bold text-gray-800 focus:outline-none focus:ring-0 placeholder-gray-400" style="outline: none; border: none; background: transparent; width: 100%;">
+                        </div>
+
+                        {{-- Select Tahun (Flexbox Wrapper - Anti-Bocor Ikon) --}}
+                        <div class="flex items-center rounded-xl shadow-sm px-3.5 py-2 w-44 shrink-0 cursor-pointer" style="background-color: #f5f3ff; border: 1px solid #c084fc;">
+                            <i class="ph-bold ph-calendar-blank text-sm mr-2 shrink-0 pointer-events-none" style="color: #9333ea;"></i>
+                            <select name="year" onchange="this.form.submit()" 
+                                    class="w-full bg-transparent border-0 p-0 text-xs font-black focus:outline-none focus:ring-0 appearance-none cursor-pointer pr-3" style="color: #6b21a8; outline: none; border: none; background: transparent; width: 100%;">
+                                <option value="all">Semua Tahun</option>
+                                @if(isset($years) && $years->count() > 0)
+                                    @foreach($years as $yr)
+                                        <option value="{{ $yr }}" {{ request('year') == $yr ? 'selected' : '' }}>Tahun {{ $yr }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            <i class="ph-bold ph-caret-down text-xs ml-1 shrink-0 pointer-events-none" style="color: #9333ea;"></i>
+                        </div>
+
+                        {{-- Tombol Cari --}}
+                        <button type="submit" class="px-5 py-2 rounded-xl text-xs font-black shadow-sm transition-all hover:opacity-90 flex items-center justify-center gap-1.5 shrink-0" style="background-color: #7c3aed; color: #ffffff;">
+                            <i class="ph-bold ph-magnifying-glass text-xs"></i>
+                            <span>Cari</span>
+                        </button>
+
+                        @if(request()->filled('search') || (request()->filled('year') && request('year') != 'all'))
+                            <a :href="'{{ route('public.anjab-abk') }}?tab=' + activeTab" class="px-4 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 border border-gray-200 transition-colors flex items-center justify-center gap-1 shrink-0" title="Reset Filter">
+                                <i class="ph-bold ph-arrow-counter-clockwise text-xs"></i>
+                                <span>Reset</span>
+                            </a>
+                        @endif
+                    </form>
+                </div>
+
+                {{-- KONTEN TAB (GRID KARTU DOKUMEN) --}}
                 @foreach($groupedDocuments as $slug => $group)
                     <div x-show="activeTab === '{{ $slug }}'"
-                         x-transition:enter="transition ease-out duration-200"
-                         x-transition:enter-start="opacity-0 translate-y-2"
-                         x-transition:enter-end="opacity-100 translate-y-0">
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 translate-y-3"
+                         x-transition:enter-end="opacity-100 translate-y-0"
+                         style="display: none;">
 
                         @if($group['documents']->count() > 0)
-                            <div class="space-y-3">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 @foreach($group['documents'] as $doc)
-                                    <a href="{{ asset('storage/' . $doc->file_path) }}" target="_blank"
-                                       class="group flex items-center gap-4 lg:gap-6 bg-white p-5 lg:p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-purple-200 transition-all duration-300">
-                                        <div class="w-12 h-12 lg:w-14 lg:h-14 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                                            <i class="ph-fill ph-file-pdf text-2xl"></i>
-                                        </div>
-                                        <div class="flex-1 min-w-0">
-                                            <h4 class="text-sm lg:text-base font-bold text-[#1a202c] group-hover:text-purple-600 transition-colors truncate">{{ $doc->title }}</h4>
-                                            <div class="flex items-center gap-3 mt-1 flex-wrap">
-                                                @if($doc->document_number)
-                                                    <span class="text-xs text-gray-400 font-medium"><i class="ph ph-hash"></i> {{ $doc->document_number }}</span>
-                                                @endif
-                                                @if($doc->year)
-                                                    <span class="text-xs text-gray-400 font-medium"><i class="ph ph-calendar-blank"></i> {{ $doc->year }}</span>
-                                                @endif
-                                                @if($doc->file_size)
-                                                    <span class="text-xs text-gray-400 font-medium">{{ number_format($doc->file_size / 1024 / 1024, 1) }} MB</span>
-                                                @endif
+                                    <div class="group rounded-[2rem] p-7 lg:p-8 hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between relative overflow-hidden" style="background-color: #ffffff; border: 2px solid #cbd5e1; box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);">
+                                        {{-- Aksen Dekoratif Atas --}}
+                                        <div class="absolute top-0 left-0 right-0 h-2" style="background: linear-gradient(90deg, #7c3aed 0%, #c084fc 100%);"></div>
+
+                                        <div>
+                                            {{-- Icon & Tag --}}
+                                            <div class="flex items-center justify-between gap-4 mb-6 pt-2 relative z-10">
+                                                <div class="w-14 h-14 rounded-2xl flex items-center justify-center font-bold text-2xl shadow-sm" style="background-color: #f5f3ff; border: 1px solid #ddd6fe; color: #7c3aed;">
+                                                    <i class="ph-bold ph-users-three"></i>
+                                                </div>
+                                                <div class="flex flex-col items-end gap-1">
+                                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black tracking-wide shadow-sm" style="background-color: #f5f3ff; color: #6b21a8; border: 1px solid #ddd6fe;">
+                                                        <i class="ph-fill ph-check-circle" style="color: #9333ea;"></i> {{ $group['name'] }}
+                                                    </span>
+                                                    @if($doc->year)
+                                                        <span class="text-[11px] font-extrabold text-gray-400">Tahun {{ $doc->year }}</span>
+                                                    @endif
+                                                </div>
                                             </div>
+
+                                            {{-- Judul & Deskripsi --}}
+                                            <h4 class="text-lg lg:text-xl font-black transition-colors duration-200 mb-3 leading-snug relative z-10" style="color: #0f172a;">
+                                                <a href="{{ route('public.dokumen.show', $doc->id) }}" class="hover:text-purple-700 focus:outline-none block">
+                                                    {{ $doc->title }}
+                                                </a>
+                                            </h4>
+                                            <p class="text-sm font-medium line-clamp-3 leading-relaxed mb-8 relative z-10" style="color: #334155;">
+                                                {{ $doc->description ?: '-' }}
+                                            </p>
                                         </div>
-                                        <div class="w-10 h-10 rounded-full bg-gray-50 text-gray-400 group-hover:bg-purple-500 group-hover:text-white flex items-center justify-center transition-colors shrink-0">
-                                            <i class="ph-bold ph-download-simple"></i>
+
+                                        {{-- Footer Kartu --}}
+                                        <div class="pt-5 flex items-center justify-end mt-auto relative z-10" style="border-top: 1px solid #e2e8f0;">
+                                            <a href="{{ route('public.dokumen.show', $doc->id) }}" 
+                                               class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs shadow-md hover:opacity-90 transition-all duration-300" style="background-color: #7c3aed; color: #ffffff;">
+                                                <span>Lihat Detail</span>
+                                                <i class="ph-bold ph-arrow-right text-sm"></i>
+                                            </a>
                                         </div>
-                                    </a>
+                                    </div>
                                 @endforeach
                             </div>
                         @else
-                            <div class="bg-white rounded-[2rem] p-12 text-center shadow-[0_4px_25px_rgb(0,0,0,0.03)] border border-gray-100">
-                                <div class="w-20 h-20 mx-auto bg-purple-50 rounded-full flex items-center justify-center mb-6">
-                                    <i class="ph-duotone ph-folder-open text-4xl text-purple-200"></i>
+                            <div class="bg-white rounded-[2.5rem] p-16 text-center shadow-sm border border-gray-200" style="border: 1px solid #cbd5e1;">
+                                <div class="w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-6" style="background-color: #f5f3ff; border: 1px solid #ddd6fe;">
+                                    <i class="ph-duotone ph-folder-open text-5xl" style="color: #7c3aed;"></i>
                                 </div>
-                                <h4 class="text-lg font-bold text-gray-300 mb-2">Belum Ada Dokumen</h4>
-                                <p class="text-sm text-gray-400 font-medium">Dokumen {{ $group['name'] }} belum tersedia.</p>
+                                @if(request()->filled('search') || (request()->filled('year') && request('year') != 'all'))
+                                    <h4 class="text-xl font-black text-gray-700 mb-2">Tidak Ada Dokumen {{ $group['name'] }} Ditemukan</h4>
+                                    <p class="text-sm text-gray-500 font-medium max-w-md mx-auto mb-6">Tidak ada dokumen pada kategori {{ $group['name'] }} yang sesuai dengan pencarian atau filter tahun yang dipilih.</p>
+                                    <a :href="'{{ route('public.anjab-abk') }}?tab=' + activeTab" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs shadow-md transition-all duration-300 hover:opacity-90" style="background-color: #7c3aed; color: #ffffff;">
+                                        <i class="ph-bold ph-arrow-counter-clockwise"></i>
+                                        <span>Reset Filter & Pencarian</span>
+                                    </a>
+                                @else
+                                    <h4 class="text-xl font-black text-gray-700 mb-2">Belum Ada Dokumen {{ $group['name'] }}</h4>
+                                    <p class="text-sm text-gray-500 font-medium max-w-md mx-auto">Dokumen {{ $group['name'] }} akan ditampilkan sesuai database setelah diisi oleh admin.</p>
+                                @endif
                             </div>
                         @endif
                     </div>
                 @endforeach
             @else
-                <div class="bg-white rounded-[2.5rem] p-16 text-center shadow-[0_4px_25px_rgb(0,0,0,0.03)] border border-gray-100">
-                    <div class="w-24 h-24 mx-auto bg-purple-50 rounded-full flex items-center justify-center mb-6">
-                        <i class="ph-duotone ph-users text-5xl text-purple-200"></i>
+                <div class="bg-white rounded-[2.5rem] p-16 text-center shadow-sm border border-gray-200" style="border: 1px solid #cbd5e1;">
+                    <div class="w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-6" style="background-color: #f5f3ff; border: 1px solid #ddd6fe;">
+                        <i class="ph-duotone ph-users text-5xl" style="color: #7c3aed;"></i>
                     </div>
-                    <h4 class="text-xl font-black text-gray-300 mb-3">Kategori Belum Tersedia</h4>
-                    <p class="text-sm text-gray-400 font-medium max-w-md mx-auto">Kategori Anjab & ABK akan ditampilkan setelah dikonfigurasi.</p>
+                    <h4 class="text-xl font-black text-gray-700 mb-2">Kategori Belum Tersedia</h4>
+                    <p class="text-sm text-gray-500 font-medium max-w-md mx-auto">Kategori Anjab & ABK akan ditampilkan sesuai database setelah dikonfigurasi admin.</p>
                 </div>
             @endif
+
         </div>
     </section>
 

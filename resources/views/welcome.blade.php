@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
         rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" integrity="sha384-/rJKQnzOkEo+daG0jMjU1IwwY9unxt1NBw3Ef2fmOJ3PW/TfAg2KXVoWwMZQZtw9" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -40,8 +40,13 @@
         </script>
     @endif
 
-    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1" integrity="sha384-cPFV+/abYd3INVFHPmSKpBmcnH+Q+bTZW7dv/EiuShUNPkHyFmRF8PsL7Ibfvunk" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js" integrity="sha384-IntiqSJhM3wcHA/7O7MOj9GM6+qIPnjxugImfm81JveaSWrT7m3K0CfsWwOscMCu" crossorigin="anonymous"></script>
+    {{-- Phosphor Icons (jsDelivr Fast CDN) --}}
+    <script src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/index.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
     <style>
         html, body {
@@ -103,7 +108,7 @@
 
     {{-- ═══ HERO ═══ --}}
     <section id="beranda"
-        class="relative overflow-hidden bg-white min-h-screen flex flex-col justify-center pt-36 lg:pt-32">
+        class="relative overflow-hidden bg-white min-h-screen flex flex-col justify-center pt-24 lg:pt-20">
 
         {{-- Dot Pattern Background --}}
         <div class="absolute inset-0 z-0 opacity-50"
@@ -151,7 +156,7 @@
                     </p>
 
                     <div class="flex flex-wrap gap-4">
-                        <a href="#profil"
+                        <a href="{{ url('/profil') }}"
                             class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-brand-500 text-white font-bold text-[15px] rounded-xl hover:bg-brand-600 transition-colors shadow-lg shadow-brand-500/25">
                             Profil Organisasi <i class="ph ph-arrow-right"></i>
                         </a>
@@ -388,6 +393,33 @@
             </div>
         </div>
     </section>
+
+    {{-- ═══ PROFIL PIMPINAN / PEJABAT ═══ --}}
+    @if(isset($pegawais) && $pegawais->count() > 0)
+    <section class="py-24 bg-white relative border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-5 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 border border-brand-100 mb-4">
+                        <i class="ph-bold ph-users-three text-brand-600 text-sm"></i>
+                        <span class="text-xs font-bold uppercase tracking-wider text-brand-900">Jajaran Pimpinan & Pejabat</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight leading-tight">
+                        Profil Pejabat
+                    </h2>
+                    <p class="text-gray-500 font-medium max-w-xl leading-relaxed mt-3">
+                        Mengenal lebih dekat sosok jajaran pejabat struktural dan fungsional di Bagian Organisasi Setda Kota Padang. Klik foto untuk melihat detail profil.
+                    </p>
+                </div>
+                <a href="{{ url('/profil') }}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-slate-900 text-white font-bold text-sm hover:bg-slate-800 transition-all shadow-md shrink-0">
+                    Lihat Struktur Lengkap <i class="ph-bold ph-arrow-right"></i>
+                </a>
+            </div>
+
+            <x-pegawai-cards :pegawais="$pegawais" columns="5" />
+        </div>
+    </section>
+    @endif
 
     {{-- ═══ BERITA TERKINI ═══ --}}
     <section class="py-24 bg-white relative">
@@ -1073,7 +1105,7 @@
     </script>
     
     {{-- AOS Scroll Animations --}}
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" integrity="sha384-wziAfh6b/qT+3LrqebF9WeK4+J5sehS6FA10J1t3a866kJ/fvU5UwofWnQyzLtwu" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Dynamically add data-aos to section containers to avoid hardcoding everywhere
