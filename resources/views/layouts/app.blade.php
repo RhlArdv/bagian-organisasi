@@ -49,7 +49,7 @@
 
         {{-- SIDEBAR --}}
         <aside
-            class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-100 flex flex-col transition-transform duration-300 lg:translate-x-0"
+            class="fixed inset-y-0 left-0 z-50 w-56 bg-white border-r border-gray-100 flex flex-col transition-transform duration-300 lg:translate-x-0"
             :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
 
             {{-- Sidebar Header (Logo) --}}
@@ -474,7 +474,7 @@
         </aside>
 
         {{-- MAIN CONTENT AREA --}}
-        <div class="flex-1 lg:ml-64 flex flex-col min-h-screen w-full lg:w-[calc(100%-16rem)] max-w-full overflow-x-hidden">
+        <div class="flex-1 lg:ml-56 flex flex-col min-h-screen w-full lg:w-[calc(100%-14rem)] max-w-full overflow-x-hidden">
 
             {{-- TOPBAR --}}
             <header
