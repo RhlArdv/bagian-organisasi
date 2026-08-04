@@ -15,7 +15,7 @@ Route::get('/', function () {
         ->get();
     $postCategories = \App\Models\PostCategory::orderBy('name')->get();
     $announcements = \App\Models\Announcement::active()->limit(5)->get();
-    $statistics = \App\Models\Statistic::orderBy('order')->get();
+    $metrics = \App\Models\PerformanceMetric::getLatestAll();
     $agendas = \App\Models\Agenda::orderBy('date', 'asc')->limit(3)->get();
     $faqs = \App\Models\Faq::active()->get();
     $pegawais = \App\Models\Pegawai::where('is_active', true)->orderBy('order_index', 'asc')->limit(5)->get();
@@ -29,7 +29,7 @@ Route::get('/', function () {
     $visitorChartData = \App\Models\VisitorStat::getChartData();
 
     return view('welcome', compact(
-        'latestPosts', 'postCategories', 'announcements', 'statistics',
+        'latestPosts', 'postCategories', 'announcements', 'metrics',
         'visitorToday', 'visitorMonth', 'visitorYear', 'visitorTotal', 'visitorChartData',
         'agendas', 'faqs', 'pegawais', 'banners'
     ));

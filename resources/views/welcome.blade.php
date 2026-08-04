@@ -177,17 +177,22 @@
             <div class="relative z-20 w-full mt-12 lg:mt-20">
                 <div class="max-w-[90rem] mx-auto px-5 lg:px-12 pb-8">
                     <div class="flex flex-wrap lg:flex-nowrap gap-4">
-                        @foreach($statistics as $stat)
+                        @foreach($metrics as $type => $metric)
+                        @php
+                            $config = $metricConfig[$type] ?? ['icon' => 'ph-chart-bar', 'color' => 'slate', 'label' => str_replace('_', ' ', $type)];
+                            // Format number to remove trailing .00 if integer
+                            $formattedValue = rtrim(rtrim(number_format($metric->score, 2, ',', '.'), '0'), ',');
+                        @endphp
                         @if($loop->last && $loop->count > 1)
                             {{-- The last statistic is highlighted with solid dark navy bg --}}
                             <div class="w-full sm:w-full lg:flex-1 rounded-3xl px-6 py-4 shadow-xl shadow-slate-900/10 bg-[#2b3a4a]">
                                 <div class="flex items-center gap-4">
                                     <div class="text-white flex items-center justify-center">
-                                        <i class="ph-duotone {{ $stat->icon }} text-[32px]"></i>
+                                        <i class="ph-duotone {{ $config['icon'] }} text-[32px]"></i>
                                     </div>
                                     <div class="flex flex-col">
-                                        <p class="text-[26px] font-black text-white leading-[1.1]">{{ $stat->value }}</p>
-                                        <p class="text-[12px] text-slate-300 font-medium mt-0.5">{{ $stat->name }}</p>
+                                        <p class="text-[26px] font-black text-white leading-[1.1]">{{ $formattedValue }}</p>
+                                        <p class="text-[12px] text-slate-300 font-medium mt-0.5">{{ $config['label'] }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -196,12 +201,12 @@
                             <div
                                 class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-95 backdrop-blur-sm rounded-3xl px-6 py-4 shadow-lg shadow-slate-900/5 transition-all">
                                 <div class="flex items-center gap-4">
-                                    <div class="text-{{ $stat->color === 'brand' ? 'slate' : $stat->color }}-500 flex items-center justify-center">
-                                        <i class="ph-duotone {{ $stat->icon }} text-[32px]"></i>
+                                    <div class="text-{{ $config['color'] === 'brand' ? 'slate' : $config['color'] }}-500 flex items-center justify-center">
+                                        <i class="ph-duotone {{ $config['icon'] }} text-[32px]"></i>
                                     </div>
                                     <div class="flex flex-col">
-                                        <p class="text-[26px] font-black text-slate-900 leading-[1.1]">{{ $stat->value }}</p>
-                                        <p class="text-[12px] text-slate-500 font-medium mt-0.5">{{ $stat->name }}</p>
+                                        <p class="text-[26px] font-black text-slate-900 leading-[1.1]">{{ $formattedValue }}</p>
+                                        <p class="text-[12px] text-slate-500 font-medium mt-0.5">{{ $config['label'] }}</p>
                                     </div>
                                 </div>
                             </div>
