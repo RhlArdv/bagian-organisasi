@@ -47,6 +47,7 @@ Route::get('/profil', function () {
 
 // Halaman Publik — Layanan Unggulan (6 cards dari landing page)
 Route::get('/layanan/reformasi-birokrasi', [PublicLayananController::class, 'reformasiBirokrasi'])->name('public.reformasi-birokrasi');
+Route::get('/layanan/sakip', [PublicLayananController::class, 'sakip'])->name('public.sakip');
 Route::get('/layanan/sop', [PublicLayananController::class, 'sop'])->name('public.sop');
 Route::get('/layanan/peta-proses-bisnis', [PublicLayananController::class, 'petaProsesBisnis'])->name('public.peta-proses-bisnis');
 Route::get('/layanan/tata-naskah-dinas', [PublicLayananController::class, 'tataNaskahDinas'])->name('public.tata-naskah-dinas');
@@ -63,6 +64,7 @@ Route::get('/layanan/detail/{id}', [PublicLayananController::class, 'show'])->na
 Route::get('/dokumen/detail/{id}', [PublicLayananController::class, 'showDocument'])->name('public.dokumen.show');
 Route::get('/layanan/standar-pelayanan', [PublicLayananController::class, 'standarPelayanan'])->name('public.standar-pelayanan');
 Route::get('/layanan/regulasi', [PublicLayananController::class, 'regulasi'])->name('public.regulasi');
+Route::get('/layanan/regulasi/{slug}', [PublicLayananController::class, 'subRegulasi'])->name('public.regulasi.sub');
 Route::get('/layanan/maklumat-pelayanan', [PublicLayananController::class, 'maklumatPelayanan'])->name('public.maklumat-pelayanan');
 Route::get('/layanan/skm', [PublicLayananController::class, 'skm'])->name('public.skm');
 Route::get('/layanan/forum-konsultasi-publik', [PublicLayananController::class, 'forumKonsultasiPublik'])->name('public.forum-konsultasi-publik');

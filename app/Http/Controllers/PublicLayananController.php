@@ -6,6 +6,7 @@ use App\Models\Document;
 use App\Models\DocumentCategory;
 use App\Models\Feedback;
 use App\Models\Layanan;
+use App\Models\PerformanceMetric;
 use App\Models\RbDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -23,24 +24,63 @@ class PublicLayananController extends Controller
      * 1. Reformasi Birokrasi
      * Displays RB index scores, SAKIP documents, and related reform documents.
      */
-    public function reformasiBirokrasi()
+    public function reformasiBirokrasi(Request $request)
     {
-        $indeksRb = RbDocument::where('type', 'indeks_rb')
-            ->orderByDesc('year')
-            ->get();
+        // Nilai Indeks RB dari PerformanceMetric atau fallback ke RbDocument
+        $indeksRb = PerformanceMetric::where('type', 'NILAI_RB')->orderByDesc('year')->get();
+        if ($indeksRb->isEmpty()) {
+            $indeksRb = RbDocument::where('type', 'indeks_rb')->orderByDesc('year')->get();
+        }
 
-        $sakip = RbDocument::where('type', 'sakip')
-            ->orderByDesc('year')
-            ->get();
+        $kategori = DocumentCategory::where('slug', 'indeks-rb')->first();
+        $years = $kategori ? Document::active()->where('category_id', $kategori->id)->whereNotNull('year')->distinct()->orderBy('year', 'desc')->pluck('year') : collect();
+        $query = $kategori ? Document::active()->where('category_id', $kategori->id) : null;
 
-        // Also grab documents from 'indeks-rb' and 'sakip' document categories
-        $docCategories = DocumentCategory::whereIn('slug', ['indeks-rb', 'sakip'])->get();
-        $documents = Document::active()
-            ->whereIn('category_id', $docCategories->pluck('id'))
-            ->latest()
-            ->get();
+        if ($query && $request->filled('year') && $request->year != 'all') {
+            $query->where('year', $request->year);
+        }
+        if ($query && $request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('document_number', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+        $documents = $query ? $query->latest()->get() : collect();
 
-        return view('public.layanan.reformasi-birokrasi', compact('indeksRb', 'sakip', 'documents'));
+        return view('public.layanan.reformasi-birokrasi', compact('indeksRb', 'documents', 'kategori', 'years'));
+    }
+
+    /**
+     * SAKIP (Sub-menu Reformasi Birokrasi)
+     */
+    public function sakip(Request $request)
+    {
+        // Nilai SAKIP dari PerformanceMetric atau fallback ke RbDocument
+        $sakip = PerformanceMetric::where('type', 'NILAI_SAKIP')->orderByDesc('year')->get();
+        if ($sakip->isEmpty()) {
+            $sakip = RbDocument::where('type', 'sakip')->orderByDesc('year')->get();
+        }
+
+        $kategori = DocumentCategory::where('slug', 'sakip')->first();
+        $years = $kategori ? Document::active()->where('category_id', $kategori->id)->whereNotNull('year')->distinct()->orderBy('year', 'desc')->pluck('year') : collect();
+        $query = $kategori ? Document::active()->where('category_id', $kategori->id) : null;
+
+        if ($query && $request->filled('year') && $request->year != 'all') {
+            $query->where('year', $request->year);
+        }
+        if ($query && $request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('document_number', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+        $documents = $query ? $query->latest()->get() : collect();
+
+        return view('public.layanan.sakip', compact('sakip', 'documents', 'kategori', 'years'));
     }
 
     /**
@@ -348,6 +388,7 @@ class PublicLayananController extends Controller
 
         $namaKategori = $document->category->name ?? 'Dokumen';
         $slug = $document->category?->slug ?? '';
+        $group = $document->category?->group ?? '';
         $backRoute = match(true) {
             $slug === 'peta-jabatan' => route('public.peta-jabatan'),
             $slug === 'produk-hukum' => route('public.produk-hukum'),
@@ -358,13 +399,19 @@ class PublicLayananController extends Controller
             $slug === 'sop-pelayanan' => route('public.sop'),
             $slug === 'peta-proses-bisnis' => route('public.peta-proses-bisnis'),
             $slug === 'tata-naskah-dinas' => route('public.tata-naskah-dinas'),
+            $slug === 'indeks-rb' => route('public.reformasi-birokrasi'),
+            $slug === 'sakip' => route('public.sakip'),
+            in_array($slug, ['undang-undang', 'peraturan-pemerintah', 'permenpanrb', 'perda', 'perwako', 'surat-edaran']) || $group === 'regulasi' => route('public.regulasi.sub', ['slug' => $slug ?: 'undang-undang']),
             in_array($slug, ['informasi-anjab', 'informasi-abk', 'pedoman-anjab-abk', 'formulir-permohonan']) || str_contains($slug, 'anjab') || str_contains($slug, 'abk') => route('public.anjab-abk', ['tab' => $slug ?: 'informasi-anjab']),
             default => url('/'),
         };
         $isAnjab = in_array($slug, ['informasi-anjab', 'informasi-abk', 'pedoman-anjab-abk', 'formulir-permohonan']) || str_contains($slug, 'anjab') || str_contains($slug, 'abk') || str_contains(strtolower($namaKategori), 'anjab') || str_contains(strtolower($namaKategori), 'abk');
         $isTataLaksana = in_array($slug, ['sop-pelayanan', 'peta-proses-bisnis', 'tata-naskah-dinas']) || str_contains(strtolower($namaKategori), 'tata laksana') || str_contains(strtolower($namaKategori), 'sop') || str_contains(strtolower($namaKategori), 'peta proses') || str_contains(strtolower($namaKategori), 'tata naskah');
+        $isIndeksRb = $slug === 'indeks-rb' || str_contains(strtolower($namaKategori), 'indeks rb') || str_contains(strtolower($namaKategori), 'reformasi');
+        $isSakip = $slug === 'sakip' || str_contains(strtolower($namaKategori), 'sakip');
+        $isRegulasi = in_array($slug, ['undang-undang', 'peraturan-pemerintah', 'permenpanrb', 'perda', 'perwako', 'surat-edaran']) || $group === 'regulasi' || str_contains(strtolower($namaKategori), 'peraturan') || str_contains(strtolower($namaKategori), 'undang') || str_contains(strtolower($namaKategori), 'perda') || str_contains(strtolower($namaKategori), 'perwako') || str_contains(strtolower($namaKategori), 'edaran');
 
-        return view('public.layanan.show-document', compact('document', 'relatedDocuments', 'namaKategori', 'backRoute', 'isAnjab', 'isTataLaksana'));
+        return view('public.layanan.show-document', compact('document', 'relatedDocuments', 'namaKategori', 'backRoute', 'isAnjab', 'isTataLaksana', 'isIndeksRb', 'isSakip', 'isRegulasi'));
     }
 
     /**
@@ -572,5 +619,84 @@ class PublicLayananController extends Controller
         }
 
         return view('public.layanan.regulasi', compact('groupedDocuments', 'categories'));
+    }
+
+    /**
+     * 7b. Sub Regulasi (Per sub-menu)
+     */
+    public function subRegulasi(Request $request, $slug)
+    {
+        $kategori = DocumentCategory::where('slug', $slug)
+            ->where(function($q) {
+                $q->where('group', 'regulasi')
+                  ->orWhereIn('slug', ['undang-undang', 'peraturan-pemerintah', 'permenpanrb', 'perda', 'perwako', 'surat-edaran']);
+            })
+            ->firstOrFail();
+
+        $years = Document::active()->where('category_id', $kategori->id)->whereNotNull('year')->distinct()->orderBy('year', 'desc')->pluck('year');
+
+        $query = Document::active()->where('category_id', $kategori->id);
+
+        if ($request->filled('year') && $request->year != 'all') {
+            $query->where('year', $request->year);
+        }
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('document_number', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        $documents = $query->latest()->get();
+
+        $metaInfo = match($slug) {
+            'undang-undang' => [
+                'title' => 'Undang-Undang (UU)',
+                'subtitle' => 'Dasar Hukum & Peraturan Perundang-undangan',
+                'description' => 'Kumpulan dokumen regulasi Undang-Undang Republik Indonesia yang menjadi dasar hukum penyelenggaraan pemerintahan, penataan birokrasi, dan pelayanan publik.',
+                'icon' => 'ph-scales',
+            ],
+            'peraturan-pemerintah' => [
+                'title' => 'Peraturan Pemerintah (PP)',
+                'subtitle' => 'Kebijakan Tata Kelola & Pelaksanaan Undang-Undang',
+                'description' => 'Kumpulan Peraturan Pemerintah Republik Indonesia dalam penetapan kebijakan tata kelola ekosistem pemerintahan dan petunjuk pelaksanaan ketetapan undang-undang.',
+                'icon' => 'ph-bank',
+            ],
+            'permenpanrb' => [
+                'title' => 'PermenPANRB',
+                'subtitle' => 'Peraturan Menteri PANRB & Reformasi Birokrasi',
+                'description' => 'Peraturan Menteri Pendayagunaan Aparatur Negara dan Reformasi Birokrasi (PANRB) terkait ketatalaksanaan, kelembagaan, SDM aparatur, dan peningkatan kualitas pelayanan publik.',
+                'icon' => 'ph-book-bookmark',
+            ],
+            'perda' => [
+                'title' => 'Peraturan Daerah (Perda)',
+                'subtitle' => 'Peraturan Daerah Kota Padang & Provinsi Sumatera Barat',
+                'description' => 'Peraturan Daerah (Perda) yang disahkan dalam penyelenggaraan tugas pemerintahan, ketatanegaraan daerah, serta urusan otonomi di Kota Padang dan Provinsi Sumatera Barat.',
+                'icon' => 'ph-buildings',
+            ],
+            'perwako' => [
+                'title' => 'Peraturan Wali Kota (Perwako)',
+                'subtitle' => 'Kebijakan & Regulasi Eksekutif Pemerintah Kota Padang',
+                'description' => 'Peraturan Wali Kota Padang yang memuat instruksi operasional, pedoman tata kelola pemerintah daerah, dan penjabaran lebih lanjut dari Peraturan Daerah yang berlaku.',
+                'icon' => 'ph-gavel',
+            ],
+            'surat-edaran' => [
+                'title' => 'Surat Edaran (SE)',
+                'subtitle' => 'Panduan Teknis, Edaran & Instruksi Kerja Resmi',
+                'description' => 'Kumpulan Surat Edaran resmi dari Pemerintah Daerah, Wali Kota, atau Sekretariat Daerah terkait pengumuman, pedoman kerja operasional, dan instruksi koordinasi bagi seluruh OPD.',
+                'icon' => 'ph-envelope-simple-open',
+            ],
+            default => [
+                'title' => $kategori->name,
+                'subtitle' => 'Dokumen Regulasi & Aturan Bagian Organisasi',
+                'description' => 'Kumpulan dokumen regulasi resmi terkait tata kelola administrasi pemerintahan dan pelayanan publik Kota Padang.',
+                'icon' => 'ph-folder-lock',
+            ],
+        };
+
+        return view('public.layanan.regulasi-sub', compact('documents', 'kategori', 'years', 'metaInfo'));
     }
 }
