@@ -154,28 +154,28 @@
                                 Selamat Datang di
                             </div>
 
-                            <h1 class="text-5xl sm:text-6xl lg:text-[5rem] font-black text-gray-900 leading-[1] mb-4 tracking-tighter">
+                            <h1 class="text-5xl sm:text-6xl lg:text-[5rem] font-black text-slate-900 leading-[1] mb-4 tracking-tighter">
                                 {{ $banner->title }}
                             </h1>
 
-                            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-medium text-gray-400 tracking-wide mb-8 flex items-center gap-4">
-                                <div class="h-px bg-gray-300 w-10 hidden sm:block"></div>
+                            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-medium text-slate-500 tracking-wide mb-8 flex items-center gap-4">
+                                <div class="h-px bg-slate-300 w-10 hidden sm:block"></div>
                                 Sekretariat Daerah Kota Padang
                             </h2>
 
                             {{-- Tagline --}}
-                            <p class="text-gray-500 text-lg lg:text-xl font-medium leading-relaxed max-w-xl mb-10 border-l-4 border-brand-500 pl-6 py-1">
+                            <p class="text-slate-700 text-lg lg:text-xl font-medium leading-relaxed max-w-xl mb-10 border-l-4 border-slate-900 pl-6 py-1">
                                 {{ $banner->subtitle }}
                             </p>
 
                             <div class="flex flex-wrap gap-4">
                                 @if($banner->button_link)
-                                <a href="{{ url($banner->button_link) }}" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-brand-500 text-white font-bold text-[15px] rounded-xl hover:bg-brand-600 transition-colors shadow-lg shadow-brand-500/25">
+                                <a href="{{ url($banner->button_link) }}" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-slate-900 text-white font-bold text-[15px] rounded-xl hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/25">
                                     {{ $banner->button_text ?: 'Selengkapnya' }} <i class="ph ph-arrow-right"></i>
                                 </a>
                                 @endif
-                                <a href="#pelayanan" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-white text-gray-800 font-bold text-[15px] rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                                    Lihat Layanan <i class="ph ph-arrow-right text-gray-400"></i>
+                                <a href="#pelayanan" class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-white text-slate-900 font-bold text-[15px] rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                                    Lihat Layanan <i class="ph ph-arrow-right text-slate-400"></i>
                                 </a>
                             </div>
                         </div>
@@ -194,32 +194,32 @@
                         </div>
 
                         <h1
-                            class="text-5xl sm:text-6xl lg:text-[5rem] font-black text-gray-900 leading-[1] mb-4 tracking-tighter">
+                            class="text-5xl sm:text-6xl lg:text-[5rem] font-black text-slate-900 leading-[1] mb-4 tracking-tighter">
                             Bagian Organisasi
                         </h1>
 
                         <h2
-                            class="text-2xl sm:text-3xl lg:text-4xl font-medium text-gray-400 tracking-wide mb-8 flex items-center gap-4">
-                            <div class="h-px bg-gray-300 w-10 hidden sm:block"></div>
+                            class="text-2xl sm:text-3xl lg:text-4xl font-medium text-slate-500 tracking-wide mb-8 flex items-center gap-4">
+                            <div class="h-px bg-slate-300 w-10 hidden sm:block"></div>
                             Sekretariat Daerah Kota Padang
                         </h2>
 
                         {{-- Tagline --}}
                         <p
-                            class="text-gray-500 text-lg lg:text-xl font-medium leading-relaxed max-w-xl mb-10 border-l-4 border-brand-500 pl-6 py-1">
+                            class="text-slate-700 text-lg lg:text-xl font-medium leading-relaxed max-w-xl mb-10 border-l-4 border-slate-900 pl-6 py-1">
                             Mewujudkan tata kelola organisasi yang efektif, efisien, transparan, dan berorientasi pada
-                            pelayanan publik untuk <strong class="text-gray-900 font-black">Kota Padang yang lebih
+                            pelayanan publik untuk <strong class="text-slate-900 font-black">Kota Padang yang lebih
                                 baik</strong>.
                         </p>
 
                         <div class="flex flex-wrap gap-4">
                             <a href="{{ url('/profil') }}"
-                                class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-brand-500 text-white font-bold text-[15px] rounded-xl hover:bg-brand-600 transition-colors shadow-lg shadow-brand-500/25">
+                                class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-slate-900 text-white font-bold text-[15px] rounded-xl hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/25">
                                 Profil Organisasi <i class="ph ph-arrow-right"></i>
                             </a>
                             <a href="#pelayanan"
-                                class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-white text-gray-800 font-bold text-[15px] rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                                Lihat Layanan <i class="ph ph-arrow-right text-gray-400"></i>
+                                class="h-[48px] px-8 inline-flex items-center justify-center gap-2 bg-white text-slate-900 font-bold text-[15px] rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                                Lihat Layanan <i class="ph ph-arrow-right text-slate-400"></i>
                             </a>
                         </div>
                     </div>
@@ -232,36 +232,37 @@
                     <div class="flex flex-wrap lg:flex-nowrap gap-4">
                         @foreach($statistics as $stat)
                         @if($loop->last && $loop->count > 1)
-                            {{-- The last statistic is highlighted with solid brand bg --}}
-                            <div class="w-full sm:w-full lg:flex-1 rounded-2xl p-5 shadow-lg bg-brand-500">
+                            {{-- The last statistic is highlighted with solid dark navy bg --}}
+                            <div class="w-full sm:w-full lg:flex-1 rounded-2xl p-5 shadow-lg bg-slate-800 border border-slate-700">
                                 <div class="flex items-center gap-3">
                                     <div
-                                        class="w-10 h-10 rounded-xl bg-white bg-opacity-20 text-white flex items-center justify-center">
+                                        class="w-10 h-10 rounded-xl bg-white bg-opacity-10 text-white flex items-center justify-center">
                                         <i class="ph-duotone {{ $stat->icon }} text-xl"></i>
                                     </div>
                                     <div>
                                         <p class="text-2xl font-black text-white leading-none">{{ $stat->value }}</p>
-                                        <p class="text-[11px] text-brand-100 font-semibold mt-1">{{ $stat->name }}</p>
+                                        <p class="text-[11px] text-slate-300 font-semibold mt-1">{{ $stat->name }}</p>
                                     </div>
                                 </div>
                             </div>
                         @else
                             {{-- Normal statistic card --}}
                             <div
-                                class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                                class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-95 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-md hover:shadow-lg transition-all">
                                 <div class="flex items-center gap-3">
                                     <div
-                                        class="w-10 h-10 rounded-xl bg-{{ $stat->color }}-50 text-{{ $stat->color }}-500 flex items-center justify-center">
+                                        class="w-10 h-10 rounded-xl bg-slate-50 text-slate-700 flex items-center justify-center border border-slate-100">
                                         <i class="ph-duotone {{ $stat->icon }} text-xl"></i>
                                     </div>
                                     <div>
-                                        <p class="text-2xl font-black text-gray-900 leading-none">{{ $stat->value }}</p>
-                                        <p class="text-[11px] text-gray-500 font-semibold mt-1">{{ $stat->name }}</p>
+                                        <p class="text-2xl font-black text-slate-900 leading-none">{{ $stat->value }}</p>
+                                        <p class="text-[11px] text-slate-500 font-semibold mt-1">{{ $stat->name }}</p>
                                     </div>
                                 </div>
                             </div>
                         @endif
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
