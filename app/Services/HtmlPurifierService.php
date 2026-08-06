@@ -49,7 +49,7 @@ class HtmlPurifierService
 
         // --- Block ALL javascript: URIs ---
         $config->set('URI.SafeIframeRegexp', null);
-        $config->set('URI.AllowedSchemes', ['http' => true, 'https' => true, 'mailto' => false]);
+        $config->set('URI.AllowedSchemes', ['http' => true, 'https' => true]);
 
         // --- Block dangerous attributes globally ---
         // HTMLPurifier already strips event handlers by default,

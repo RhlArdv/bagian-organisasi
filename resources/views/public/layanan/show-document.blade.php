@@ -17,20 +17,118 @@
         str_contains(strtolower($namaKategori), 'tata naskah')
     );
 
-    $theme = [
-        'primary' => $isAnjab ? '#7c3aed' : ($isTataLaksana ? '#2563eb' : '#059669'),
-        'primaryHover' => $isAnjab ? 'hover:text-purple-700' : ($isTataLaksana ? 'hover:text-blue-700' : 'hover:text-emerald-700'),
-        'badgeBg' => $isAnjab ? '#f5f3ff' : ($isTataLaksana ? '#eff6ff' : '#ecfdf5'),
-        'badgeText' => $isAnjab ? '#6b21a8' : ($isTataLaksana ? '#1e40af' : '#047857'),
-        'badgeBorder' => $isAnjab ? '#ddd6fe' : ($isTataLaksana ? '#bfdbfe' : '#a7f3d0'),
-        'iconColor' => $isAnjab ? '#9333ea' : ($isTataLaksana ? '#2563eb' : '#059669'),
-        'gradient' => $isAnjab ? 'linear-gradient(90deg, #7c3aed 0%, #c084fc 100%)' : ($isTataLaksana ? 'linear-gradient(90deg, #2563eb 0%, #60a5fa 100%)' : 'linear-gradient(90deg, #059669 0%, #34d399 100%)'),
-        'descBg' => $isAnjab ? '#f5f3ff' : ($isTataLaksana ? '#eff6ff' : '#ecfdf5'),
-        'descBorder' => $isAnjab ? '#ddd6fe' : ($isTataLaksana ? '#bfdbfe' : '#d1fae5'),
-        'itemHoverBorder' => $isAnjab ? 'hover:border-purple-300' : ($isTataLaksana ? 'hover:border-blue-300' : 'hover:border-emerald-200'),
-        'subTextColor' => $isAnjab ? '#7c3aed' : ($isTataLaksana ? '#2563eb' : '#059669'),
-        'descTextColor' => $isAnjab ? '#581c87' : ($isTataLaksana ? '#1e3a8a' : '#064e3b'),
-    ];
+    $isIndeksRb = $isIndeksRb ?? (
+        $document->category?->slug === 'indeks-rb' ||
+        str_contains(strtolower($namaKategori), 'indeks rb') ||
+        str_contains(strtolower($namaKategori), 'reformasi')
+    );
+
+    $isSakip = $isSakip ?? (
+        $document->category?->slug === 'sakip' ||
+        str_contains(strtolower($namaKategori), 'sakip')
+    );
+
+    $isRegulasi = $isRegulasi ?? (
+        $document->category?->group === 'regulasi' ||
+        in_array($document->category?->slug, ['undang-undang', 'peraturan-pemerintah', 'permenpanrb', 'perda', 'perwako', 'surat-edaran']) ||
+        str_contains(strtolower($namaKategori), 'peraturan') ||
+        str_contains(strtolower($namaKategori), 'undang') ||
+        str_contains(strtolower($namaKategori), 'perda') ||
+        str_contains(strtolower($namaKategori), 'perwako') ||
+        str_contains(strtolower($namaKategori), 'edaran')
+    );
+
+    if ($isAnjab) {
+        $theme = [
+            'primary' => '#7c3aed',
+            'primaryHover' => 'hover:text-purple-700',
+            'badgeBg' => '#f5f3ff',
+            'badgeText' => '#6b21a8',
+            'badgeBorder' => '#ddd6fe',
+            'iconColor' => '#9333ea',
+            'gradient' => 'linear-gradient(90deg, #7c3aed 0%, #c084fc 100%)',
+            'descBg' => '#f5f3ff',
+            'descBorder' => '#ddd6fe',
+            'itemHoverBorder' => 'hover:border-purple-300',
+            'subTextColor' => '#7c3aed',
+            'descTextColor' => '#581c87',
+        ];
+    } elseif ($isTataLaksana) {
+        $theme = [
+            'primary' => '#2563eb',
+            'primaryHover' => 'hover:text-blue-700',
+            'badgeBg' => '#eff6ff',
+            'badgeText' => '#1e40af',
+            'badgeBorder' => '#bfdbfe',
+            'iconColor' => '#2563eb',
+            'gradient' => 'linear-gradient(90deg, #2563eb 0%, #60a5fa 100%)',
+            'descBg' => '#eff6ff',
+            'descBorder' => '#bfdbfe',
+            'itemHoverBorder' => 'hover:border-blue-300',
+            'subTextColor' => '#2563eb',
+            'descTextColor' => '#1e3a8a',
+        ];
+    } elseif ($isIndeksRb) {
+        $theme = [
+            'primary' => '#4f46e5',
+            'primaryHover' => 'hover:text-indigo-700',
+            'badgeBg' => '#eef2ff',
+            'badgeText' => '#3730a3',
+            'badgeBorder' => '#c7d2fe',
+            'iconColor' => '#4f46e5',
+            'gradient' => 'linear-gradient(90deg, #4f46e5 0%, #818cf8 100%)',
+            'descBg' => '#eef2ff',
+            'descBorder' => '#c7d2fe',
+            'itemHoverBorder' => 'hover:border-indigo-300',
+            'subTextColor' => '#4f46e5',
+            'descTextColor' => '#312e81',
+        ];
+    } elseif ($isSakip) {
+        $theme = [
+            'primary' => '#d97706',
+            'primaryHover' => 'hover:text-amber-700',
+            'badgeBg' => '#fffbeb',
+            'badgeText' => '#92400e',
+            'badgeBorder' => '#fde68a',
+            'iconColor' => '#d97706',
+            'gradient' => 'linear-gradient(90deg, #d97706 0%, #fbbf24 100%)',
+            'descBg' => '#fffbeb',
+            'descBorder' => '#fde68a',
+            'itemHoverBorder' => 'hover:border-amber-300',
+            'subTextColor' => '#d97706',
+            'descTextColor' => '#78350f',
+        ];
+    } elseif ($isRegulasi) {
+        $theme = [
+            'primary' => '#dc2626',
+            'primaryHover' => 'hover:text-red-700',
+            'badgeBg' => '#fef2f2',
+            'badgeText' => '#991b1b',
+            'badgeBorder' => '#fecaca',
+            'iconColor' => '#dc2626',
+            'gradient' => 'linear-gradient(90deg, #dc2626 0%, #f87171 100%)',
+            'descBg' => '#fef2f2',
+            'descBorder' => '#fecaca',
+            'itemHoverBorder' => 'hover:border-red-300',
+            'subTextColor' => '#dc2626',
+            'descTextColor' => '#7f1d1d',
+        ];
+    } else {
+        $theme = [
+            'primary' => '#059669',
+            'primaryHover' => 'hover:text-emerald-700',
+            'badgeBg' => '#ecfdf5',
+            'badgeText' => '#047857',
+            'badgeBorder' => '#a7f3d0',
+            'iconColor' => '#059669',
+            'gradient' => 'linear-gradient(90deg, #059669 0%, #34d399 100%)',
+            'descBg' => '#ecfdf5',
+            'descBorder' => '#d1fae5',
+            'itemHoverBorder' => 'hover:border-emerald-200',
+            'subTextColor' => '#059669',
+            'descTextColor' => '#064e3b',
+        ];
+    }
 @endphp
 
     <div class="max-w-7xl mx-auto px-5 lg:px-8 pt-6 pb-24">

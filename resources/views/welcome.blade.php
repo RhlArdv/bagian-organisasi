@@ -8,6 +8,7 @@
     <meta name="description"
         content="Portal resmi Bagian Organisasi Sekretariat Daerah Kota Padang. Informasi kelembagaan, pelayanan publik, tata laksana, dan reformasi birokrasi.">
     <title>Bagian Organisasi — Sekretariat Daerah Kota Padang</title>
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/logo.png') }}?v=1.0">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -842,10 +843,17 @@
         {{-- Massive Edge-to-Edge Map Background --}}
         @php
             $defaultMap = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2683976643275!2d100.35692807531795!3d-0.9512986353524716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b948c7c72e11%3A0x6771787fa612c99f!2sSekretariat%20Daerah%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1785310213215!5m2!1sid!2sid';
-            $mapEmbed = \App\Models\SiteSetting::getValue('google_maps_embed') ?: $defaultMap;
+            $rawWelcomeMap = \App\Models\SiteSetting::getValue('google_maps_embed');
+            if ($rawWelcomeMap && preg_match('/src=["\']([^"\']+)["\']/', $rawWelcomeMap, $matches)) {
+                $mapEmbed = $matches[1];
+            } elseif ($rawWelcomeMap) {
+                $mapEmbed = $rawWelcomeMap;
+            } else {
+                $mapEmbed = $defaultMap;
+            }
             
-            // Extract a search link for the button if possible, else default
-            $mapSearchLink = 'https://www.google.com/maps/search/Sekretariat+Daerah+Kota+Padang';
+            $addressQuery = \App\Models\SiteSetting::getValue('address', 'Sekretariat Daerah Kota Padang');
+            $mapSearchLink = 'https://www.google.com/maps/search/?api=1&query=' . urlencode($addressQuery);
         @endphp
         <iframe
             src="{{ $mapEmbed }}"
@@ -876,7 +884,7 @@
                 <div
                     class="w-full max-w-md mx-auto lg:mx-0 h-[220px] bg-gray-800 rounded-[2rem] overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.4)] border border-white/10 group relative mt-4">
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2683976643275!2d100.35692807531795!3d-0.9512986353524716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b948c7c72e11%3A0x6771787fa612c99f!2sSekretariat%20Daerah%20Kota%20Padang!5e0!3m2!1sid!2sid!4v1785310213215!5m2!1sid!2sid"
+                        src="{{ $mapEmbed }}"
                         class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                         style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     <div class="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[2rem] pointer-events-none">

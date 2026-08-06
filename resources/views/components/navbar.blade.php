@@ -154,10 +154,9 @@
                     <div
                         class="bg-white border border-gray-100 shadow-xl shadow-brand-500/5 rounded-2xl py-3 flex flex-col">
                         <a href="{{ route('public.reformasi-birokrasi') }}"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Indeks
-                            RB</a>
-                        <a href="#"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">SAKIP</a>
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 hover:pl-6 transition-all">Indeks RB</a>
+                        <a href="{{ route('public.sakip') }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-amber-600 hover:bg-amber-50 hover:pl-6 transition-all">SAKIP</a>
                     </div>
                 </div>
             </div>
@@ -170,22 +169,20 @@
                         class="ph-bold ph-caret-down text-brand-500 transition-transform duration-300 group-hover:rotate-180"></i>
                 </button>
                 <div
-                    class="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-48 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-                    <div
-                        class="bg-white border border-gray-100 shadow-xl shadow-brand-500/5 rounded-2xl py-3 flex flex-col">
-                        <a href="#"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">UU</a>
-                        <a href="#"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">PP</a>
-                        <a href="#"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">PermenPANRB</a>
-                        <a href="#"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Perda</a>
-                        <a href="#"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Perwako</a>
-                        <a href="#"
-                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Surat
-                            Edaran</a>
+                    class="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-auto min-w-[250px] z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+                    <div class="bg-white border border-gray-100 shadow-xl shadow-brand-500/5 rounded-2xl py-3 flex flex-col">
+                        <a href="{{ route('public.regulasi.sub', 'undang-undang') }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-red-600 hover:bg-red-50 hover:pl-6 transition-all whitespace-nowrap">Undang-Undang</a>
+                        <a href="{{ route('public.regulasi.sub', 'peraturan-pemerintah') }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-red-600 hover:bg-red-50 hover:pl-6 transition-all whitespace-nowrap">Peraturan Pemerintah</a>
+                        <a href="{{ route('public.regulasi.sub', 'permenpanrb') }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-red-600 hover:bg-red-50 hover:pl-6 transition-all whitespace-nowrap">Peraturan Menteri PANRB</a>
+                        <a href="{{ route('public.regulasi.sub', 'perda') }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-red-600 hover:bg-red-50 hover:pl-6 transition-all whitespace-nowrap">Peraturan Daerah</a>
+                        <a href="{{ route('public.regulasi.sub', 'perwako') }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-red-600 hover:bg-red-50 hover:pl-6 transition-all whitespace-nowrap">Peraturan Wali Kota</a>
+                        <a href="{{ route('public.regulasi.sub', 'surat-edaran') }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-red-600 hover:bg-red-50 hover:pl-6 transition-all whitespace-nowrap">Surat Edaran</a>
                     </div>
                 </div>
             </div>
@@ -288,11 +285,33 @@
                 </div>
             </div>
 
-            {{-- Reformasi Birokrasi & Berita Mobile --}}
-            <a href="{{ route('public.reformasi-birokrasi') }}" @click="mobileOpen = false" class="text-sm font-extrabold text-gray-800 hover:text-brand-500 py-2 border-b border-gray-100 flex items-center justify-between">
-                <span>Reformasi Birokrasi & SAKIP</span>
-                <i class="ph-bold ph-arrow-right text-brand-500"></i>
-            </a>
+            {{-- Reformasi Birokrasi Mobile --}}
+            <div x-data="{ openRb: false }" class="border-b border-gray-100 pb-2">
+                <button @click="openRb = !openRb" class="w-full flex items-center justify-between py-2 text-sm font-extrabold text-gray-800 hover:text-indigo-600">
+                    <span>Reformasi Birokrasi</span>
+                    <i class="ph-bold transition-transform" :class="openRb ? 'ph-caret-up text-indigo-600' : 'ph-caret-down'" style="color: #4f46e5;"></i>
+                </button>
+                <div x-show="openRb" class="pl-4 pt-2 flex flex-col space-y-2.5 text-xs font-bold text-gray-600" style="display: none;">
+                    <a href="{{ route('public.reformasi-birokrasi') }}" @click="mobileOpen = false" class="hover:text-indigo-600">Indeks RB</a>
+                    <a href="{{ route('public.sakip') }}" @click="mobileOpen = false" class="hover:text-amber-600">SAKIP</a>
+                </div>
+            </div>
+
+            {{-- Regulasi Mobile --}}
+            <div x-data="{ openRegulasi: false }" class="border-b border-gray-100 pb-2">
+                <button @click="openRegulasi = !openRegulasi" class="w-full flex items-center justify-between py-2 text-sm font-extrabold text-gray-800 hover:text-red-600">
+                    <span>Regulasi</span>
+                    <i class="ph-bold transition-transform" :class="openRegulasi ? 'ph-caret-up text-red-600' : 'ph-caret-down'" style="color: #dc2626;"></i>
+                </button>
+                <div x-show="openRegulasi" class="pl-4 pt-2 flex flex-col space-y-2.5 text-xs font-bold text-gray-600" style="display: none;">
+                    <a href="{{ route('public.regulasi.sub', 'undang-undang') }}" @click="mobileOpen = false" class="hover:text-red-600">Undang-Undang</a>
+                    <a href="{{ route('public.regulasi.sub', 'peraturan-pemerintah') }}" @click="mobileOpen = false" class="hover:text-red-600">Peraturan Pemerintah</a>
+                    <a href="{{ route('public.regulasi.sub', 'permenpanrb') }}" @click="mobileOpen = false" class="hover:text-red-600">Peraturan Menteri PANRB</a>
+                    <a href="{{ route('public.regulasi.sub', 'perda') }}" @click="mobileOpen = false" class="hover:text-red-600">Peraturan Daerah</a>
+                    <a href="{{ route('public.regulasi.sub', 'perwako') }}" @click="mobileOpen = false" class="hover:text-red-600">Peraturan Wali Kota</a>
+                    <a href="{{ route('public.regulasi.sub', 'surat-edaran') }}" @click="mobileOpen = false" class="hover:text-red-600">Surat Edaran</a>
+                </div>
+            </div>
             <a href="{{ route('public.berita.index') }}" @click="mobileOpen = false" class="text-sm font-extrabold text-gray-800 hover:text-brand-500 py-2 border-b border-gray-100 flex items-center justify-between">
                 <span>Berita & Pengumuman</span>
                 <i class="ph-bold ph-arrow-right text-brand-500"></i>

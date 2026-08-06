@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Bagian Organisasi') }} - Dashboard</title>
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/logo.png') }}?v=1.0">
 
     {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.bunny.net">
