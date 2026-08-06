@@ -49,7 +49,7 @@ class HtmlPurifierService
 
         // --- Block ALL javascript: URIs ---
         $config->set('URI.SafeIframeRegexp', null);
-        $config->set('URI.AllowedSchemes', ['http' => true, 'https' => true, 'mailto' => false]);
+        $config->set('URI.AllowedSchemes', ['http' => true, 'https' => true]);
 
         // --- Block dangerous attributes globally ---
         // HTMLPurifier already strips event handlers by default,
@@ -62,6 +62,13 @@ class HtmlPurifierService
         // Allow target="_blank" on links but enforce noopener
         $config->set('HTML.TargetBlank', true);
         $config->set('HTML.TargetNoopener', true);
+
+        // Add custom HTML5 elements (mark)
+        $config->set('HTML.DefinitionID', 'html5-definitions');
+        $config->set('HTML.DefinitionRev', 1);
+        if ($def = $config->maybeGetRawHTMLDefinition()) {
+            $def->addElement('mark', 'Inline', 'Inline', 'Common');
+        }
 
         $this->purifier = new HTMLPurifier($config);
     }

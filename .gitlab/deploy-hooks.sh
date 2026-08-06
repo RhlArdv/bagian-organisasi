@@ -29,13 +29,14 @@ docker compose exec -T app php artisan storage:link || true
 echo "[HOOK] Menunggu database siap (15 detik)..."
 sleep 15
 
-echo "[HOOK] Menjalankan migrasi database..."
-docker compose exec -T app php artisan migrate --force
-
-# Hanya jalankan seeder jika berada di Staging (variabel STAGING_APP_URL terisi)
+# Di Staging: fresh migrate + seed agar database selalu bersih setiap deploy
+# Di Production: hanya migrate biasa (tanpa fresh/seed)
 if [ -n "${STAGING_APP_URL:-}" ]; then
-    echo "[HOOK] Menjalankan database seeder (Staging only)..."
-    docker compose exec -T app php artisan db:seed --force
+    echo "[HOOK] Staging — menjalankan migrate:fresh --seed (reset total database)..."
+    docker compose exec -T app php artisan migrate:fresh --seed --force
+else
+    echo "[HOOK] Production — menjalankan migrasi database (incremental)..."
+    docker compose exec -T app php artisan migrate --force
 fi
 
 echo "[HOOK] Mengoptimalkan cache Laravel..."
