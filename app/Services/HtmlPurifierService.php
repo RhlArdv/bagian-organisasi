@@ -63,6 +63,13 @@ class HtmlPurifierService
         $config->set('HTML.TargetBlank', true);
         $config->set('HTML.TargetNoopener', true);
 
+        // Add custom HTML5 elements (mark)
+        $config->set('HTML.DefinitionID', 'html5-definitions');
+        $config->set('HTML.DefinitionRev', 1);
+        if ($def = $config->maybeGetRawHTMLDefinition()) {
+            $def->addElement('mark', 'Inline', 'Inline', 'Common');
+        }
+
         $this->purifier = new HTMLPurifier($config);
     }
 
