@@ -81,6 +81,12 @@
                     <li><a href="/profil"
                             class="text-sm text-gray-400 font-medium hover:text-brand-400 transition-colors inline-flex items-center gap-2"><i
                                 class="ph-bold ph-caret-right text-[10px]"></i> Profil Organisasi</a></li>
+                    <li><a href="{{ url('/profil/visi-misi') }}"
+                            class="text-sm text-gray-400 font-medium hover:text-brand-400 transition-colors inline-flex items-center gap-2"><i
+                                class="ph-bold ph-caret-right text-[10px]"></i> Visi & Misi</a></li>
+                    <li><a href="{{ url('/profil/tugas-fungsi') }}"
+                            class="text-sm text-gray-400 font-medium hover:text-brand-400 transition-colors inline-flex items-center gap-2"><i
+                                class="ph-bold ph-caret-right text-[10px]"></i> Tugas Pokok & Fungsi</a></li>
                     <li><a href="/#kelembagaan"
                             class="text-sm text-gray-400 font-medium hover:text-brand-400 transition-colors inline-flex items-center gap-2"><i
                                 class="ph-bold ph-caret-right text-[10px]"></i> Layanan Kelembagaan</a></li>

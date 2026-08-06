@@ -95,7 +95,7 @@
         </section>
 
         {{-- VISI, MISI, TUJUAN --}}
-        <section class="mb-10">
+        <section id="visi-misi" class="mb-10 scroll-mt-28 lg:scroll-mt-32">
             <div class="max-w-7xl mx-auto px-5 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     
@@ -182,7 +182,7 @@
         </section>
 
         {{-- TUPOKSI --}}
-        <section class="mb-10">
+        <section id="tupoksi" class="mb-10 scroll-mt-28 lg:scroll-mt-32">
             <div class="max-w-7xl mx-auto px-5 lg:px-8">
                 <div class="bg-white rounded-[2rem] p-8 lg:p-12 shadow-[0_4px_25px_rgb(0,0,0,0.03)] flex flex-col lg:flex-row gap-10 lg:gap-16">
                     <div class="w-full lg:w-[40%]">
@@ -237,7 +237,7 @@
         </section>
 
         {{-- MAKLUMAT PELAYANAN --}}
-        <section class="mb-12">
+        <section id="maklumat-pelayanan" class="mb-12 scroll-mt-28 lg:scroll-mt-32">
             <div class="max-w-7xl mx-auto px-5 lg:px-8">
                 <div class="bg-[#fff9ed] rounded-[2rem] p-8 lg:px-12 flex flex-col md:flex-row items-center md:items-start gap-6 border border-[#ffe5b5] shadow-sm">
                     <div class="w-[70px] h-[70px] bg-white rounded-2xl flex items-center justify-center shrink-0 shadow-sm text-brand-400">
@@ -258,7 +258,7 @@
         </section>
 
         {{-- PROFIL PEGAWAI --}}
-        <section id="profil-pegawai" class="mb-14">
+        <section id="profil-pegawai" class="mb-14 scroll-mt-28 lg:scroll-mt-32">
             <div class="max-w-7xl mx-auto px-5 lg:px-8">
                 <div class="flex items-center justify-between mb-8">
                     <div class="flex items-center gap-3">
@@ -303,7 +303,7 @@
                 $dbMap = $defaultMapUrl;
             }
         @endphp
-        <section>
+        <section id="kontak" class="scroll-mt-28 lg:scroll-mt-32">
             <div class="max-w-7xl mx-auto px-5 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
                     
