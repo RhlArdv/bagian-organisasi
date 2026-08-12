@@ -37,7 +37,7 @@
                             <span class="text-[11px] font-extrabold uppercase tracking-wider block" style="color: #a7f3d0;">Partisipasi Publik</span>
                             <span class="text-base font-black block text-white mt-0.5">Isi Survei Digital Kami</span>
                         </div>
-                        <a href="https://surveidigital.spbe.go.id/embed/survey/eyJzdXJ2ZXlfaWQiOjIsInNlcnZpY2VfaWQiOjkxNiwiaG9zdCI6Imh0dHBzOi8vYmFnb3JnYW5pc2FzaS5wYWRhbmcuZ28uaWQiLCJrZXkiOiJyWTc3Z1VOciJ9/embed/view/?jenis_layanan=Website" target="_blank" rel="noopener noreferrer"
+                        <a href="https://surveidigital.spbe.go.id/embed/survey/eyJzdXJ2ZXlfaWQiOjIsInNlcnZpY2VfaWQiOjkxNiwiaG9zdCI6Imh0dHBzOi8vYmFnb3JnYW5pc2FzaS5wYWRhbmcuZ28uaWQiLCJrZXkiOiJyWTc3Z1VOciJ9/embed/view/?jenis_layanan=Website" target="_blank" rel="noopener"
                            class="px-5 py-3 rounded-xl font-extrabold text-xs shadow-md hover:bg-emerald-50 transition-all text-emerald-800 bg-white inline-flex items-center gap-2">
                             <i class="ph-bold ph-paper-plane-tilt text-emerald-600 text-sm"></i>
                             <span>Buka Form Survei</span>
