@@ -181,7 +181,7 @@
             {{-- Statistics Bar (moved closer to text) --}}
             <div class="relative z-20 w-full mt-10 lg:mt-20">
                 <div class="max-w-[90rem] mx-auto px-5 lg:px-12 pb-8">
-                    <div class="grid grid-cols-2 lg:flex lg:flex-nowrap gap-3 sm:gap-4">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                         @foreach($metrics as $type => $metric)
                             @php
                                 $config = $metricConfig[$type] ?? ['icon' => 'ph-chart-bar', 'color' => 'slate', 'label' => str_replace('_', ' ', $type)];
@@ -190,7 +190,7 @@
                             @endphp
                             @if($loop->last && $loop->count > 1)
                                 {{-- The last statistic is highlighted with solid brand bg --}}
-                                <div class="col-span-2 sm:col-span-1 lg:flex-1 rounded-2xl p-4 sm:p-5 shadow-lg bg-brand-500 flex flex-col justify-center">
+                                <div class="rounded-2xl p-4 sm:p-5 shadow-lg bg-brand-500 flex flex-col justify-center">
                                     <div class="flex items-center gap-3">
                                         <div class="w-10 h-10 rounded-xl bg-white bg-opacity-20 text-white flex items-center justify-center shrink-0">
                                             <i class="ph-duotone {{ $config['icon'] }} text-xl"></i>
@@ -203,7 +203,7 @@
                                 </div>
                             @else
                                 {{-- Normal statistic card --}}
-                                <div class="col-span-1 lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-center">
+                                <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-center">
                                     <div class="flex items-center gap-2 sm:gap-3">
                                         <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-{{ $config['color'] }}-50 text-{{ $config['color'] }}-500 flex items-center justify-center shrink-0">
                                             <i class="ph-duotone {{ $config['icon'] }} text-lg sm:text-xl"></i>
