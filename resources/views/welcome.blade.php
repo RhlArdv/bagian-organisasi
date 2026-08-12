@@ -111,8 +111,9 @@
             style="background-image: radial-gradient(#fcd34d 1.5px, transparent 1.5px); background-size: 36px 36px;">
         </div>
 
-        {{-- Mobile Readability Overlay --}}
-        <div class="absolute inset-0 bg-white/70 lg:hidden z-[1] pointer-events-none"></div>
+        {{-- Mobile Readability Overlay (Frosted Glass Effect) --}}
+        <div class="absolute inset-0 lg:hidden z-[1] pointer-events-none" 
+             style="background-color: rgba(255, 255, 255, 0.7); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);"></div>
 
         {{-- Background Image --}}
         <div class="absolute top-0 right-0 w-full lg:w-[75%] h-full pointer-events-none z-0 lg:z-0" 
