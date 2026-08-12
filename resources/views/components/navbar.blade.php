@@ -344,13 +344,11 @@
                     <a href="{{ route('public.regulasi.sub', 'surat-edaran') }}" @click="mobileOpen = false" class="hover:text-red-600">Surat Edaran</a>
                 </div>
             </div>
-            <a href="{{ route('public.berita.index') }}" @click="mobileOpen = false" class="text-sm font-extrabold text-gray-800 hover:text-brand-500 py-2 border-b border-gray-100 flex items-center justify-between">
-                <span>Berita & Pengumuman</span>
+            {{-- Survei Kepuasan Masyarakat (SKM) --}}
+            <a href="https://surveidigital.spbe.go.id/embed/survey/eyJzdXJ2ZXlfaWQiOjIsInNlcnZpY2VfaWQiOjkxNiwiaG9zdCI6Imh0dHBzOi8vYmFnb3JnYW5pc2FzaS5wYWRhbmcuZ28uaWQiLCJrZXkiOiJyWTc3Z1VOciJ9/embed/view/" target="_blank" rel="noopener"
+               @click="mobileOpen = false" class="text-sm font-extrabold text-gray-800 hover:text-brand-500 py-2 border-b border-gray-100 flex items-center justify-between">
+                <span>SKM</span>
                 <i class="ph-bold ph-arrow-right text-brand-500"></i>
-            </a>
-            <a href="{{ route('public.pengaduan') }}" @click="mobileOpen = false" class="text-sm font-extrabold text-brand-500 hover:text-brand-600 py-3 bg-brand-50 rounded-xl px-4 flex items-center justify-between mt-3 shadow-sm">
-                <span class="flex items-center gap-2"><i class="ph-fill ph-chat-circle-dots text-lg"></i> Kritik, Saran & Pengaduan</span>
-                <i class="ph-bold ph-arrow-right"></i>
             </a>
         </div>
     </div>

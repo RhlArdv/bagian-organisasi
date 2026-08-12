@@ -123,11 +123,11 @@
             
             @if($activeBanner)
                 <img src="{{ asset('storage/' . $activeBanner->image) }}" alt="{{ $activeBanner->title }}"
-                    class="w-full h-full object-cover object-[75%_center] md:object-right opacity-40 lg:opacity-100"
+                    class="w-full h-full object-cover object-[75%_center] md:object-right"
                     onerror="this.src='{{ asset('assets/img/hero3.webp') }}'">
             @else
                 <img src="{{ asset('assets/img/hero3.webp') }}" alt="Bagian Organisasi Sekretariat Daerah Kota Padang"
-                    class="w-full h-full object-cover object-[75%_center] md:object-right opacity-40 lg:opacity-100"
+                    class="w-full h-full object-cover object-[75%_center] md:object-right"
                     onerror="this.src='https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=900&q=80'">
             @endif
         </div>
@@ -179,9 +179,9 @@
             </div>
 
             {{-- Statistics Bar (moved closer to text) --}}
-            <div class="relative z-20 w-full mt-10 lg:mt-20">
+            <div class="relative z-20 w-full mt-10 lg:mt-16">
                 <div class="max-w-[90rem] mx-auto px-5 lg:px-12 pb-8">
-                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:max-w-5xl xl:max-w-6xl">
                         @foreach($metrics as $type => $metric)
                             @php
                                 $config = $metricConfig[$type] ?? ['icon' => 'ph-chart-bar', 'color' => 'slate', 'label' => str_replace('_', ' ', $type)];
