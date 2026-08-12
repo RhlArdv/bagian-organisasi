@@ -111,10 +111,6 @@
             style="background-image: radial-gradient(#fcd34d 1.5px, transparent 1.5px); background-size: 36px 36px;">
         </div>
 
-        {{-- Mobile Readability Overlay (Frosted Glass Effect) --}}
-        <div class="absolute inset-0 lg:hidden z-[1] pointer-events-none" 
-             style="background-color: rgba(255, 255, 255, 0.7); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);"></div>
-
         {{-- Background Image --}}
         <div class="absolute top-0 right-0 w-full lg:w-[75%] h-full pointer-events-none z-0 lg:z-0" 
              style="mask-image: linear-gradient(to right, transparent 0%, black 15%); -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%);">
@@ -132,6 +128,11 @@
                     onerror="this.src='https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=900&q=80'">
             @endif
         </div>
+
+        {{-- Mobile Readability Overlay (Frosted Glass Effect) --}}
+        <div class="absolute inset-0 lg:hidden pointer-events-none" 
+             style="z-index: 5; background-color: rgba(255, 255, 255, 0.75); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);"></div>
+
 
         {{-- Main Hero Content --}}
         <div class="flex-1 flex flex-col justify-center">
