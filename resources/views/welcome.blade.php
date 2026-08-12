@@ -104,15 +104,18 @@
 
     {{-- ═══ HERO ═══ --}}
     <section id="beranda"
-        class="relative overflow-hidden bg-white h-screen min-h-[700px] max-h-[1080px] flex flex-col justify-center pt-24 lg:pt-20">
+        class="relative overflow-hidden bg-white min-h-screen lg:h-screen lg:min-h-[700px] max-h-[1200px] flex flex-col justify-center pt-24 lg:pt-20 pb-10 lg:pb-0">
 
         {{-- Dot Pattern Background --}}
         <div class="absolute inset-0 z-0 opacity-50"
             style="background-image: radial-gradient(#fcd34d 1.5px, transparent 1.5px); background-size: 36px 36px;">
         </div>
 
+        {{-- Mobile Readability Overlay --}}
+        <div class="absolute inset-0 bg-white/70 lg:hidden z-[1] pointer-events-none"></div>
+
         {{-- Background Image --}}
-        <div class="absolute top-0 right-0 w-full lg:w-[75%] h-full pointer-events-none z-0" 
+        <div class="absolute top-0 right-0 w-full lg:w-[75%] h-full pointer-events-none z-0 lg:z-0" 
              style="mask-image: linear-gradient(to right, transparent 0%, black 15%); -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%);">
             @php
                 $activeBanner = isset($banners) && $banners->count() > 0 ? $banners->first() : null;
@@ -120,11 +123,11 @@
             
             @if($activeBanner)
                 <img src="{{ asset('storage/' . $activeBanner->image) }}" alt="{{ $activeBanner->title }}"
-                    class="w-full h-full object-cover object-[75%_center] md:object-right"
+                    class="w-full h-full object-cover object-[75%_center] md:object-right opacity-40 lg:opacity-100"
                     onerror="this.src='{{ asset('assets/img/hero3.webp') }}'">
             @else
                 <img src="{{ asset('assets/img/hero3.webp') }}" alt="Bagian Organisasi Sekretariat Daerah Kota Padang"
-                    class="w-full h-full object-cover object-[75%_center] md:object-right"
+                    class="w-full h-full object-cover object-[75%_center] md:object-right opacity-40 lg:opacity-100"
                     onerror="this.src='https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?w=900&q=80'">
             @endif
         </div>
@@ -144,12 +147,12 @@
                     </div>
 
                     <h1
-                        class="text-5xl sm:text-6xl lg:text-[5rem] font-black text-gray-900 leading-[1] mb-4 tracking-tighter">
+                        class="text-4xl sm:text-5xl lg:text-[5rem] font-black text-gray-900 leading-[1.1] lg:leading-[1] mb-4 tracking-tighter">
                         Bagian Organisasi
                     </h1>
 
                     <h2
-                        class="text-2xl sm:text-3xl lg:text-4xl font-medium text-gray-400 tracking-wide mb-8 flex items-center gap-4">
+                        class="text-xl sm:text-2xl lg:text-4xl font-medium text-gray-600 lg:text-gray-400 tracking-wide mb-8 flex items-center gap-3 sm:gap-4">
                         <div class="h-px bg-gray-300 w-10 hidden sm:block"></div>
                         Sekretariat Daerah Kota Padang
                     </h2>
@@ -176,9 +179,9 @@
             </div>
 
             {{-- Statistics Bar (moved closer to text) --}}
-            <div class="relative z-20 w-full mt-12 lg:mt-20">
+            <div class="relative z-20 w-full mt-10 lg:mt-20">
                 <div class="max-w-[90rem] mx-auto px-5 lg:px-12 pb-8">
-                    <div class="flex flex-wrap lg:flex-nowrap gap-4">
+                    <div class="grid grid-cols-2 lg:flex lg:flex-nowrap gap-3 sm:gap-4">
                         @foreach($metrics as $type => $metric)
                             @php
                                 $config = $metricConfig[$type] ?? ['icon' => 'ph-chart-bar', 'color' => 'slate', 'label' => str_replace('_', ' ', $type)];
@@ -187,30 +190,27 @@
                             @endphp
                             @if($loop->last && $loop->count > 1)
                                 {{-- The last statistic is highlighted with solid brand bg --}}
-                                <div class="w-full sm:w-full lg:flex-1 rounded-2xl p-5 shadow-lg bg-brand-500">
+                                <div class="col-span-2 sm:col-span-1 lg:flex-1 rounded-2xl p-4 sm:p-5 shadow-lg bg-brand-500 flex flex-col justify-center">
                                     <div class="flex items-center gap-3">
-                                        <div
-                                            class="w-10 h-10 rounded-xl bg-white bg-opacity-20 text-white flex items-center justify-center">
+                                        <div class="w-10 h-10 rounded-xl bg-white bg-opacity-20 text-white flex items-center justify-center shrink-0">
                                             <i class="ph-duotone {{ $config['icon'] }} text-xl"></i>
                                         </div>
                                         <div>
-                                            <p class="text-2xl font-black text-white leading-none">{{ $formattedValue }}</p>
-                                            <p class="text-[11px] text-brand-100 font-semibold mt-1">{{ $config['label'] }}</p>
+                                            <p class="text-xl sm:text-2xl font-black text-white leading-none">{{ $formattedValue }}</p>
+                                            <p class="text-[10px] sm:text-[11px] text-brand-100 font-semibold mt-1">{{ $config['label'] }}</p>
                                         </div>
                                     </div>
                                 </div>
                             @else
                                 {{-- Normal statistic card --}}
-                                <div
-                                    class="w-full sm:w-[calc(50%-0.5rem)] lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                                    <div class="flex items-center gap-3">
-                                        <div
-                                            class="w-10 h-10 rounded-xl bg-{{ $config['color'] }}-50 text-{{ $config['color'] }}-500 flex items-center justify-center">
-                                            <i class="ph-duotone {{ $config['icon'] }} text-xl"></i>
+                                <div class="col-span-1 lg:flex-1 bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-center">
+                                    <div class="flex items-center gap-2 sm:gap-3">
+                                        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-{{ $config['color'] }}-50 text-{{ $config['color'] }}-500 flex items-center justify-center shrink-0">
+                                            <i class="ph-duotone {{ $config['icon'] }} text-lg sm:text-xl"></i>
                                         </div>
                                         <div>
-                                            <p class="text-2xl font-black text-gray-900 leading-none">{{ $formattedValue }}</p>
-                                            <p class="text-[11px] text-gray-500 font-semibold mt-1">{{ $config['label'] }}</p>
+                                            <p class="text-lg sm:text-2xl font-black text-gray-900 leading-none">{{ $formattedValue }}</p>
+                                            <p class="text-[9px] sm:text-[11px] text-gray-500 font-semibold mt-1 line-clamp-1">{{ $config['label'] }}</p>
                                         </div>
                                     </div>
                                 </div>
