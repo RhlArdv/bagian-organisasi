@@ -25,8 +25,30 @@
         <nav class="hidden lg:flex flex-1 items-center justify-center gap-4 lg:gap-5 xl:gap-6 px-4">
             <a href="/#beranda"
                 class="text-[12px] xl:text-[13px] font-bold {{ request()->is('/') ? 'text-brand-500 border-b-2 border-brand-500 pb-1' : 'text-gray-500 hover:text-brand-500 transition-colors' }} uppercase tracking-wide whitespace-nowrap">Beranda</a>
-            <a href="/profil"
-                class="text-[12px] xl:text-[13px] font-bold {{ request()->is('profil') ? 'text-brand-500 border-b-2 border-brand-500 pb-1' : 'text-gray-500 hover:text-brand-500 transition-colors' }} uppercase tracking-wide whitespace-nowrap">Profil</a>
+            {{-- Dropdown Profil --}}
+            <div class="relative group py-2">
+                <a href="/profil"
+                    class="text-[12px] xl:text-[13px] font-bold {{ request()->is('profil*') ? 'text-brand-500 border-b-2 border-brand-500 pb-1' : 'text-gray-500 group-hover:text-brand-500 transition-colors' }} uppercase tracking-wide flex items-center gap-1 whitespace-nowrap">
+                    Profil <i
+                        class="ph-bold ph-caret-down text-brand-500 transition-transform duration-300 group-hover:rotate-180"></i>
+                </a>
+                <div
+                    class="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-56 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+                    <div
+                        class="bg-white border border-gray-100 shadow-xl shadow-brand-500/5 rounded-2xl py-3 flex flex-col">
+                        <a href="{{ url('/profil') }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Profil Organisasi</a>
+                        <a href="{{ url('/profil/visi-misi') }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Visi & Misi</a>
+                        <a href="{{ url('/profil/tugas-fungsi') }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Tugas Pokok & Fungsi</a>
+                        <a href="{{ url('/profil/maklumat-pelayanan') }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Maklumat Pelayanan</a>
+                        <a href="{{ url('/profil/struktur-organisasi') }}"
+                            class="px-5 py-2.5 text-[13px] font-bold text-gray-600 hover:text-brand-500 hover:bg-brand-50 hover:pl-6 transition-all">Struktur & Pegawai</a>
+                    </div>
+                </div>
+            </div>
 
             {{-- Dropdown Kelembagaan --}}
             <div class="relative group py-2">
@@ -189,7 +211,7 @@
 
             {{-- Survei Kepuasan Masyarakat --}}
             <div class="py-2">
-                <a href="https://surveidigital.spbe.go.id/embed/survey/eyJzdXJ2ZXlfaWQiOjIsInNlcnZpY2VfaWQiOjkxNiwiaG9zdCI6Imh0dHBzOi8vYmFnb3JnYW5pc2FzaS5wYWRhbmcuZ28uaWQiLCJrZXkiOiJyWTc3Z1VOciJ9/embed/view/?jenis_layanan=Website" target="_blank" rel="noopener noreferrer"
+                <a href="https://surveidigital.spbe.go.id/embed/survey/eyJzdXJ2ZXlfaWQiOjIsInNlcnZpY2VfaWQiOjkxNiwiaG9zdCI6Imh0dHBzOi8vYmFnb3JnYW5pc2FzaS5wYWRhbmcuZ28uaWQiLCJrZXkiOiJyWTc3Z1VOciJ9/embed/view/" target="_blank" rel="noopener"
                     class="text-[12px] xl:text-[13px] font-bold text-gray-500 hover:text-brand-500 transition-colors uppercase tracking-wide flex items-center whitespace-nowrap">
                     SKM
                 </a>
@@ -222,10 +244,20 @@
                 <span>Beranda</span>
                 <i class="ph-bold ph-arrow-right text-brand-500"></i>
             </a>
-            <a href="/profil" @click="mobileOpen = false" class="text-sm font-extrabold text-gray-800 hover:text-brand-500 py-2 border-b border-gray-100 flex items-center justify-between">
-                <span>Profil Bagian</span>
-                <i class="ph-bold ph-arrow-right text-brand-500"></i>
-            </a>
+            {{-- Profil Mobile --}}
+            <div x-data="{ openProfil: false }" class="border-b border-gray-100 pb-2">
+                <button @click="openProfil = !openProfil" class="w-full flex items-center justify-between py-2 text-sm font-extrabold text-gray-800 hover:text-brand-500">
+                    <span>Profil Bagian</span>
+                    <i class="ph-bold transition-transform" :class="openProfil ? 'ph-caret-up text-brand-500' : 'ph-caret-down'"></i>
+                </button>
+                <div x-show="openProfil" class="pl-4 pt-2 flex flex-col space-y-2.5 text-xs font-bold text-gray-600" style="display: none;">
+                    <a href="{{ url('/profil') }}" @click="mobileOpen = false" class="hover:text-brand-500">Profil Organisasi</a>
+                    <a href="{{ url('/profil/visi-misi') }}" @click="mobileOpen = false" class="hover:text-brand-500">Visi & Misi</a>
+                    <a href="{{ url('/profil/tugas-fungsi') }}" @click="mobileOpen = false" class="hover:text-brand-500">Tugas Pokok & Fungsi</a>
+                    <a href="{{ url('/profil/maklumat-pelayanan') }}" @click="mobileOpen = false" class="hover:text-brand-500">Maklumat Pelayanan</a>
+                    <a href="{{ url('/profil/struktur-organisasi') }}" @click="mobileOpen = false" class="hover:text-brand-500">Struktur & Pegawai</a>
+                </div>
+            </div>
 
             {{-- Kelembagaan Mobile --}}
             <div x-data="{ openKelembagaan: false }" class="border-b border-gray-100 pb-2">
@@ -312,13 +344,11 @@
                     <a href="{{ route('public.regulasi.sub', 'surat-edaran') }}" @click="mobileOpen = false" class="hover:text-red-600">Surat Edaran</a>
                 </div>
             </div>
-            <a href="{{ route('public.berita.index') }}" @click="mobileOpen = false" class="text-sm font-extrabold text-gray-800 hover:text-brand-500 py-2 border-b border-gray-100 flex items-center justify-between">
-                <span>Berita & Pengumuman</span>
+            {{-- Survei Kepuasan Masyarakat (SKM) --}}
+            <a href="https://surveidigital.spbe.go.id/embed/survey/eyJzdXJ2ZXlfaWQiOjIsInNlcnZpY2VfaWQiOjkxNiwiaG9zdCI6Imh0dHBzOi8vYmFnb3JnYW5pc2FzaS5wYWRhbmcuZ28uaWQiLCJrZXkiOiJyWTc3Z1VOciJ9/embed/view/" target="_blank" rel="noopener"
+               @click="mobileOpen = false" class="text-sm font-extrabold text-gray-800 hover:text-brand-500 py-2 border-b border-gray-100 flex items-center justify-between">
+                <span>SKM</span>
                 <i class="ph-bold ph-arrow-right text-brand-500"></i>
-            </a>
-            <a href="{{ route('public.pengaduan') }}" @click="mobileOpen = false" class="text-sm font-extrabold text-brand-500 hover:text-brand-600 py-3 bg-brand-50 rounded-xl px-4 flex items-center justify-between mt-3 shadow-sm">
-                <span class="flex items-center gap-2"><i class="ph-fill ph-chat-circle-dots text-lg"></i> Kritik, Saran & Pengaduan</span>
-                <i class="ph-bold ph-arrow-right"></i>
             </a>
         </div>
     </div>

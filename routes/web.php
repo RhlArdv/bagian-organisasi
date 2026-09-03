@@ -45,6 +45,18 @@ Route::get('/profil', function () {
     return view('profil', compact('pages', 'kepala', 'pegawais', 'settings'));
 });
 
+// Halaman Publik — Sub Profil & Direct Section Anchors
+Route::get('/profil/visi-misi', fn() => redirect('/profil#visi-misi'))->name('public.profil.visi-misi');
+Route::get('/profil/tugas-fungsi', fn() => redirect('/profil#tupoksi'))->name('public.profil.tugas-fungsi');
+Route::get('/profil/tugas-pokok-dan-fungsi', fn() => redirect('/profil#tupoksi'));
+Route::get('/profil/tupoksi', fn() => redirect('/profil#tupoksi'));
+Route::get('/profil/maklumat-pelayanan', fn() => redirect('/profil#maklumat-pelayanan'))->name('public.profil.maklumat-pelayanan');
+Route::get('/profil/struktur-organisasi', fn() => redirect('/profil#profil-pegawai'))->name('public.profil.struktur');
+
+// Redirect Banner Landing Page Links
+Route::get('/reformasi-birokrasi', fn() => redirect()->route('public.reformasi-birokrasi'));
+Route::get('/pelayanan-publik', fn() => redirect()->route('public.standar-pelayanan'));
+
 // Halaman Publik — Layanan Unggulan (6 cards dari landing page)
 Route::get('/layanan/reformasi-birokrasi', [PublicLayananController::class, 'reformasiBirokrasi'])->name('public.reformasi-birokrasi');
 Route::get('/layanan/sakip', [PublicLayananController::class, 'sakip'])->name('public.sakip');
