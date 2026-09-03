@@ -115,7 +115,7 @@
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Foto Pegawai</label>
                         <input type="file" name="foto" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-brand-50 file:text-brand-600 hover:file:bg-brand-100 transition-colors cursor-pointer">
-                        <p class="text-xs text-gray-400 mt-2 font-medium">Format: JPG/PNG, Maksimal: 2MB. Disarankan foto berlatar biru/merah dengan pakaian dinas rasio 3:4.</p>
+                        <p class="text-xs text-gray-400 mt-2 font-medium">Format: JPG/PNG/WEBP, Maksimal: 10MB. Disarankan foto berlatar biru/merah dengan pakaian dinas rasio 3:4.</p>
                     </div>
                     
                     <div class="flex items-center gap-3 bg-gray-50 p-4 rounded-xl border border-gray-200">

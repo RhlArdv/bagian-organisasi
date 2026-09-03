@@ -38,7 +38,7 @@ class PegawaiController extends Controller
             'jabatan' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'pangkat_golongan' => 'nullable|string|max:255',
             'pendidikan' => 'nullable|string|max:255',
-            'foto' => 'nullable|image|max:2048',
+            'foto' => 'nullable|image|max:10240',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:255',
             'level' => 'required|in:kepala,kasubag,staf',
@@ -48,6 +48,8 @@ class PegawaiController extends Controller
         ], [
             'nama.regex' => 'Kolom nama tidak boleh memuat karakter khusus HTML (<, >, atau =).',
             'jabatan.regex' => 'Kolom jabatan tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'foto.image' => 'File foto harus berupa gambar yang valid (jpg, jpeg, png, webp).',
+            'foto.max' => 'Ukuran file foto tidak boleh lebih dari 10 MB.',
         ]);
 
         if ($request->hasFile('foto')) {
@@ -81,7 +83,7 @@ class PegawaiController extends Controller
             'jabatan' => ['required', 'string', 'max:255', 'regex:/^[^<>=]+$/'],
             'pangkat_golongan' => 'nullable|string|max:255',
             'pendidikan' => 'nullable|string|max:255',
-            'foto' => 'nullable|image|max:2048',
+            'foto' => 'nullable|image|max:10240',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:255',
             'level' => 'required|in:kepala,kasubag,staf',
@@ -90,6 +92,8 @@ class PegawaiController extends Controller
         ], [
             'nama.regex' => 'Kolom nama tidak boleh memuat karakter khusus HTML (<, >, atau =).',
             'jabatan.regex' => 'Kolom jabatan tidak boleh memuat karakter khusus HTML (<, >, atau =).',
+            'foto.image' => 'File foto harus berupa gambar yang valid (jpg, jpeg, png, webp).',
+            'foto.max' => 'Ukuran file foto tidak boleh lebih dari 10 MB.',
         ]);
 
         if ($request->hasFile('foto')) {
